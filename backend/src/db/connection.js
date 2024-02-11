@@ -8,12 +8,16 @@ const config = {
   port: Number(`${process.env.MYSQL_SERVER_PORT}`)
 }
 
-try {
-  const c = mySQL.createConnection(config)
-  console.log('OK: conectado a la BD')
-  module.exports = {
-    c
+function dbInit () {
+  try {
+    const db = mySQL.createPool(config)
+    console.log('OK: conectado a la BD')
+    return db
+  } catch (err) {
+    throw new Error('Error de conexion a la BD')
   }
-} catch (err) {
-  throw new Error('Error de conexion a la BD')
+}
+
+module.exports = {
+  db: dbInit()
 }
