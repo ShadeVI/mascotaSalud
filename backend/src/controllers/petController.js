@@ -25,8 +25,8 @@ const getPet = async (req, res, next) => {
     })
   }
 
-  const { UUID: requestUUID, rolID } = res.locals.user
-  if (requestUUID !== pet.UUID_usuario && rolID !== 1) {
+  const { UUID: requestUUID, isAdmin } = res.locals.user
+  if (requestUUID !== pet.UUID_usuario && !isAdmin) {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',

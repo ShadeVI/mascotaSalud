@@ -2,7 +2,7 @@ const Pet = require('../models/Pet')
 
 const findAll = async (user) => {
   let allPets = await Pet.findAll()
-  if (user.rolID !== 1) {
+  if (!user.isAdmin) {
     allPets = allPets.filter(mascota => mascota.UUID_usuario === user.UUID)
   }
   return allPets

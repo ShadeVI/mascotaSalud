@@ -23,7 +23,7 @@ const getUser = async (req, res, next) => {
     })
   }
 
-  const { UUID: requestUUID, rolID } = res.locals.user
+  const { UUID: requestUUID, isAdmin } = res.locals.user
   const userFound = await userService.findOne(username)
 
   if (!userFound) {
@@ -33,7 +33,7 @@ const getUser = async (req, res, next) => {
       code: 404
     })
   }
-  if (requestUUID !== userFound.UUID && rolID !== 1) {
+  if (requestUUID !== userFound.UUID && !isAdmin) {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',
