@@ -32,6 +32,12 @@ class User {
     }
     return rows[0]
   }
+
+  static async isAdmin (UUID) {
+    const [rows] = await db.execute('SELECT r.tipo FROM usuario AS u INNER JOIN rol AS r ON u.ID_rol = r.ID WHERE UUID = ?', [UUID])
+    if (rows[0].tipo === 'admin') return true
+    return false
+  }
 }
 
 module.exports = User

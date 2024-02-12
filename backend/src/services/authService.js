@@ -45,7 +45,12 @@ const login = async ({ email, password }) => {
   return user
 }
 
+const isAdmin = async (UUID) => {
+  return await User.isAdmin(UUID)
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  isAdmin
 }

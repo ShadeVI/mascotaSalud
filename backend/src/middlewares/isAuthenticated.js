@@ -1,4 +1,5 @@
 const { isTokenValid } = require('../utils/JWT')
+const authService = require('../services/authService')
 
 const isAuthenticated = async (req, res, next) => {
   // check if token is valid
@@ -6,6 +7,8 @@ const isAuthenticated = async (req, res, next) => {
     const decodedToken = await isTokenValid(req.cookies.jwt)
     if (decodedToken) {
       res.locals.user = decodedToken
+      res.locals.user.isAdmin = await authService.isAdmin(decodedToken.UUID)
+      console.log(res.locals.user.isAdmin)
       return next()
     }
     return next({
