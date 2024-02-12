@@ -8,9 +8,17 @@ const isAuthenticated = async (req, res, next) => {
       res.locals.user = decodedToken
       return next()
     }
-    return next({ message: 'invalid token' })
+    return next({
+      error: 'JSON WEB TOKEN',
+      message: 'Token no valido',
+      code: 400
+    })
   } catch (error) {
-    next(error)
+    next({
+      error: 'JSON WEB TOKEN',
+      message: 'Error en el token',
+      code: 500
+    })
   }
 }
 

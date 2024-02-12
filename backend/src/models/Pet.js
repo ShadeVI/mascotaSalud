@@ -1,16 +1,14 @@
 const { db } = require('../db/connection')
-const User = require('./User')
 
 class Pet {
-  static async findAll (username) {
-    if (username) {
-      const userData = await User.findByUsername(username)
-      if (userData) {
-        const [rows] = await db.execute('SELECT * FROM mascota WHERE UUID_usuario = ?', [userData.UUID])
-        return rows
-      }
-    }
-    return []
+  static async findAll () {
+    const [rows] = await db.execute('SELECT * FROM mascota')
+    return rows
+  }
+
+  static async findById (id) {
+    const [rows] = await db.execute('SELECT * FROM mascota WHERE ID = ?', [id])
+    return rows[0]
   }
 }
 

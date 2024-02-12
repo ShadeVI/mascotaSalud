@@ -1,20 +1,36 @@
-const User = require('../models/User')
 const { generateJWT } = require('../utils/JWT')
-const { comparePassword } = require('../utils/password')
+
+const authService = require('../services/authService')
 
 const signup = async (req, res, next) => {
   try {
     const { email, password, username } = req.body
-    const result = await User.signup({ email, password, username })
+    if (!email || !password || !username) {
+      return next({
+        error: 'BAD REQUEST',
+        message: 'Datos insuficientes',
+        code: 401
+      })
+    }
+    // SERVICE SIGN UP
+    const user = await authService.signup({ email, password, username })
+
+    if (!user) {
+      return next({
+        error: 'BAD REQUEST',
+        message: 'Datos invalidos',
+        code: 401
+      })
+    }
+
     const dataToToken = {
-      UUID: result.UUID,
-      email: result.email,
-      username: result.username,
-      rol: result.ID_rol
+      UUID: user.UUID,
+      email: user.email,
+      username: user.username,
+      rolID: user.ID_rol
     }
     const jwtToken = await generateJWT(dataToToken)
-
-    res.cookie('jwt', jwtToken, { httpOnly: true }).status(201).json({ message: 'Registrado', jwt: jwtToken })
+    return res.cookie('jwt', jwtToken, { httpOnly: true }).status(201).json({ message: 'Registrado' })
   } catch (error) {
     next(error)
   }
@@ -23,20 +39,32 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body
-    const { password_hash: passHash } = await User.findPasswordHash(email)
-    const isPasswordCorrect = await comparePassword({ clearPassword: password, hash: passHash })
-    if (!isPasswordCorrect) {
-      return res.status(403).json({ error: 'Password incorrecta' })
+    if (!email || !password) {
+      return next({
+        error: 'BAD REQUEST',
+        message: 'Datos insuficientes',
+        code: 401
+      })
     }
-    const userData = await User.findByEmail(email)
+
+    const user = await authService.login({ email, password })
+
+    if (!user) {
+      return next({
+        error: 'BAD REQUEST',
+        message: 'Datos invalidos',
+        code: 401
+      })
+    }
+
     const dataToToken = {
-      UUID: userData.UUID,
-      email: userData.email,
-      username: userData.username,
-      rol: userData.ID_rol
+      UUID: user.UUID,
+      email: user.email,
+      username: user.username,
+      rolID: user.ID_rol
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.cookie('jwt', jwtToken, { httpOnly: true }).status(200).json({ message: 'Inicio de sesion correcto', jwt: jwtToken })
+    return res.cookie('jwt', jwtToken, { httpOnly: true }).status(200).json({ message: 'Inicio de sesion correcto' })
   } catch (error) {
     next(error)
   }
