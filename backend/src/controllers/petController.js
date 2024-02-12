@@ -33,7 +33,7 @@ const getPet = async (req, res, next) => {
       code: 401
     })
   }
-  return res.json(pet)
+  return res.json({ message: 'Mascota encontrada', result: pet })
 }
 
 module.exports = {
