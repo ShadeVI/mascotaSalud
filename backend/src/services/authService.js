@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Role = require('../models/Role')
 const { hashPassword, comparePassword } = require('../utils/password')
 
 const signup = async ({ email, username, password }) => {
@@ -45,8 +46,8 @@ const login = async ({ email, password }) => {
   return user
 }
 
-const isAdmin = async (UUID) => {
-  return await User.isAdmin(UUID)
+const isAdmin = async (user) => {
+  return await Role.isAdmin(user.UUID)
 }
 
 module.exports = {

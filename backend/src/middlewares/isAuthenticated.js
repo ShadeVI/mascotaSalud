@@ -7,7 +7,7 @@ const isAuthenticated = async (req, res, next) => {
     const decodedToken = await isTokenValid(req.cookies.jwt)
     if (decodedToken) {
       res.locals.user = decodedToken
-      res.locals.user.isAdmin = await authService.isAdmin(decodedToken.UUID)
+      res.locals.user.isAdmin = await authService.isAdmin(decodedToken)
       return next()
     }
     return next({
