@@ -1,4 +1,5 @@
 const Pet = require('../models/Pet')
+const PetHistory = require('../models/PetHistory')
 
 const findAll = async (user) => {
   let allPets = await Pet.findAll()
@@ -16,7 +17,13 @@ const findOne = async (id) => {
   return pet
 }
 
+const findPetHistory = async (id) => {
+  const history = await PetHistory.findAllById(id)
+  return history
+}
+
 module.exports = {
   findAll,
-  findOne
+  findOne,
+  findPetHistory
 }

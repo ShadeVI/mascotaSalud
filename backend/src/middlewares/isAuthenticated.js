@@ -8,7 +8,6 @@ const isAuthenticated = async (req, res, next) => {
     if (decodedToken) {
       res.locals.user = decodedToken
       res.locals.user.isAdmin = await authService.isAdmin(decodedToken.UUID)
-      console.log(res.locals.user.isAdmin)
       return next()
     }
     return next({
