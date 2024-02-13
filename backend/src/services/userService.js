@@ -1,10 +1,8 @@
+const Pet = require('../models/Pet')
 const User = require('../models/User')
 const removeHashPassword = require('../utils/removeHashPassword')
 
-const findAll = async (rolID) => {
-  if (rolID !== 1) {
-    return null
-  }
+const findAll = async () => {
   const allUsers = await User.findAll()
   // Para seguridad no devolver password_hash
   const filteredUsers = removeHashPassword({ arr: allUsers })
@@ -20,7 +18,15 @@ const findOne = async (username) => {
   return filteredUser
 }
 
+const findAllUserPets = async (username) => {
+  const user = await User.findByUsername(username)
+  const pets = await Pet.findAll()
+  const filteredPetsByUsername = pets.filter(pet => pet.UUID_usuario === user.UUID)
+  return filteredPetsByUsername
+}
+
 module.exports = {
   findAll,
-  findOne
+  findOne,
+  findAllUserPets
 }
