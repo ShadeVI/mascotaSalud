@@ -40,7 +40,7 @@ const getUser = async (req, res, next) => {
       code: 401
     })
   }
-  return res.json({ message: 'Todos los usuarios', result: userFound })
+  return res.json({ message: `Datos del usuario ${username}`, result: userFound })
 }
 
 const getUserPets = async (req, res, next) => {

@@ -30,7 +30,7 @@ const signup = async (req, res, next) => {
       rolID: user.ID_rol
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.cookie('jwt', jwtToken, { httpOnly: true }).status(201).json({ message: 'Registrado' })
+    return res.status(201).cookie('jwt', jwtToken, { httpOnly: true }).json({ message: 'Registrado' })
   } catch (error) {
     next(error)
   }
@@ -64,7 +64,7 @@ const login = async (req, res, next) => {
       rolID: user.ID_rol
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.cookie('jwt', jwtToken, { httpOnly: true }).status(200).json({ message: 'Inicio de sesion correcto' })
+    return res.status(200).cookie('jwt', jwtToken, { httpOnly: true }).json({ message: 'Inicio de sesion correcto' })
   } catch (error) {
     next(error)
   }
