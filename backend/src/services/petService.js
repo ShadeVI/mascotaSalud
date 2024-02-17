@@ -1,11 +1,8 @@
 const Pet = require('../models/Pet')
 const PetHistory = require('../models/PetHistory')
 
-const findAll = async (user) => {
-  let allPets = await Pet.findAll()
-  if (!user.isAdmin) {
-    allPets = allPets.filter(mascota => mascota.UUID_usuario === user.UUID)
-  }
+const findAll = async () => {
+  const allPets = await Pet.findAll()
   return allPets
 }
 

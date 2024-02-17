@@ -1,11 +1,13 @@
 const express = require('express')
-const { getAllUsers, getUser, getUserPets } = require('../controllers/usersController')
+const { getUser, getUserPets, updateUser, deleteUser } = require('../controllers/usersController')
 
 const userRouter = express.Router()
 
-userRouter.get('/', getAllUsers)
 userRouter.get('/:username', getUser)
 userRouter.get('/:username/pets', getUserPets)
+
+userRouter.put('/:username', updateUser)
+userRouter.delete('/:username', deleteUser)
 
 module.exports = {
   userRouter

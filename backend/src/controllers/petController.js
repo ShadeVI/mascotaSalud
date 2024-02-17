@@ -2,12 +2,9 @@ const petService = require('../services/petService')
 
 const getAllPets = async (req, res, next) => {
   const { user } = res.locals
-  try {
-    const result = await petService.findAll(user)
-    return res.status(200).json({ message: 'Todas las mascotas', result })
-  } catch (error) {
-    return next(error)
-  }
+  const result = await petService.findAll()
+  const allPets = result.filter(mascota => mascota.UUID_usuario === user.UUID)
+  return res.status(200).json({ message: 'Todas las mascotas', result: { data: allPets } })
 }
 
 const getPet = async (req, res, next) => {
@@ -29,15 +26,15 @@ const getPet = async (req, res, next) => {
     })
   }
 
-  const { UUID: requestUUID, isAdmin } = res.locals.user
-  if (requestUUID !== pet.UUID_usuario && !isAdmin) {
+  const { UUID: requestUUID } = res.locals.user
+  if (requestUUID !== pet.UUID_usuario) {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',
       code: 401
     })
   }
-  return res.json({ message: 'Mascota encontrada', result: pet })
+  return res.json({ message: 'Mascota encontrada', result: { data: pet } })
 }
 
 const getPetHistory = async (req, res, next) => {
@@ -59,8 +56,8 @@ const getPetHistory = async (req, res, next) => {
     })
   }
 
-  const { UUID: requestUUID, isAdmin, username } = res.locals.user
-  if (requestUUID !== pet.UUID_usuario && !isAdmin) {
+  const { UUID: requestUUID, username } = res.locals.user
+  if (requestUUID !== pet.UUID_usuario) {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',
@@ -69,7 +66,7 @@ const getPetHistory = async (req, res, next) => {
   }
 
   const petHistory = await petService.findPetHistory(pet.ID)
-  return res.json({ message: `Historial completo de la mascota ${pet.nombre} del usuario ${username}`, result: petHistory })
+  return res.json({ message: `Historial completo de la mascota ${pet.nombre} del usuario ${username}`, result: { data: petHistory } })
 }
 
 module.exports = {

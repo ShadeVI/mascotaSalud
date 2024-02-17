@@ -7,7 +7,7 @@ class User {
   }
 
   static async save ({ username, email, hashPass, rol }) {
-    const [result] = await db.execute('INSERT INTO usuario (username, email, password_hash, ID_rol) VALUES (?, ?, ?, ?)', [username, email, hashPass, rol])
+    const [result] = await db.execute('INSERT INTO usuario (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashPass])
 
     if (result.affectedRows > 0) {
       return true
@@ -31,6 +31,28 @@ class User {
       return null
     }
     return rows[0]
+  }
+
+  static async update (user) {
+    const entries = Object.entries(user)
+    const values = entries.map(row => row[1] === 'null' || row[1] === 'undefined' ? null : row[1])
+    const [result] = await db.execute('UPDATE usuario SET UUID = ?, email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ?, url_foto = ?, fecha_registro = ? WHERE UUID = ?', [...values, user.UUID])
+
+    if (result.affectedRows > 0) {
+      return true
+    }
+
+    return false
+  }
+
+  static async deleteOne (user) {
+    const [result] = await db.execute('DELETE FROM usuario WHERE UUID = ?', [user.UUID])
+
+    if (result.affectedRows > 0) {
+      return true
+    }
+
+    return false
   }
 }
 
