@@ -15,14 +15,7 @@ export const AuthProvider = ({ children }) => {
       credentials: 'include'
     })
     const data = await res.json()
-    if (data?.result) {
-      const res = await fetch(`http://localhost:3000/users/${data.result.username}`, {
-        method: 'GET',
-        credentials: 'include'
-      })
-      const user = await res.json()
-      setUser(user.result)
-    }
+    setUser(data.result)
   }
 
   useEffect(() => {

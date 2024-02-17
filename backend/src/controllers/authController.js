@@ -72,7 +72,11 @@ const login = async (req, res, next) => {
 }
 
 const checkToken = (req, res, next) => {
-  res.status(200).json({ result: { username: res.locals.user.username } })
+  if (res.locals.user.username) {
+    res.redirect(`/users/${res.locals.user.username}`)
+  } else {
+    res.status(400).json({ error: 'Token no valido' })
+  }
 }
 
 module.exports = {
