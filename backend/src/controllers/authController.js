@@ -39,6 +39,7 @@ const signup = async (req, res, next) => {
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body
+    console.log(req.body)
     if (!email || !password) {
       return next({
         error: 'BAD REQUEST',
@@ -64,13 +65,18 @@ const login = async (req, res, next) => {
       rolID: user.ID_rol
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.status(200).cookie('jwt', jwtToken, { httpOnly: true }).json({ message: 'Inicio de sesion correcto' })
+    return res.status(200).cookie('jwt', jwtToken, { httpOnly: true }).json({ message: 'Inicio de sesion correcto', result: { username: user.username } })
   } catch (error) {
     next(error)
   }
 }
 
+const checkToken = (req, res, next) => {
+  res.status(200).json({ result: { username: res.locals.user.username } })
+}
+
 module.exports = {
   signup,
-  login
+  login,
+  checkToken
 }

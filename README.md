@@ -31,3 +31,6 @@ CREATE TABLE `mascotasalud`.`account` (
   UNIQUE INDEX `UUID_UNIQUE` (`UUID` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
 ```
+
+## Images
+https://unsplash.com/es/fotos/foto-de-primer-plano-de-gato-atigrado-cWOzOnSoh6Q

@@ -10,7 +10,8 @@ export default defineConfig({
       '@components': resolve(__dirname, 'src/components'),
       '@pages': resolve(__dirname, 'src/pages'),
       '@contexts': resolve(__dirname, 'src/contexts'),
-      '@hooks': resolve(__dirname, 'src/hooks')
+      '@hooks': resolve(__dirname, 'src/hooks'),
+      '@assets': resolve(__dirname, 'src/assets')
     }
   }
 })
