@@ -1,20 +1,9 @@
 const userService = require('../services/userService')
 
-const getAllUsers = async (req, res, next) => {
-  const { isAdmin } = res.locals.user
-  if (!isAdmin) {
-    return next({
-      error: 'UNAUTHORIZED',
-      message: 'No tienes permisos suficientes',
-      code: 401
-    })
-  }
-  const result = await userService.findAll(isAdmin)
-  return res.status(200).json({ message: 'Todos los usuarios', result })
-}
-
 const getUser = async (req, res, next) => {
   const { username } = req.params
+  const { user } = res.locals
+
   if (!username) {
     return next({
       error: 'BAD REQUEST',
@@ -23,28 +12,31 @@ const getUser = async (req, res, next) => {
     })
   }
 
-  const { UUID: requestUUID, isAdmin } = res.locals.user
   const userFound = await userService.findOne(username)
 
-  if (!userFound) {
+  if (username !== user.username) {
     return next({
-      error: 'BAD REQUEST',
-      message: 'Usuario no encontrado',
-      code: 404
-    })
-  }
-  if (requestUUID !== userFound.UUID && !isAdmin) {
-    return next({
-      error: 'BAD REQUEST',
+      error: 'NO AUTORIZADO',
       message: 'No tienes permisos',
       code: 401
     })
   }
-  return res.json({ message: `Datos del usuario ${username}`, result: userFound })
+
+  if (!userFound) {
+    return next({
+      error: 'NOT FOUND',
+      message: 'Usuario no encontrado',
+      code: 404
+    })
+  }
+
+  return res.json({ message: `Datos del usuario ${username}`, result: { data: userFound } })
 }
 
 const getUserPets = async (req, res, next) => {
   const { username } = req.params
+  const { user } = res.locals
+
   if (!username) {
     return next({
       error: 'BAD REQUEST',
@@ -62,15 +54,90 @@ const getUserPets = async (req, res, next) => {
       code: 404
     })
   }
+  if (username !== user.username) {
+    return next({
+      error: 'NO AUTORIZADO',
+      message: 'No tienes permisos',
+      code: 401
+    })
+  }
 
   // Buscar todas las mascotas del usuario
-  const pets = await userService.findAllUserPets(username)
+  const pets = await userService.findAllUserPets(user)
 
-  return res.json({ message: `Todas las mascotas de ${username}`, result: pets })
+  return res.json({ message: `Todas las mascotas de ${username}`, result: { data: pets } })
+}
+
+const updateUser = async (req, res, next) => {
+  const { username } = req.params
+  const { user } = res.locals
+  const { body: data } = req
+
+  if (!username) {
+    return next({
+      error: 'BAD REQUEST',
+      message: 'Datos insuficientes',
+      code: 401
+    })
+  }
+
+  if (username !== user.username) {
+    return next({
+      error: 'NO AUTORIZADO',
+      message: 'No tienes permisos',
+      code: 401
+    })
+  }
+
+  const userFound = await userService.update(username, data)
+
+  if (!userFound) {
+    return next({
+      error: 'NOT FOUND',
+      message: 'Usuario no encontrado',
+      code: 404
+    })
+  }
+
+  return res.json({ message: `Datos del usuario ${username}`, result: { data: userFound } })
+}
+
+const deleteUser = async (req, res, next) => {
+  const { username } = req.params
+  const { user } = res.locals
+
+  if (!username) {
+    return next({
+      error: 'BAD REQUEST',
+      message: 'Datos insuficientes',
+      code: 401
+    })
+  }
+
+  if (username !== user.username) {
+    return next({
+      error: 'NO AUTORIZADO',
+      message: 'No tienes permisos',
+      code: 401
+    })
+  }
+
+  const userDeleted = await userService.deleteOne(username)
+
+  if (!userDeleted) {
+    return next({
+      error: 'NOT FOUND',
+      message: 'Usuario no encontrado',
+      code: 404
+    })
+  }
+
+  return res.cookie('jwt', '', { httpOnly: true, maxAge: -1 }).json({ message: `Datos del usuario ${username}`, result: { data: userDeleted } })
 }
 
 module.exports = {
-  getAllUsers,
   getUser,
-  getUserPets
+  getUserPets,
+  updateUser,
+  deleteUser
 }

@@ -1,6 +1,6 @@
-const removeHashPassword = ({ arr, user }) => {
-  if (arr) {
-    return arr.map(user => {
+const removeHashPassword = ({ usersArr, user }) => {
+  if (usersArr) {
+    return usersArr.map(user => {
       const newUser = { ...user }
       delete newUser.password_hash
       return newUser

@@ -1,31 +1,26 @@
 const User = require('../models/User')
-const Role = require('../models/Role')
 const { hashPassword, comparePassword } = require('../utils/password')
+const removeHashPassword = require('../utils/removeHashPassword')
 
 const signup = async ({ email, username, password }) => {
   const allUsers = await User.findAll()
 
-  // Verificamos si no hay usuarios. Si es el primer registro, este usuario tendrá rol de Admin (1).
-  let rol = 2 // usuario cliente
-
-  if (allUsers.length === 0) {
-    rol = 1 // usuario admin
-  }
-
   // Verificamos si el usuario ya existe
   const users = allUsers.filter(user => user.email === email)
+
   if (users.length > 0) {
-    return false
+    throw new Error('Usuario ya existe')
   }
 
   // Hash password antes de insertar
   const hashPass = await hashPassword({ clearPassword: password })
 
   // Se guardó en la BD ==> true
-  const isSaved = await User.save({ username, email, hashPass, rol })
+  const isSaved = await User.save({ username, email, hashPass })
 
   if (isSaved) {
-    const userData = User.findByUsername(username)
+    let userData = User.findByUsername(username)
+    userData = removeHashPassword({ user: userData })
     return userData
   }
 
@@ -33,7 +28,7 @@ const signup = async ({ email, username, password }) => {
 }
 
 const login = async ({ email, password }) => {
-  const user = await User.findByEmail(email)
+  let user = await User.findByEmail(email)
 
   if (!user) {
     return null
@@ -43,15 +38,11 @@ const login = async ({ email, password }) => {
   if (!isPasswordCorrect) {
     return null
   }
+  user = removeHashPassword({ user })
   return user
-}
-
-const isAdmin = async (user) => {
-  return await Role.isAdmin(user.UUID)
 }
 
 module.exports = {
   signup,
-  login,
-  isAdmin
+  login
 }

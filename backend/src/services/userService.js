@@ -5,7 +5,7 @@ const removeHashPassword = require('../utils/removeHashPassword')
 const findAll = async () => {
   const allUsers = await User.findAll()
   // Para seguridad no devolver password_hash
-  const filteredUsers = removeHashPassword({ arr: allUsers })
+  const filteredUsers = removeHashPassword({ usersArr: allUsers })
   return filteredUsers
 }
 
@@ -18,15 +18,42 @@ const findOne = async (username) => {
   return filteredUser
 }
 
-const findAllUserPets = async (username) => {
-  const user = await User.findByUsername(username)
+const findAllUserPets = async (user) => {
   const pets = await Pet.findAll()
   const filteredPetsByUsername = pets.filter(pet => pet.UUID_usuario === user.UUID)
   return filteredPetsByUsername
 }
 
+const update = async (username, data) => {
+  let user = await User.findByUsername(username)
+  user = removeHashPassword({ user })
+  const newUser = { ...user, ...data }
+
+  const userUpdated = await User.update(newUser)
+
+  if (!userUpdated) {
+    return null
+  }
+
+  return newUser
+}
+
+const deleteOne = async (username) => {
+  const user = await User.findByUsername(username)
+
+  const userDeleted = await User.deleteOne(user)
+
+  if (!userDeleted) {
+    return null
+  }
+
+  return userDeleted
+}
+
 module.exports = {
   findAll,
   findOne,
-  findAllUserPets
+  findAllUserPets,
+  update,
+  deleteOne
 }
