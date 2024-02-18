@@ -34,9 +34,11 @@ class User {
   }
 
   static async update (user) {
-    const entries = Object.entries(user)
-    const values = entries.map(row => row[1] === 'null' || row[1] === 'undefined' ? null : row[1])
-    const [result] = await db.execute('UPDATE usuario SET UUID = ?, email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ?, url_foto = ?, fecha_registro = ? WHERE UUID = ?', [...values, user.UUID])
+    for (const key in user) {
+      user[key] = user[key] === 'null' || user[key] === 'undefined' ? null : user[key]
+    }
+    const { email, username, nombre, apellido, fecha_nac: fechaNac, empleo, url_foto: urlFoto } = user
+    const [result] = await db.execute('UPDATE usuario SET email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ?, url_foto = ? WHERE UUID = ?', [email, username, nombre, apellido, fechaNac, empleo, urlFoto, user.UUID])
 
     if (result.affectedRows > 0) {
       return true
