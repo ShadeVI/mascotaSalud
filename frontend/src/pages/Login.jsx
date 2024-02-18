@@ -1,17 +1,23 @@
 import logo from '@assets/logo.png'
-import bgImage from '@assets/gato-fondo-blanco.jpg'
-import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useAuth from '@hooks/useAuth'
+import Container from '../components/Container'
+import Input from '../components/Input'
+import Button from '../components/Button'
+import Label from '../components/Label'
+import FormContainer from '../components/Containers/Form'
+import FormHeader from '../components/FormHeader'
 
 const Login = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const navigator = useNavigate()
   const { setUser } = useAuth()
+  const navigator = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const formDataJSON = JSON.stringify(Object.fromEntries(formData.entries()))
     try {
       const res = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
@@ -19,96 +25,78 @@ const Login = () => {
           'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: formDataJSON
+        body: JSON.stringify({
+          email,
+          password
+        })
       })
       const data = await res.json()
-      if (data?.message) {
-        const res = await fetch(`http://localhost:3000/users/${data.result.username}`, {
-          method: 'GET',
-          credentials: 'include'
-        })
-        const dataUser = await res.json()
-        console.log(dataUser)
-        setUser(dataUser.result)
-        navigator('/home')
-      }
       if (data?.error) {
-        setError(data.error)
+        return setError(data.error)
       }
+      setUser({ ...data.result.data })
+      navigator('/home')
     } catch (err) {
-      setError(err?.message || 'Error durante el login')
+      setError('Error durante el login')
     }
   }
 
+  const fetchAPI = async () => {
+    const res = await fetch('http://localhost:3000/auth/checkToken', {
+      method: 'GET',
+      credentials: 'include'
+    })
+    const data = await res.json()
+    if (data.result) {
+      setUser(data.result)
+      navigator('/home', { replace: true })
+    }
+  }
+
+  useEffect(() => {
+    fetchAPI()
+  }, [])
+
   return (
-    <main className={`min-h-[100vh] flex justify-center items-center bg-[url('${bgImage}')] bg-cover`}>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8  bg-opacity-70 bg-white">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="mx-auto w-auto">
-            <img src={logo} alt="Mascota Salud logo" className="h-14 mx-auto" />
-          </div>
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+    <Container>
+      <main className={'h-full flex justify-center items-center'}>
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8  bg-opacity-30 bg-white">
+          <FormHeader logo={logo}>
             Bienvenido!
-          </h2>
+          </FormHeader>
+
+          <FormContainer>
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <div className="mt-2">
+                  <Input id="email" name="email" type="email" autoComplete="email" required={true} value={email} handleChange={ (e) => setEmail(e.target.value) } />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                </div>
+                <div className="mt-2">
+                  <Input id="password" name="password" type="password" required={true} value={password} handleChange={ (e) => setPassword(e.target.value) } />
+                </div>
+              </div>
+
+              {error && (
+                <p>{error}</p>
+              )}
+
+              <div>
+                  <Button type="submit">Login</Button>
+              </div>
+            </form>
+
+          </FormContainer>
+
         </div>
-
-        <div className="mt-10 mx-auto w-full max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email
-              </label>
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="block w-full p-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            {error && (
-              <p>{error}</p>
-            )}
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Login
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            No tienes una cuenta? {' '}
-            <Link to='/signup' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate</Link>
-          </p>
-        </div>
-      </div>
-    </main>
+      </main>
+    </Container>
   )
 }
 
