@@ -5,7 +5,7 @@ const removeHashPassword = require('../utils/removeHashPassword')
 const findAll = async () => {
   const allUsers = await User.findAll()
   // Para seguridad no devolver password_hash
-  const filteredUsers = removeHashPassword({ arr: allUsers })
+  const filteredUsers = removeHashPassword({ usersArr: allUsers })
   return filteredUsers
 }
 

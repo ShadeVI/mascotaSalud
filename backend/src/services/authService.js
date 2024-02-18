@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const { hashPassword, comparePassword } = require('../utils/password')
+const removeHashPassword = require('../utils/removeHashPassword')
 
 const signup = async ({ email, username, password }) => {
   const allUsers = await User.findAll()
@@ -18,7 +19,8 @@ const signup = async ({ email, username, password }) => {
   const isSaved = await User.save({ username, email, hashPass })
 
   if (isSaved) {
-    const userData = User.findByUsername(username)
+    let userData = User.findByUsername(username)
+    userData = removeHashPassword({ user: userData })
     return userData
   }
 
@@ -26,7 +28,7 @@ const signup = async ({ email, username, password }) => {
 }
 
 const login = async ({ email, password }) => {
-  const user = await User.findByEmail(email)
+  let user = await User.findByEmail(email)
 
   if (!user) {
     return null
@@ -36,6 +38,7 @@ const login = async ({ email, password }) => {
   if (!isPasswordCorrect) {
     return null
   }
+  user = removeHashPassword({ user })
   return user
 }
 

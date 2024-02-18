@@ -85,8 +85,13 @@ const checkToken = (req, res, next) => {
   }
 }
 
+const logout = (req, res) => {
+  return res.status(200).cookie('jwt', 'jwtToken', { httpOnly: true, maxAge: -1 }).json({ error: null, result: { data: null, message: 'Logout correcto' } })
+}
+
 module.exports = {
   signup,
   login,
-  checkToken
+  checkToken,
+  logout
 }
