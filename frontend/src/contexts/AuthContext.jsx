@@ -9,16 +9,19 @@ export const AuthContext = createContext(initialContext)
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState()
 
-  const fetchAPI = async () => {
-    const res = await fetch('http://localhost:3000/auth/checkToken', {
-      method: 'GET',
-      credentials: 'include'
-    })
-    const data = await res.json()
-    setUser(data.result)
-  }
-
   useEffect(() => {
+    const fetchAPI = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/auth/checkToken', {
+          method: 'GET',
+          credentials: 'include'
+        })
+        const data = await res.json()
+        setUser(data.result)
+      } catch (error) {
+        setUser(initialContext)
+      }
+    }
     fetchAPI()
   }, [])
 
