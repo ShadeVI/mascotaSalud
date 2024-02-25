@@ -1,32 +1,27 @@
 import { createContext, useEffect, useState } from 'react'
+import useFetch from '../hooks/useFetch'
 
 const initialContext = {
-  user: null
+  user: null,
+  error: null,
+  isLoading: false,
+  isAuthenticated: false
 }
 
 export const AuthContext = createContext(initialContext)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState()
+  const { result, error, isLoading } = useFetch({ url: 'http://localhost:3000/auth/checkToken' })
 
   useEffect(() => {
-    const fetchAPI = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/auth/checkToken', {
-          method: 'GET',
-          credentials: 'include'
-        })
-        const data = await res.json()
-        setUser(data.result)
-      } catch (error) {
-        setUser(initialContext)
-      }
+    if (result) {
+      setUser(result.data)
     }
-    fetchAPI()
-  }, [])
+  })
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, error, isLoading }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,0 +1,8 @@
+.formContainer {
+  border: 1px solid rgba(64, 35, 97, 0.164);
+  box-shadow: 0px 0px 5px 1px rgba(64, 35, 97, 0.164);
+  background-color: rgba(255,255,255, 0.1);
+  width: 500px;
+  padding: 30px;
+  text-align: center;
+}

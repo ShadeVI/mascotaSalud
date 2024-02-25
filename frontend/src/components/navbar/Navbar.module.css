@@ -1,0 +1,65 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.logoContainer {
+  width: 50px;
+  min-width: 50px;
+}
+
+.logoPicture {
+  max-width: 100%;
+}
+
+.links {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.link {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: black;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  color: rgb(96, 57, 104);
+  text-decoration: underline;
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+}
+
+.userPicture {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 2px solid black;
+  overflow: hidden;
+}
+
+.userPicture img {
+  max-width: 100%;
+  object-fit: cover;
+}
