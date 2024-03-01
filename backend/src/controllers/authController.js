@@ -10,7 +10,7 @@ const signup = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: 'Datos insuficientes',
-        code: 401
+        httpCode: 401
       })
     }
     // SERVICE SIGN UP
@@ -19,8 +19,8 @@ const signup = async (req, res, next) => {
     if (!user) {
       return next({
         error: 'BAD REQUEST',
-        message: 'Datos invalidos',
-        code: 401
+        message: 'Datos inválidos',
+        httpCode: 401
       })
     }
 
@@ -36,7 +36,7 @@ const signup = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: error.message,
-        code: 401
+        httpCode: 401
       })
     }
     return next(error)
@@ -51,7 +51,7 @@ const login = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: 'Datos insuficientes',
-        code: 401
+        httpCode: 401
       })
     }
 
@@ -61,7 +61,7 @@ const login = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: 'Email/contraseña no validas',
-        code: 401
+        httpCode: 401
       })
     }
 
@@ -71,7 +71,7 @@ const login = async (req, res, next) => {
       username: user.username
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.status(200).cookie('jwt', jwtToken, { httpOnly: true }).json({ error: null, result: { data: removeHashPassword({ user }), message: 'Inicio de sesion correcto' } })
+    return res.status(200).cookie('jwt', jwtToken, { httpOnly: true }).json({ error: null, result: { data: removeHashPassword({ user }), message: 'Inicio de sesión correcto' } })
   } catch (error) {
     next(error)
   }

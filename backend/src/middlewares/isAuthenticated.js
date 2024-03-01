@@ -11,13 +11,13 @@ const isAuthenticated = async (req, res, next) => {
     return next({
       error: 'JSON WEB TOKEN',
       message: 'Token no valido',
-      code: 400
+      httpCode: 400
     })
   } catch (error) {
     next({
       error: 'JSON WEB TOKEN',
       message: 'Error en el token',
-      code: 500
+      httpCode: 500
     })
   }
 }

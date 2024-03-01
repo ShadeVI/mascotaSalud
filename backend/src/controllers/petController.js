@@ -13,7 +13,7 @@ const getPet = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos incorrectos',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -22,7 +22,7 @@ const getPet = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Mascota no encontrada',
-      code: 404
+      httpCode: 404
     })
   }
 
@@ -31,7 +31,7 @@ const getPet = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',
-      code: 401
+      httpCode: 401
     })
   }
   return res.json({ message: 'Mascota encontrada', result: { data: pet } })
@@ -43,7 +43,7 @@ const getPetHistory = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos incorrectos',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -52,7 +52,7 @@ const getPetHistory = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Mascota no encontrada',
-      code: 404
+      httpCode: 404
     })
   }
 
@@ -61,7 +61,7 @@ const getPetHistory = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',
-      code: 401
+      httpCode: 401
     })
   }
 

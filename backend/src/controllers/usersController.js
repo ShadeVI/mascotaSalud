@@ -8,7 +8,7 @@ const getUser = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -18,7 +18,7 @@ const getUser = async (req, res, next) => {
     return next({
       error: 'NO AUTORIZADO',
       message: 'No tienes permisos',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -26,7 +26,7 @@ const getUser = async (req, res, next) => {
     return next({
       error: 'NOT FOUND',
       message: 'Usuario no encontrado',
-      code: 404
+      httpCode: 404
     })
   }
 
@@ -41,7 +41,7 @@ const getUserPets = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -51,14 +51,14 @@ const getUserPets = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Usuario no encontrado',
-      code: 404
+      httpCode: 404
     })
   }
   if (username !== user.username) {
     return next({
       error: 'NO AUTORIZADO',
       message: 'No tienes permisos',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -77,7 +77,7 @@ const updateUser = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -85,7 +85,7 @@ const updateUser = async (req, res, next) => {
     return next({
       error: 'NO AUTORIZADO',
       message: 'No tienes permisos',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -95,7 +95,7 @@ const updateUser = async (req, res, next) => {
     return next({
       error: 'NOT FOUND',
       message: 'Usuario no encontrado',
-      code: 404
+      httpCode: 404
     })
   }
 
@@ -110,7 +110,7 @@ const deleteUser = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -118,7 +118,7 @@ const deleteUser = async (req, res, next) => {
     return next({
       error: 'NO AUTORIZADO',
       message: 'No tienes permisos',
-      code: 401
+      httpCode: 401
     })
   }
 
@@ -128,7 +128,7 @@ const deleteUser = async (req, res, next) => {
     return next({
       error: 'NOT FOUND',
       message: 'Usuario no encontrado',
-      code: 404
+      httpCode: 404
     })
   }
 
