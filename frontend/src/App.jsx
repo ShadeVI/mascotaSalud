@@ -8,13 +8,14 @@ import Layout from './pages/Layout'
 import Profile from './pages/Profile'
 import Pets from './pages/Pets'
 import Expenses from './pages/Expenses'
+import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
 
 function App () {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path='/welcome' element={<Welcome />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/login" element={<Login />} />

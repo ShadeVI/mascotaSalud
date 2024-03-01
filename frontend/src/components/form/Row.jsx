@@ -1,11 +1,9 @@
-import Input from '../Input'
-import Label from './Label'
+import styles from './Row.module.css'
 
-const Row = ({ labelText }) => {
+const Row = ({ children }) => {
   return (
-    <div>
-      <Label idInput='username' text='Username' />
-      <Input />
+    <div className={styles.row}>
+      {children}
     </div>
   )
 }

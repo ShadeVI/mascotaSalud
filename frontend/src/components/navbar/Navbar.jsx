@@ -1,10 +1,22 @@
 import logo from '../../assets/logo.png'
 import styles from './Navbar.module.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import { logout } from '../../services/logout'
 
 const Navbar = () => {
-  const { user } = useAuth()
+  const { user, setUser } = useAuth()
+  const navigator = useNavigate()
+
+  const handleLogout = async () => {
+    const res = await logout()
+    if (res.result.message) {
+      setUser(null)
+      navigator('/login', { replace: true })
+    } else {
+      console.log('Error logout')
+    }
+  }
 
   return (
     <nav className={styles.navbar}>
@@ -17,7 +29,7 @@ const Navbar = () => {
           <div className={styles.links}>
             <NavLink className={styles.link} to="/">Home</NavLink>
             <NavLink className={styles.link} to="/gastos">Gastos</NavLink>
-            <NavLink className={styles.link} to="/logout">Logout</NavLink>
+            <NavLink className={styles.link} onClick={handleLogout}>Logout</NavLink>
           </div>
           <div className={styles.user}>
             <p className={styles.userText}>Hola, <span>{user && user.username}</span></p>

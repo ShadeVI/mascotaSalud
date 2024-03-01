@@ -18,7 +18,7 @@ const useFetch = ({ url, method = 'GET', credentials = 'include' }) => {
         if (res.ok && data?.result) {
           setResult(data?.result)
         } else {
-          setError(data.error)
+          setError(data?.error)
         }
       } catch (error) {
         setError(error?.message || 'Error fetch')
