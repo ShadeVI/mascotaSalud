@@ -26,13 +26,17 @@ const Home = () => {
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: 'minmax(100px, auto)', gap: '50px' }}>
         {
-          pets && (
-            pets.map(pet => (
+          pets.length > 0
+            ? (
+                pets.map(pet => (
               <div key={pet.ID}>
                 Nombre: {pet.nombre}
                 </div>
-            ))
-          )
+                ))
+              )
+            : (
+            <p>No hay mascotas</p>
+              )
         }
       </div>
     </div>

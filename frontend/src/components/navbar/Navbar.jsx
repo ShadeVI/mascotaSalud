@@ -7,10 +7,12 @@ const Navbar = () => {
   const { user, setUser } = useAuth()
   const navigator = useNavigate()
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     localStorage.removeItem('user')
     setUser(null)
-    navigator('/login')
+    navigator('/login', {
+      replace: true
+    })
   }
 
   return (
@@ -24,7 +26,7 @@ const Navbar = () => {
             <div className={styles.links}>
               <NavLink className={styles.link} to="/">Home</NavLink>
               <NavLink className={styles.link} to="/gastos">Gastos</NavLink>
-              <NavLink className={styles.link} onClick={handleLogout}>Logout</NavLink>
+              <Link className={styles.link} onClick={handleLogout}>Logout</Link>
             </div>
             <div className={styles.user}>
               <p className={styles.userText}>Hola, <span><Link className={styles.link} to="/profile">{user && user.username}</Link></span></p>

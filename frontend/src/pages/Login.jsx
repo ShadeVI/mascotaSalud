@@ -38,7 +38,7 @@ const Login = () => {
       }
       localStorage.setItem('user', JSON.stringify(result.data))
       setUser(result.data)
-      navigator('/')
+      navigator('/', { replace: true })
     } catch (err) {
       console.log(err)
     } finally {
@@ -46,17 +46,13 @@ const Login = () => {
     }
   }
 
-  if (user) return <Navigate to="/" replace />
+  if (user) return <Navigate to="/home" replace />
 
   return (
     <section className={styles.login}>
       <FormContainer>
         <h2 className={styles.title}>Login</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          {/* <div className={styles.row}>
-            <label htmlFor='username' className={styles.label}>Username</label>
-            <input type='text' id='username' name='username' className={styles.input} value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div> */}
           <Row>
             <Label htmlFor='email' text="Email" />
             <Input type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />

@@ -20,6 +20,9 @@
 }
 
 .error {
-  color: rgb(187, 11, 11);
+  color: rgb(61, 61, 61);
   font-weight: 600;
+  background-color: rgba(236, 59, 59, 0.63);
+  padding: 1rem 2rem;
+  border-radius: 3px;
 }
