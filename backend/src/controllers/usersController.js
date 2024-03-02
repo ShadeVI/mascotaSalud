@@ -132,23 +132,31 @@ const deleteUser = async (req, res, next) => {
     })
   }
 
-  return res.json({ message: `Datos del usuario ${username}`, result: { data: userDeleted } })
+  return res.json({ message: `Datos del usuario ${username}`, result: { data: null } })
 }
 
 const uploadPhotoProfile = async (req, res, next) => {
   if (!req.file) {
     console.log('No file provided')
-    return res.status(400).json({ msg: 'falta imagen' })
+    return next({
+      error: 'BAD REQUEST',
+      message: 'Datos insuficientes',
+      httpCode: 401
+    })
   }
 
   // TODO: ACTUALIZAR BD llamando al servicio
   const { user } = res.locals
-  const resultUpdate = await userService.updateProfileImage(user.username, req.file.filename)
+  const resultUpdate = await userService.updateProfileImage(user.UUID, req.file.filename)
   if (!resultUpdate) {
-    return res.status(500).json({ msg: 'error cargando la imagen' })
+    return next({
+      error: 'INTERNAL ERROR',
+      message: 'Error cargando la image',
+      httpCode: 500
+    })
   }
 
-  return res.status(200).json({ msg: 'uploaded' })
+  return res.json({ message: `Imagen para el usuario ${user.username} cargada correctamente`, result: { data: req.file.filename } })
 }
 
 module.exports = {

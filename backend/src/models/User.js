@@ -6,7 +6,7 @@ class User {
     return rows
   }
 
-  static async save ({ username, email, hashPass, rol }) {
+  static async save ({ username, email, hashPass }) {
     const [result] = await db.execute('INSERT INTO usuario (username, email, password_hash) VALUES (?, ?, ?)', [username, email, hashPass])
 
     if (result.affectedRows > 0) {
@@ -14,6 +14,14 @@ class User {
     }
 
     return false
+  }
+
+  static async findByUUID (UUID) {
+    const [rows] = await db.execute('SELECT * FROM usuario WHERE UUID = ?', [UUID])
+    if (rows.length < 1) {
+      return null
+    }
+    return rows[0]
   }
 
   static async findByUsername (username) {
@@ -37,8 +45,8 @@ class User {
     for (const key in user) {
       user[key] = user[key] === 'null' || user[key] === 'undefined' ? null : user[key]
     }
-    const { email, username, nombre, apellido, fecha_nac: fechaNac, empleo, url_foto: urlFoto } = user
-    const [result] = await db.execute('UPDATE usuario SET email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ?, url_foto = ? WHERE UUID = ?', [email, username, nombre, apellido, fechaNac, empleo, urlFoto, user.UUID])
+    const { email, username, nombre, apellido, fecha_nac: fechaNac, empleo, foto } = user
+    const [result] = await db.execute('UPDATE usuario SET email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ?, foto = ? WHERE UUID = ?', [email, username, nombre, apellido, fechaNac, empleo, foto, user.UUID])
 
     if (result.affectedRows > 0) {
       return true
@@ -59,7 +67,7 @@ class User {
 
   static async updateProfileImage (user, imageName) {
     const { UUID } = user
-    const [result] = await db.execute('UPDATE usuario SET url_foto = ? WHERE UUID = ?', [imageName, UUID])
+    const [result] = await db.execute('UPDATE usuario SET foto = ? WHERE UUID = ?', [imageName, UUID])
 
     if (result.affectedRows > 0) {
       return true

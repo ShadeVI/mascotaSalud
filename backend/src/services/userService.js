@@ -50,8 +50,8 @@ const deleteOne = async (username) => {
   return userDeleted
 }
 
-const updateProfileImage = async (username, imgName) => {
-  const user = await User.findByUsername(username)
+const updateProfileImage = async (UUID, imgName) => {
+  const user = await User.findByUUID(UUID)
 
   const userUpdated = await User.updateProfileImage(user, imgName)
 

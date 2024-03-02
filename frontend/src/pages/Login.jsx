@@ -55,7 +55,7 @@ const Login = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
           <Row>
             <Label htmlFor='email' text="Email" />
-            <Input type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input autocomplete type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
           </Row>
           <Row>
             <Label htmlFor='password' text="Password" />
