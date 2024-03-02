@@ -135,9 +135,26 @@ const deleteUser = async (req, res, next) => {
   return res.json({ message: `Datos del usuario ${username}`, result: { data: userDeleted } })
 }
 
+const uploadPhotoProfile = async (req, res, next) => {
+  if (!req.file) {
+    console.log('No file provided')
+    return res.status(400).json({ msg: 'falta imagen' })
+  }
+
+  // TODO: ACTUALIZAR BD llamando al servicio
+  const { user } = res.locals
+  const resultUpdate = await userService.updateProfileImage(user.username, req.file.filename)
+  if (!resultUpdate) {
+    return res.status(500).json({ msg: 'error cargando la imagen' })
+  }
+
+  return res.status(200).json({ msg: 'uploaded' })
+}
+
 module.exports = {
   getUser,
   getUserPets,
   updateUser,
-  deleteUser
+  deleteUser,
+  uploadPhotoProfile
 }

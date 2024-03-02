@@ -18,6 +18,7 @@ const requireAuth = async (req, res, next) => {
     const decodedToken = await isTokenValid(token)
     if (decodedToken) {
       res.locals.user = decodedToken
+      req.user = decodedToken
       return next()
     }
     return next({

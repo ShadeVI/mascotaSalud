@@ -56,6 +56,17 @@ class User {
 
     return false
   }
+
+  static async updateProfileImage (user, imageName) {
+    const { UUID } = user
+    const [result] = await db.execute('UPDATE usuario SET url_foto = ? WHERE UUID = ?', [imageName, UUID])
+
+    if (result.affectedRows > 0) {
+      return true
+    }
+
+    return false
+  }
 }
 
 module.exports = User

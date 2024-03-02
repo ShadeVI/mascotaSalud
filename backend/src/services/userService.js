@@ -50,10 +50,23 @@ const deleteOne = async (username) => {
   return userDeleted
 }
 
+const updateProfileImage = async (username, imgName) => {
+  const user = await User.findByUsername(username)
+
+  const userUpdated = await User.updateProfileImage(user, imgName)
+
+  if (!userUpdated) {
+    return null
+  }
+
+  return true
+}
+
 module.exports = {
   findAll,
   findOne,
   findAllUserPets,
   update,
-  deleteOne
+  deleteOne,
+  updateProfileImage
 }
