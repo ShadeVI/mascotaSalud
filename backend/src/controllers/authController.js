@@ -1,7 +1,6 @@
 const { generateJWT } = require('../utils/JWT')
 
 const authService = require('../services/authService')
-const removeHashPassword = require('../utils/removeHashPassword')
 
 const signup = async (req, res, next) => {
   try {
@@ -18,19 +17,30 @@ const signup = async (req, res, next) => {
 
     if (!user) {
       return next({
-        error: 'BAD REQUEST',
-        message: 'Datos inválidos',
-        httpCode: 401
+        error: 'BD ERROR',
+        message: 'No se han podido guardar los datos',
+        httpCode: 500
       })
     }
 
     const dataToToken = {
       UUID: user.UUID,
-      email: user.email,
-      username: user.username
+      email,
+      username
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.status(201).cookie('jwt', jwtToken, { httpOnly: true }).json({ error: null, result: { data: removeHashPassword({ user }), message: 'Registrado' } })
+    return res.status(201).json(
+      {
+        error: null,
+        result: {
+          data: {
+            username,
+            isAuthenticated: true,
+            jwt: jwtToken
+          }
+        }
+      }
+    )
   } catch (error) {
     if (error.message === 'Usuario ya existe') {
       return next({
@@ -39,7 +49,13 @@ const signup = async (req, res, next) => {
         httpCode: 401
       })
     }
-    return next(error)
+    return next(
+      {
+        error: 'INTERNAL ERROR',
+        message: error,
+        httpCode: 500
+      }
+    )
   }
 }
 
@@ -67,31 +83,32 @@ const login = async (req, res, next) => {
 
     const dataToToken = {
       UUID: user.UUID,
-      email: user.email,
+      email,
       username: user.username
     }
     const jwtToken = await generateJWT(dataToToken)
-    return res.status(200).cookie('jwt', jwtToken, { httpOnly: true }).json({ error: null, result: { data: removeHashPassword({ user }), message: 'Inicio de sesión correcto' } })
+    return res.status(200).json(
+      {
+        error: null,
+        result: {
+          data: {
+            username: user.username,
+            isAuthenticated: true,
+            jwt: jwtToken
+          }
+        }
+      }
+    )
   } catch (error) {
-    next(error)
+    next({
+      error: 'INTERNAL ERROR',
+      message: error,
+      httpCode: 500
+    })
   }
-}
-
-const checkToken = (req, res, next) => {
-  if (res.locals?.user) {
-    return res.redirect(`/users/${res.locals.user.username}`)
-  } else {
-    return res.status(400).json({ error: 'Token no valido' })
-  }
-}
-
-const logout = (req, res) => {
-  return res.status(200).cookie('jwt', 'jwtToken', { httpOnly: true, maxAge: -1 }).json({ error: null, result: { data: null, message: 'Logout correcto' } })
 }
 
 module.exports = {
   signup,
-  login,
-  checkToken,
-  logout
+  login
 }

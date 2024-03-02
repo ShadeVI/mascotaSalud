@@ -132,7 +132,7 @@ const deleteUser = async (req, res, next) => {
     })
   }
 
-  return res.cookie('jwt', '', { httpOnly: true, maxAge: -1 }).json({ message: `Datos del usuario ${username}`, result: { data: userDeleted } })
+  return res.json({ message: `Datos del usuario ${username}`, result: { data: userDeleted } })
 }
 
 module.exports = {

@@ -1,9 +1,21 @@
 const { isTokenValid } = require('../utils/JWT')
 
-const isAuthenticated = async (req, res, next) => {
+const requireAuth = async (req, res, next) => {
+  const { authorization } = req.headers
+
+  if (!authorization) {
+    return next({
+      error: 'NO AUTH',
+      message: 'Falta autorización',
+      httpCode: 401
+    })
+  }
+
+  const token = authorization.split(' ')[1]
+
   // check if token is valid
   try {
-    const decodedToken = await isTokenValid(req.cookies.jwt)
+    const decodedToken = await isTokenValid(token)
     if (decodedToken) {
       res.locals.user = decodedToken
       return next()
@@ -22,4 +34,4 @@ const isAuthenticated = async (req, res, next) => {
   }
 }
 
-module.exports = isAuthenticated
+module.exports = requireAuth

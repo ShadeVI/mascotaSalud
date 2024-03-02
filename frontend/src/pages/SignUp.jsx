@@ -21,17 +21,12 @@ const SignUp = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      console.log(JSON.stringify({
-        email,
-        password
-      }))
       const res = await fetch('http://localhost:3000/auth/signup',
         {
           headers: {
             'Content-Type': 'application/json'
           },
           method: 'POST',
-          credentials: 'include',
           body: JSON.stringify({
             username,
             email,
@@ -43,6 +38,7 @@ const SignUp = () => {
       if (error) {
         return setError(error)
       }
+      localStorage.setItem('user', JSON.stringify(result.data))
       setUser(result.data)
       navigator('/')
     } catch (err) {

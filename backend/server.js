@@ -10,12 +10,11 @@ const { userRouter } = require('./src/routes/userRouter')
 const { petRouter } = require('./src/routes/petRouter')
 
 // Import middlewares
-const isAuthenticated = require('./src/middlewares/isAuthenticated')
+const requireAuth = require('./src/middlewares/requireAuth')
 
 const PORT = process.env.PORT || 3002
 const corsOptions = {
-  origin: 'http://localhost:5173',
-  credentials: true
+  origin: 'http://localhost:5173'
 }
 app.use(cors(corsOptions))
 app.use(express.urlencoded({ extended: true }))
@@ -23,11 +22,13 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use('/auth', authRouter)
-app.use('/users', isAuthenticated, userRouter)
-app.use('/pets', isAuthenticated, petRouter)
+
+app.use('/users', requireAuth, userRouter)
+
+app.use('/pets', requireAuth, petRouter)
 
 app.use((err, req, res, next) => {
-  return res.status(err.code).json({ error: err.message })
+  return res.status(err?.httpCode || 500).json({ error: err?.message || 'Error interno' })
 })
 
 app.listen(PORT, () => {
