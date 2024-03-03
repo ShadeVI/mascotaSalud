@@ -3,15 +3,16 @@ import { getUserData } from '../services/getProfileImage'
 import noImage from '../assets/noimage.png'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 
+const userLS = localStorage.getItem('user')
+
 const initialContext = {
-  user: null
+  user: userLS ? JSON.parse(userLS) : null
 }
 
 export const AuthContext = createContext(initialContext)
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState()
-  const userLS = localStorage.getItem('user')
+  const [user, setUser] = useState(initialContext.user)
 
   useEffect(() => {
     if (userLS) {

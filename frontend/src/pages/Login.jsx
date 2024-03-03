@@ -7,6 +7,9 @@ import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Button from '../components/Button'
+import { getUserData } from '../services/getProfileImage'
+import { fotoPathBuilder } from '../utils/fotoPathBuilder'
+import noImage from '../assets/noimage.png'
 
 const Login = () => {
   const navigator = useNavigate()
@@ -37,8 +40,12 @@ const Login = () => {
         return setError(error)
       }
       localStorage.setItem('user', JSON.stringify(result.data))
-      setUser(result.data)
-      navigator('/', { replace: true })
+      getUserData({ username: result.data.username, jwt: result.data.jwt })
+        .then((data) => {
+          const foto = data?.foto ? fotoPathBuilder(data.foto) : noImage
+          setUser({ ...data, jwt: result.data.jwt, profilePic: foto })
+          navigator('/', { replace: true })
+        })
     } catch (err) {
       console.log(err)
     } finally {
@@ -55,7 +62,7 @@ const Login = () => {
         <form className={styles.form} onSubmit={handleSubmit}>
           <Row>
             <Label htmlFor='email' text="Email" />
-            <Input autocomplete type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
           </Row>
           <Row>
             <Label htmlFor='password' text="Password" />

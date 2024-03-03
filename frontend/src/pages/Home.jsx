@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
+import styles from './Home.module.css'
+import Grid from '../components/grid/Grid'
+import GridSquare from '../components/grid/GridSquare'
+import Card from '../components/Card'
 
 const Home = () => {
   const { user } = useAuth()
@@ -23,23 +27,25 @@ const Home = () => {
   }, [])
 
   return (
-    <div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: 'minmax(100px, auto)', gap: '50px' }}>
-        {
-          pets.length > 0
-            ? (
-                pets.map(pet => (
-              <div key={pet.ID}>
-                Nombre: {pet.nombre}
-                </div>
-                ))
-              )
-            : (
-            <p>No hay mascotas</p>
-              )
-        }
-      </div>
-    </div>
+    <section className={styles.section}>
+      {
+        pets.length > 0
+          ? (
+            <Grid>
+              {pets.map(pet => {
+                return (
+                  <GridSquare key={pet.ID}>
+                    <Card pet={pet} />
+                  </GridSquare>
+                )
+              })}
+            </Grid>
+            )
+          : (
+            <p className={styles.info}>No hay mascotas</p>
+            )
+      }
+    </section>
   )
 }
 

@@ -32,7 +32,7 @@ const Navbar = () => {
               <p className={styles.userText}>Hola, <span><Link className={styles.link} to="/profile">{user && user.username}</Link></span></p>
               <Link className={styles.link} to="/profile">
                 <div className={styles.userPicture}>
-                  <img className={styles.photo} src={user.profilePic} alt="usuario image" />
+                  <img className={styles.profile} src={user.profilePic} alt="usuario image" />
                 </div>
               </Link>
             </div>
