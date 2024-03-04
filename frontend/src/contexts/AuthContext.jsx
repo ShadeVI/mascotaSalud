@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
           const foto = data?.foto ? fotoPathBuilder(data.foto) : noImage
           setUser({ ...data, jwt, profilePic: foto })
         })
+        .catch(error => console.error(error))
     }
   }, [userLS])
 
