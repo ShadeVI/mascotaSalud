@@ -15,4 +15,9 @@
   background-color: rgba(240, 240, 240, 0.521);
   cursor: pointer;
   border: none;
+  transition: background-color 0.2s ease;
+} 
+
+.container button:hover {
+  background-color: rgba(205, 152, 230, 0.521);
 }

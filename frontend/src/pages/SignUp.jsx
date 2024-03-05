@@ -9,7 +9,7 @@ import Input from '../components/form/Input'
 import Button from '../components/Button'
 import { getUserData } from '../services/getProfileImage'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
-import noImage from '../assets/noimage.png'
+import noImage from '../assets/noImageProfile.png'
 
 const SignUp = () => {
   const navigator = useNavigate()

@@ -1,6 +1,7 @@
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import { Link } from 'react-router-dom'
 import styles from './Card.module.css'
+import { ROUTES } from '../constants/routes'
 
 const Card = ({ pet }) => {
   return (
@@ -9,7 +10,7 @@ const Card = ({ pet }) => {
         <img src={fotoPathBuilder({ type: 'animals', foto: pet.url_foto })} alt={`${pet.nombre} foto`} />
       </div>
       <div className={styles.description}>
-        <Link to={`mascotas/${pet.ID}`}>{pet.nombre}</Link>
+        <Link to={`${ROUTES.PETS}/${pet.ID}`}>{pet.nombre}</Link>
       </div>
     </div>
   )

@@ -2,6 +2,8 @@ import logo from '../../assets/logo.png'
 import styles from './Navbar.module.css'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
+import { ROUTES } from '../../constants/routes'
+import noImageProfile from '../../assets/noImageProfile.png'
 
 const Navbar = () => {
   const { user, setUser } = useAuth()
@@ -24,22 +26,22 @@ const Navbar = () => {
         ? (
           <>
             <div className={styles.links}>
-              <NavLink className={styles.link} to="/">Home</NavLink>
-              <NavLink className={styles.link} to="/gastos">Gastos</NavLink>
+              <NavLink className={styles.link} to={ROUTES.HOME}>Home</NavLink>
+              <NavLink className={styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
               <Link className={styles.link} onClick={handleLogout}>Logout</Link>
             </div>
             <div className={styles.user}>
-              <p className={styles.userText}>Hola, <span><Link className={styles.link} to="/profile">{user && user.username}</Link></span></p>
+              <p className={styles.userText}>Hola, <span><Link className={styles.link} to={ROUTES.PROFILE}>{user && user.username}</Link></span></p>
                 <div className={styles.userPicture}>
-                  <img className={styles.profile} src={user.profilePic} alt="usuario image" />
+                  <img className={styles.profile} src={user.profilePic || noImageProfile} alt="usuario image" />
                 </div>
             </div>
           </>
           )
         : (
           <div className={styles.links}>
-            <NavLink className={styles.link} to="/login">login</NavLink>
-            <NavLink className={styles.link} to="/sign-up">register</NavLink>
+            <NavLink className={styles.link} to={ROUTES.LOGIN}>login</NavLink>
+            <NavLink className={styles.link} to={ROUTES.SIGNUP}>register</NavLink>
           </div>
           )
       }
