@@ -1,3 +1,4 @@
+const { randomUUID } = require('crypto')
 const multer = require('multer')
 const path = require('path')
 const storage = multer.diskStorage({
@@ -5,7 +6,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/profile_images')
   },
   filename: function (req, file, cb) {
-    const filename = req.user.UUID + '-profile-image'
+    const filename = randomUUID().replace('-', '')
     const extension = path.extname(file.originalname)
     const finalName = filename + extension
     cb(null, finalName)

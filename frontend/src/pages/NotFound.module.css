@@ -1,0 +1,17 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+  padding-top: 100px;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+p {
+  font-size: 1.2rem;
+}

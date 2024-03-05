@@ -37,7 +37,7 @@ const Login = () => {
       const data = await res.json()
       const { result, error } = data
       if (error) {
-        return setError(error)
+        return setError({ message: error?.message, code: error?.code || null })
       }
       localStorage.setItem('user', JSON.stringify(result.data))
       getUserData({ username: result.data.username, jwt: result.data.jwt })

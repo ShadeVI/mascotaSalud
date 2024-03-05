@@ -7,6 +7,9 @@ import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Button from '../components/Button'
+import { getUserData } from '../services/getProfileImage'
+import { fotoPathBuilder } from '../utils/fotoPathBuilder'
+import noImage from '../assets/noimage.png'
 
 const SignUp = () => {
   const navigator = useNavigate()
@@ -36,13 +39,16 @@ const SignUp = () => {
       const data = await res.json()
       const { result, error } = data
       if (error) {
-        return setError(error)
+        return setError({ message: error?.message, code: error?.code || null })
       }
       localStorage.setItem('user', JSON.stringify(result.data))
-      setUser(result.data)
-      navigator('/')
+      getUserData({ username: result.data.username, jwt: result.data.jwt })
+        .then((data) => {
+          const foto = data?.foto ? fotoPathBuilder(data.foto) : noImage
+          setUser({ ...data, jwt: result.data.jwt, profilePic: foto })
+          navigator('/', { replace: true })
+        })
     } catch (err) {
-      console.log(err)
     } finally {
       setIsLoading(false)
     }
@@ -71,7 +77,7 @@ const SignUp = () => {
             <Button disabled={isLoading}>Registro</Button>
           </Row>
           {error && (<Row>
-            <p className={styles.error}>{error}</p>
+            <p className={styles.error}>{error.message}</p>
           </Row>)}
         </form>
       </FormContainer>

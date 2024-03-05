@@ -1,8 +1,11 @@
-import React from 'react'
+import styles from './NotFound.module.css'
 
 const NotFound = () => {
   return (
-    <div>NotFound</div>
+    <section className={styles.section}>
+      <h1>404</h1>
+      <p>Lo sentimos, esta pagina no existe</p>
+    </section>
   )
 }
 

@@ -30,7 +30,8 @@ app.use('/users', requireAuth, userRouter)
 app.use('/pets', requireAuth, petRouter)
 
 app.use((err, req, res, next) => {
-  return res.status(err?.httpCode || 500).json({ error: err?.message || 'Error interno' })
+  console.log(err)
+  return res.status(err?.httpCode || 500).json({ error: { message: err?.message } || 'Error interno', result: null })
 })
 
 app.listen(PORT, () => {
