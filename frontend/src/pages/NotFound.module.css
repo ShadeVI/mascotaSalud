@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   gap: 30px;
-  padding-top: 100px;
 }
 
 h1 {
