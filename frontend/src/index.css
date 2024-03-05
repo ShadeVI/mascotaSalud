@@ -25,7 +25,7 @@ body {
 }
 
 #root {
-  height: 100%;
+  min-height: 100dvh;
 }
 
 .container {
@@ -33,4 +33,9 @@ body {
   height: 100%;
   margin: 0 auto;
   padding-top: 100px;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(44, 44, 44);
 }

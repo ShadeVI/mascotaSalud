@@ -29,8 +29,8 @@ const Navbar = () => {
               <Link className={styles.link} onClick={handleLogout}>Logout</Link>
             </div>
             <div className={styles.user}>
-              <p className={styles.userText}>Hola, <span><Link className={styles.link} to="/profile">{user && user.username}</Link></span></p>
-              <Link className={styles.link} to="/profile">
+              <p className={styles.userText}>Hola, <span><Link className={styles.link} to="/perfil">{user && user.username}</Link></span></p>
+              <Link className={styles.link} to="/perfil">
                 <div className={styles.userPicture}>
                   <img className={styles.profile} src={user.profilePic} alt="usuario image" />
                 </div>

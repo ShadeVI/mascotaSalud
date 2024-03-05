@@ -4,6 +4,7 @@ import styles from './Home.module.css'
 import Grid from '../components/grid/Grid'
 import GridSquare from '../components/grid/GridSquare'
 import Card from '../components/Card'
+import ButtonSquare from '../components/ButtonSquare'
 
 const Home = () => {
   const { user } = useAuth()
@@ -39,6 +40,9 @@ const Home = () => {
                   </GridSquare>
                 )
               })}
+              <GridSquare key='Add'>
+                <ButtonSquare type='add' />
+              </GridSquare>
             </Grid>
             )
           : (

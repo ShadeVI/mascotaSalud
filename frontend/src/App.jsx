@@ -20,7 +20,7 @@ function App () {
           <Route path="/login" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path='/welcome' element={<Welcome />} />
-          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/perfil" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/mascotas/:id" element={<ProtectedRoute><Pets /></ProtectedRoute>} />
           <Route path="/gastos" element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />

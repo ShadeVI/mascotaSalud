@@ -9,7 +9,7 @@ import Input from '../components/form/Input'
 import Button from '../components/Button'
 import { getUserData } from '../services/getProfileImage'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
-import noImage from '../assets/noimage.png'
+import noImageProfile from '../assets/noImageProfile.png'
 
 const Login = () => {
   const navigator = useNavigate()
@@ -42,7 +42,7 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(result.data))
       getUserData({ username: result.data.username, jwt: result.data.jwt })
         .then((data) => {
-          const foto = data?.foto ? fotoPathBuilder(data.foto) : noImage
+          const foto = data?.foto ? fotoPathBuilder({ type: 'profile', foto: data.foto }) : noImageProfile
           setUser({ ...data, jwt: result.data.jwt, profilePic: foto })
           navigator('/', { replace: true })
         })
