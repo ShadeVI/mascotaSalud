@@ -23,7 +23,7 @@ const Navbar = () => {
       {user
         ? (
           <>
-            <div className={[styles.links, styles.mobile].join(' ')}>
+            <div className={styles.links}>
               <NavLink className={styles.link} to="/">Home</NavLink>
               <NavLink className={styles.link} to="/gastos">Gastos</NavLink>
               <Link className={styles.link} onClick={handleLogout}>Logout</Link>
