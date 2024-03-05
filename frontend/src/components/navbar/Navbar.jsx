@@ -23,18 +23,16 @@ const Navbar = () => {
       {user
         ? (
           <>
-            <div className={styles.links}>
+            <div className={[styles.links, styles.mobile].join(' ')}>
               <NavLink className={styles.link} to="/">Home</NavLink>
               <NavLink className={styles.link} to="/gastos">Gastos</NavLink>
               <Link className={styles.link} onClick={handleLogout}>Logout</Link>
             </div>
             <div className={styles.user}>
               <p className={styles.userText}>Hola, <span><Link className={styles.link} to="/profile">{user && user.username}</Link></span></p>
-              <Link className={styles.link} to="/profile">
                 <div className={styles.userPicture}>
                   <img className={styles.profile} src={user.profilePic} alt="usuario image" />
                 </div>
-              </Link>
             </div>
           </>
           )
