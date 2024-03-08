@@ -25,7 +25,7 @@ const Home = () => {
       }
     }
     fetchPets()
-  }, [])
+  }, [user])
 
   return (
     <section className={styles.section}>

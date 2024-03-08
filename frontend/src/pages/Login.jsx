@@ -72,7 +72,7 @@ const Login = () => {
             <Button disabled={isLoading}>Login</Button>
           </Row>
           {error && (<Row>
-            <p className={styles.error}>{error}</p>
+            <p className={styles.error}>{error.message}</p>
           </Row>)}
         </form>
       </FormContainer>
