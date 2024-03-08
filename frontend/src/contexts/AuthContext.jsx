@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
             window.location.reload()
             return
           }
-          console.log(data)
           if (data) {
             const foto = data?.foto ? fotoPathBuilder({ type: 'profile', foto: data.foto }) : noImageProfile
             setUser({ ...data, jwt, profilePic: foto })
