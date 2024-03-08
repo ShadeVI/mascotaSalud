@@ -19,12 +19,15 @@ export const AuthProvider = ({ children }) => {
       const { username, jwt } = JSON.parse(userLS)
       getUserData({ username, jwt })
         .then((data) => {
-          if (data?.result) {
-            const foto = data?.foto ? fotoPathBuilder({ type: 'profile', foto: data.foto }) : noImageProfile
-            setUser({ ...data, jwt, profilePic: foto })
-          } else {
+          if (data.error) {
             localStorage.removeItem('user')
             window.location.reload()
+            return
+          }
+          console.log(data)
+          if (data) {
+            const foto = data?.foto ? fotoPathBuilder({ type: 'profile', foto: data.foto }) : noImageProfile
+            setUser({ ...data, jwt, profilePic: foto })
           }
         })
         .catch(error => console.log(error.message))
