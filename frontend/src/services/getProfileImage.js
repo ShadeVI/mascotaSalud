@@ -6,7 +6,7 @@ const getUserData = async ({ username, jwt }) => {
     }
   })
   const data = await res.json()
-  return data?.result?.data
+  return data?.result?.data || data?.error
 }
 
 export {

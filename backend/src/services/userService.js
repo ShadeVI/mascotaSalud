@@ -1,6 +1,8 @@
 const Pet = require('../models/Pet')
 const User = require('../models/User')
 const removeHashPassword = require('../utils/removeHashPassword')
+const path = require('node:path')
+const fs = require('node:fs/promises')
 
 const findAll = async () => {
   const allUsers = await User.findAll()
@@ -51,13 +53,16 @@ const deleteOne = async (username) => {
 }
 
 const updateProfileImage = async (UUID, imgName) => {
-  const user = await User.findByUUID(UUID)
+  const oldUser = await User.findByUUID(UUID)
 
-  const userUpdated = await User.updateProfileImage(user, imgName)
+  const userUpdated = await User.updateProfileImage(UUID, imgName)
 
   if (!userUpdated) {
     return null
   }
+
+  const pathFileToRemove = path.join('public/profile_images', oldUser.foto)
+  fs.rm(pathFileToRemove).then(() => console.log('OK')).catch((err) => console.log(err))
 
   return true
 }

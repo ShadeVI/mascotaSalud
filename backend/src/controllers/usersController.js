@@ -145,9 +145,8 @@ const uploadPhotoProfile = async (req, res, next) => {
     })
   }
 
-  // TODO: ACTUALIZAR BD llamando al servicio
-  const { user } = res.locals
-  const resultUpdate = await userService.updateProfileImage(user.UUID, req.file.filename)
+  const { username, UUID } = res.locals.user
+  const resultUpdate = await userService.updateProfileImage(UUID, req.file.filename)
   if (!resultUpdate) {
     return next({
       error: 'INTERNAL ERROR',
@@ -155,8 +154,7 @@ const uploadPhotoProfile = async (req, res, next) => {
       httpCode: 500
     })
   }
-
-  return res.json({ message: `Imagen para el usuario ${user.username} cargada correctamente`, result: { data: req.file.filename } })
+  return res.json({ message: `Imagen para el usuario ${username} cargada correctamente`, result: { data: req.file.filename } })
 }
 
 module.exports = {

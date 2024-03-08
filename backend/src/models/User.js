@@ -65,8 +65,7 @@ class User {
     return false
   }
 
-  static async updateProfileImage (user, imageName) {
-    const { UUID } = user
+  static async updateProfileImage (UUID, imageName) {
     const [result] = await db.execute('UPDATE usuario SET foto = ? WHERE UUID = ?', [imageName, UUID])
 
     if (result.affectedRows > 0) {

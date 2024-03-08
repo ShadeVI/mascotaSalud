@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/profile_images')
   },
   filename: function (req, file, cb) {
-    const filename = randomUUID().replace('-', '')
+    const filename = randomUUID()
     const extension = path.extname(file.originalname)
     const finalName = filename + extension
     cb(null, finalName)
