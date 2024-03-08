@@ -154,7 +154,8 @@ const uploadPhotoProfile = async (req, res, next) => {
       httpCode: 500
     })
   }
-  return res.json({ message: `Imagen para el usuario ${username} cargada correctamente`, result: { data: req.file.filename } })
+  const newUser = await userService.findOne(username)
+  return res.json({ message: `Imagen para el usuario ${username} cargada correctamente`, result: { data: newUser } })
 }
 
 module.exports = {
