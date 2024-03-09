@@ -28,6 +28,7 @@ const signup = async (req, res, next) => {
       email,
       username
     }
+
     const jwtToken = await generateJWT(dataToToken)
     return res.status(201).json(
       {
@@ -35,7 +36,6 @@ const signup = async (req, res, next) => {
         result: {
           data: {
             username,
-            isAuthenticated: true,
             jwt: jwtToken
           }
         }

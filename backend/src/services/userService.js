@@ -61,8 +61,10 @@ const updateProfileImage = async (UUID, imgName) => {
     return null
   }
 
-  const pathFileToRemove = path.join('public/profile_images', oldUser.foto)
-  fs.rm(pathFileToRemove).then(() => console.log('IMAGEN ANTERIOR BORRADA')).catch((err) => console.log(err))
+  if (oldUser?.foto) {
+    const pathFileToRemove = path.join('public/profile_images', oldUser.foto)
+    fs.rm(pathFileToRemove).then(() => console.log('IMAGEN ANTERIOR BORRADA')).catch((err) => console.log(err))
+  }
 
   return true
 }

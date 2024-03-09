@@ -19,7 +19,7 @@ const signup = async ({ email, username, password }) => {
 
   if (isSaved) {
     const userData = await User.findByUsername(username)
-    return userData.UUID
+    return userData
   }
 
   return null

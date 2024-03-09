@@ -145,7 +145,12 @@ const uploadPhotoProfile = async (req, res, next) => {
     })
   }
 
-  const { username, UUID } = res.locals.user
+  const { username, UUID } = req.user
+  console.log({
+    username,
+    UUID,
+    file: req.file
+  })
   const resultUpdate = await userService.updateProfileImage(UUID, req.file.filename)
   if (!resultUpdate) {
     return next({
