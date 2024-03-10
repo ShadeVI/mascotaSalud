@@ -59,7 +59,7 @@ const Profile = () => {
       <div className={styles.profilePicContainer}>
         <img src={user.profilePic} alt={`Foto perfil de ${user.nombre}`} />
       </div>
-      <form onSubmit={handleSubmit} encType='multipart/form-data'>
+      <form className={styles.form_image} onSubmit={handleSubmit} encType='multipart/form-data'>
         <div className={styles.row}>
           <label htmlFor='profilePicInput'>Nueva foto: </label>
           <input id='profilePicInput' type='file' name='profilePic' accept="image/png, image/jpeg" onChange={handleChange} ref={refInputProfileImage} />
@@ -69,9 +69,43 @@ const Profile = () => {
           {response && <p>{response}</p>}
         </div>
       </form>
-
-      <form>
-        {JSON.stringify(user)}
+      <h2>Información de usuario</h2>
+      <form className={styles.form_edit}>
+      <div className={styles.row_edit}>
+          <label htmlFor='fecha_registro_i'>Registrado el:
+          </label>
+          <input type='text' disabled={true} name='fecha_registro' />
+        </div>
+        <div className={styles.row_edit}>
+          <label htmlFor='nombre_i'>Nombre:
+          </label>
+          <input type='text' disabled={true} name='nombre' />
+        </div>
+        <div className={styles.row_edit}>
+          <label htmlFor='apellido_i'>Apellido:
+          </label>
+          <input type='text' disabled={true} name='apellido' />
+        </div>
+        <div className={styles.row_edit}>
+          <label htmlFor='username_i'>Username:
+          </label>
+          <input type='text' disabled={true} name='username' />
+        </div>
+        <div className={styles.row_edit}>
+          <label htmlFor='email_i'>Email:
+          </label>
+          <input type='email' disabled={true} name='email' />
+        </div>
+        <div className={styles.row_edit}>
+          <label htmlFor='fecha_nac_i'>Fecha de nacimiento:
+          </label>
+          <input type='text' disabled={true} name='fecha_nac' />
+        </div>
+        <div className={styles.row_edit}>
+          <label htmlFor='empleo_i'>Empleo:
+          </label>
+          <input type='text' disabled={true} name='empleo' />
+        </div>
       </form>
     </section>
   )
