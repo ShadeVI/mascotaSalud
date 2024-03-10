@@ -43,10 +43,10 @@ class User {
 
   static async update (user) {
     for (const key in user) {
-      user[key] = user[key] === 'null' || user[key] === 'undefined' ? null : user[key]
+      user[key] = user[key] === 'null' || user[key] === 'undefined' || user[key] === '' ? null : user[key]
     }
-    const { email, username, nombre, apellido, fecha_nac: fechaNac, empleo, foto } = user
-    const [result] = await db.execute('UPDATE usuario SET email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ?, foto = ? WHERE UUID = ?', [email, username, nombre, apellido, fechaNac, empleo, foto, user.UUID])
+    const { UUID, email, username, nombre, apellido, fecha_nac: fechaNac, empleo } = user
+    const [result] = await db.execute('UPDATE usuario SET email = ?, username = ?, nombre = ?, apellido = ?, fecha_nac = ?, empleo = ? WHERE UUID = ?', [email, username, nombre, apellido, fechaNac, empleo, UUID])
 
     if (result.affectedRows > 0) {
       return true
