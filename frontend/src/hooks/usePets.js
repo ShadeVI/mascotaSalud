@@ -1,8 +1,8 @@
 import { useContext } from 'react'
 import { PetsContext } from '../contexts/PetsContext'
 
-const useAuth = () => {
+const usePets = () => {
   return useContext(PetsContext)
 }
 
-export default useAuth
+export default usePets

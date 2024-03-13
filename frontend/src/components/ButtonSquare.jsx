@@ -1,10 +1,9 @@
 import styles from './ButtonSquare.module.css'
 
-const ButtonSquare = ({ type }) => {
-  const text = type === 'add' ? '+' : ''
+const ButtonSquare = ({ text, handleClick }) => {
   return (
     <div className={styles.container}>
-      <button>{text}</button>
+      <button onClick={handleClick}>{text}</button>
     </div>
   )
 }

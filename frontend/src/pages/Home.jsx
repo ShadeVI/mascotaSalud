@@ -1,31 +1,17 @@
-import { useEffect, useState } from 'react'
-import useAuth from '../hooks/useAuth'
 import styles from './Home.module.css'
 import Grid from '../components/grid/Grid'
 import GridSquare from '../components/grid/GridSquare'
 import Card from '../components/Card'
 import ButtonSquare from '../components/ButtonSquare'
+import usePets from '../hooks/usePets'
+import Modal from '../components/Modal'
 
 const Home = () => {
-  const { user } = useAuth()
-  const [pets, setPets] = useState([])
+  const { pets } = usePets()
 
-  useEffect(() => {
-    const fetchPets = async () => {
-      const res = await fetch('http://localhost:3000/pets', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.jwt}`
-        }
-      })
-      const data = await res.json()
-      if (data?.result.data) {
-        setPets(data.result.data)
-      }
-    }
-    fetchPets()
-  }, [user])
+  const handleAddPet = () => {
+    console.log('click')
+  }
 
   return (
     <section className={styles.section}>
@@ -41,14 +27,26 @@ const Home = () => {
                 )
               })}
               <GridSquare key='Add'>
-                <ButtonSquare type='add' />
+                <ButtonSquare text='+' />
               </GridSquare>
             </Grid>
             )
           : (
-            <p className={styles.info}>No hay mascotas</p>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyItems: 'center',
+              alignItems: 'center',
+              gap: '20px',
+              textAlign: 'center'
+            }}>
+              <h2 className={styles.info}>Todavía no tienes registrada ninguna mascota</h2>
+              <p>Quieres añadir tu primera mascota?</p>
+              <ButtonSquare text='+' handleClick={handleAddPet} />
+            </div>
             )
       }
+    {<Modal />}
     </section>
   )
 }
