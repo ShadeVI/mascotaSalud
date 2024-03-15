@@ -99,7 +99,7 @@ const Profile = () => {
     }
   }
 
-  const handleAnular = () => {
+  const handleCancel = () => {
     setIsFormOnlyReading(true)
     setFormProfile({
       fecha_registro: formatDateYYYYmmdd(user.fecha_registro) || '',
@@ -185,7 +185,7 @@ const Profile = () => {
         {
           !isFormOnlyReading &&
           (<div style={{ display: 'flex', gap: '15px' }}>
-            <Button type='button' onClick={handleAnular}>Anular</Button>
+            <Button type='button' onClick={handleCancel}>Anular</Button>
             <Button type='submit' onClick={handleUpdate}>Actualizar</Button>
           </div>)
         }

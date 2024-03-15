@@ -1,0 +1,38 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+
+.form_edit {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.form_edit .row_edit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form_edit .row_edit label {
+  color: rgb(48, 48, 48);
+}
+
+.form_edit .row_edit input,
+.form_edit .row_edit select {
+  height: 35px;
+}
+
+.form_edit .row_edit input[type='file'] {
+  width: fit-content;
+}

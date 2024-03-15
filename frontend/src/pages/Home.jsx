@@ -4,13 +4,20 @@ import GridSquare from '../components/grid/GridSquare'
 import Card from '../components/Card'
 import ButtonSquare from '../components/ButtonSquare'
 import usePets from '../hooks/usePets'
-import Modal from '../components/Modal'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
+import Loading from '../components/Loading'
 
 const Home = () => {
-  const { pets } = usePets()
+  const navigator = useNavigate()
+  const { pets, isLoading } = usePets()
 
   const handleAddPet = () => {
-    console.log('click')
+    navigator(ROUTES.NEW_PET)
+  }
+
+  if (isLoading) {
+    return <Loading />
   }
 
   return (
@@ -27,7 +34,7 @@ const Home = () => {
                 )
               })}
               <GridSquare key='Add'>
-                <ButtonSquare text='+' />
+                <ButtonSquare text='+' handleClick={handleAddPet} />
               </GridSquare>
             </Grid>
             )
@@ -46,7 +53,6 @@ const Home = () => {
             </div>
             )
       }
-    {<Modal />}
     </section>
   )
 }

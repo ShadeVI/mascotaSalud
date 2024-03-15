@@ -7,7 +7,7 @@ import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Button from '../components/Button'
-import { getUserData } from '../services/getProfileImage'
+import { getUserData } from '../services/user.services'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import noImage from '../assets/noImageProfile.png'
 

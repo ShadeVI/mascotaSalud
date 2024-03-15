@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import { getUserData } from '../services/getProfileImage'
+import { getUserData } from '../services/user.services.js'
 import noImageProfile from '../assets/noImageProfile.png'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 
