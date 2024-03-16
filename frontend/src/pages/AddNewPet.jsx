@@ -68,7 +68,7 @@ const AddNewPet = () => {
       // TODO: Set error
       return
     }
-    e.preventDefault()
+
     try {
       const formData = new FormData()
       for (const key in formEntries) {

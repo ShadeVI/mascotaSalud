@@ -76,7 +76,7 @@ const addPet = async (req, res, next) => {
   try {
     const newPet = await petService.addPet({ petData: data, petImage: file, userUUID })
 
-    return res.json({ message: 'Mascota encontrada', result: { data: newPet } })
+    return res.json({ message: 'Mascota añadida', result: { data: newPet } })
   } catch (error) {
     if (error.code === 'ER_DUP_ENTRY') {
       return next({
@@ -85,6 +85,7 @@ const addPet = async (req, res, next) => {
         httpCode: 400
       })
     }
+    return next(error)
   }
 }
 
