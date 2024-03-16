@@ -36,3 +36,7 @@
 .form_edit .row_edit input[type='file'] {
   width: fit-content;
 }
+
+button:disabled {
+  cursor: not-allowed;
+}

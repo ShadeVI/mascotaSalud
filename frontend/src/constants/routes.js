@@ -5,6 +5,7 @@ export const ROUTES = {
   WELCOME: '/welcome',
   PROFILE: '/perfil',
   PETS: '/mascotas',
+  SINGLE_PET: '/mascotas/:idPet',
   NEW_PET: '/mascotas/nueva',
   EXPENSES: '/gastos',
   NOT_FOUND: '*'

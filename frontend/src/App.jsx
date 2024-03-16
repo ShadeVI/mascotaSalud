@@ -23,7 +23,7 @@ function App () {
           <Route path={ROUTES.SIGNUP} element={<SignUp />} />
           <Route path={ROUTES.WELCOME} element={<Welcome />} />
           <Route path={ROUTES.PROFILE} element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-          <Route path={`${ROUTES.PETS}/:id`} element={<ProtectedRoute><PetProfile /></ProtectedRoute>} />
+          <Route path={ROUTES.SINGLE_PET} element={<ProtectedRoute><PetProfile /></ProtectedRoute>} />
           <Route path={ROUTES.NEW_PET} element={<ProtectedRoute><AddNewPet /></ProtectedRoute>} />
           <Route path={ROUTES.EXPENSES} element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
           <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />

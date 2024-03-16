@@ -5,6 +5,9 @@ import useAuth from '../hooks/useAuth'
 import usePets from '../hooks/usePets'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../constants/routes'
+import Input from '../components/form/Input'
+import Label from '../components/form/Label'
+import Select from '../components/form/Select'
 
 const optionsAnimalTypes = [
   {
@@ -101,33 +104,24 @@ const AddNewPet = () => {
       <h2>Registra tu mascota ahora</h2>
       <form className={styles.form_edit} onSubmit={handleSubmit} >
         <div className={styles.row_edit}>
-            <label htmlFor='imagePet'>Foto de tu adorable mascota
-            </label>
+            <Label htmlFor='imagePet' text='Foto de tu adorable mascota' />
             <input id='imagePet' type='file' name='imagePet' accept="image/png, image/jpeg" value={formEntries.image} onChange={handleFormEntries} />
         </div>
         <div className={styles.row_edit}>
-          <label htmlFor='nombre'>Nombre
-          </label>
-          <input type='text' required id='nombre' name='nombre' value={formEntries.nombre} onChange={handleFormEntries} />
+          <Label htmlFor='nombre' text='Nombre'/>
+          <Input type='text' required id='nombre' name='nombre' value={formEntries.nombre} onChange={handleFormEntries} />
         </div>
         <div className={styles.row_edit}>
-          <label htmlFor='n_chip'>Numero de chip
-          </label>
-          <input type='number' id='n_chip' name='n_chip' value={formEntries.n_chip} onChange={handleFormEntries} />
+          <Label htmlFor='n_chip' text='Numero de chip' />
+          <Input type='number' id='n_chip' name='n_chip' value={formEntries.n_chip} onChange={handleFormEntries} />
         </div>
         <div className={styles.row_edit}>
-          <label htmlFor='fecha_nac'>Fecha de nacimiento
-          </label>
-          <input type='date' id='fecha_nac' name='fecha_nac' value={formEntries.fecha_nac} onChange={handleFormEntries} />
+          <Label htmlFor='fecha_nac' text='Fecha de nacimiento' />
+          <Input type='date' id='fecha_nac' name='fecha_nac' value={formEntries.fecha_nac} onChange={handleFormEntries} />
         </div>
         <div className={styles.row_edit}>
-          <label htmlFor='tipo'>Que animal es?
-          </label>
-          <select id='tipo' name='tipo' value={formEntries.tipo} onChange={handleFormEntries} required>
-            {optionsAnimalTypes.map(({ value, displayText }, index) => {
-              return <option key={index} disabled={index === 0 && true} value={value}>{displayText}</option>
-            })}
-          </select>
+          <Label htmlFor='tipo' text='Que animal es?' />
+          <Select id='tipo' name='tipo' value={formEntries.tipo} onChange={handleFormEntries} required options={optionsAnimalTypes} />
         </div>
         <Button type='submit' disabled={!formEntries.nombre || !formEntries.tipo} >Añadir</Button>
       </form>

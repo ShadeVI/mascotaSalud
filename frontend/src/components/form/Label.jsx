@@ -1,8 +1,8 @@
 import styles from './Label.module.css'
 
-const Label = ({ text, idInput }) => {
+const Label = ({ text, htmlFor }) => {
   return (
-    <label htmlFor={idInput} className={styles.label}>{text}</label>
+    <label htmlFor={htmlFor} className={styles.label}>{text}</label>
   )
 }
 export default Label
