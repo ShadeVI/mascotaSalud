@@ -21,6 +21,7 @@
 .photoContainer {
   flex: 0.8;
   width: 100%;
+  overflow: hidden;
 }
 
 .photoContainer img {
@@ -37,4 +38,12 @@
   justify-content: center;
   align-items: center;
   font-size: 1.2rem;
+}
+
+.description a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }

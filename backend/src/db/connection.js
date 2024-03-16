@@ -14,7 +14,7 @@ function dbInit () {
     console.log('OK: conectado a la BD')
     return db
   } catch (err) {
-    throw new Error('Error de conexion a la BD')
+    console.log('Error de conexión a la BD')
   }
 }
 

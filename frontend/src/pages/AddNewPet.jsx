@@ -2,16 +2,15 @@ import { useState } from 'react'
 import Button from '../components/Button'
 import styles from './AddNewPet.module.css'
 import useAuth from '../hooks/useAuth'
-
-const initialFormState = {
-  nombre: '',
-  n_chip: '',
-  fecha_nac: '',
-  tipo: '',
-  imagePet: null
-}
+import usePets from '../hooks/usePets'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
 
 const optionsAnimalTypes = [
+  {
+    value: '',
+    displayText: 'Seleccione una opción'
+  },
   {
     value: 'gato',
     displayText: 'Gato'
@@ -27,23 +26,37 @@ const optionsAnimalTypes = [
   {
     value: 'loro',
     displayText: 'Loro'
+  },
+  {
+    value: 'otro',
+    displayText: 'Otro'
   }
 ]
 
+const initialFormState = {
+  nombre: '',
+  n_chip: '',
+  fecha_nac: '',
+  tipo: optionsAnimalTypes[0].value,
+  imagePet: null
+}
+
 const AddNewPet = () => {
   const { user } = useAuth()
+  const { addNewPetCtx } = usePets()
+  const navigator = useNavigate()
   const [formEntries, setFormEntries] = useState(initialFormState)
 
   const handleFormEntries = (e) => {
     setFormEntries((prev) => {
       if (e.target.type === 'file') {
         return {
-          ...formEntries,
+          ...prev,
           [e.target.name]: e.target.files[0]
         }
       }
       return {
-        ...formEntries,
+        ...prev,
         [e.target.name]: e.target.value
       }
     })
@@ -75,7 +88,8 @@ const AddNewPet = () => {
         return
       }
       if (data?.result) {
-        console.log(data.result.msg)
+        addNewPetCtx(data.result.data)
+        navigator(ROUTES.HOME)
       }
     } catch (error) {
       console.log(error)
@@ -109,13 +123,13 @@ const AddNewPet = () => {
         <div className={styles.row_edit}>
           <label htmlFor='tipo'>Que animal es?
           </label>
-          <select name='tipo' value={formEntries.tipo} onChange={handleFormEntries}>
+          <select id='tipo' name='tipo' value={formEntries.tipo} onChange={handleFormEntries} required>
             {optionsAnimalTypes.map(({ value, displayText }, index) => {
-              return <option key={index} value={value}>{displayText}</option>
+              return <option key={index} disabled={index === 0 && true} value={value}>{displayText}</option>
             })}
           </select>
         </div>
-        <Button type='submit' disabled={!formEntries.nombre} >Añadir</Button>
+        <Button type='submit' disabled={!formEntries.nombre || !formEntries.tipo} >Añadir</Button>
       </form>
     </section>
   )

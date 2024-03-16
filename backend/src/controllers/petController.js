@@ -13,14 +13,14 @@ const getPet = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos incorrectos',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
   const pet = await petService.findOne(id)
   if (!pet) {
     return next({
-      error: 'BAD REQUEST',
+      error: 'NOT FOUND',
       message: 'Mascota no encontrada',
       httpCode: 404
     })
@@ -29,7 +29,7 @@ const getPet = async (req, res, next) => {
   const { UUID: requestUUID } = res.locals.user
   if (requestUUID !== pet.UUID_usuario) {
     return next({
-      error: 'BAD REQUEST',
+      error: 'UNAUTHORIZED',
       message: 'No tienes permisos',
       httpCode: 401
     })
@@ -43,14 +43,14 @@ const getPetHistory = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos incorrectos',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
   const pet = await petService.findOne(id)
   if (!pet) {
     return next({
-      error: 'BAD REQUEST',
+      error: 'NOT FOUND',
       message: 'Mascota no encontrada',
       httpCode: 404
     })
@@ -61,7 +61,7 @@ const getPetHistory = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'No tienes permisos',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
@@ -69,8 +69,28 @@ const getPetHistory = async (req, res, next) => {
   return res.json({ message: `Historial completo de la mascota ${pet.nombre} del usuario ${username}`, result: { data: petHistory } })
 }
 
+const addPet = async (req, res, next) => {
+  const { body: data } = req
+  const file = req?.file
+  const { UUID: userUUID } = res.locals.user
+  try {
+    const newPet = await petService.addPet({ petData: data, petImage: file, userUUID })
+
+    return res.json({ message: 'Mascota encontrada', result: { data: newPet } })
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return next({
+        error: 'BAD REQUEST',
+        message: 'Numero de chip no valido o ya existe',
+        httpCode: 400
+      })
+    }
+  }
+}
+
 module.exports = {
   getAllPets,
   getPet,
-  getPetHistory
+  getPetHistory,
+  addPet
 }

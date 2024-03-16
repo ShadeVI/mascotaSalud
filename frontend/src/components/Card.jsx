@@ -7,7 +7,7 @@ const Card = ({ pet }) => {
   return (
     <div className={styles.card}>
       <div className={styles.photoContainer}>
-        <img src={fotoPathBuilder({ type: 'animals', foto: pet.url_foto })} alt={`${pet.nombre} foto`} />
+        <img src={fotoPathBuilder({ type: 'animals', foto: pet.foto })} alt={`${pet.nombre} foto`} />
       </div>
       <div className={styles.description}>
         <Link to={`${ROUTES.PETS}/${pet.ID}`}>{pet.nombre}</Link>

@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
 import { getUserData } from '../services/user.services.js'
-import noImageProfile from '../assets/noImageProfile.png'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 
 const userLS = localStorage.getItem('user')
@@ -25,7 +24,7 @@ export const AuthProvider = ({ children }) => {
             return
           }
           if (data) {
-            const foto = data?.foto ? fotoPathBuilder({ type: 'profile', foto: data.foto }) : noImageProfile
+            const foto = data?.foto && fotoPathBuilder({ type: 'profile', foto: data.foto })
             setUser({ ...data, jwt, profilePic: foto })
           }
         })

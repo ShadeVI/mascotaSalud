@@ -13,6 +13,10 @@ export const PetsProvider = ({ children }) => {
   const [pets, setPets] = useState(initialContext.pets)
   const [isLoading, setIsLoading] = useState(false)
 
+  const addNewPetCtx = (pet) => {
+    setPets(prev => [...pets, pet])
+  }
+
   useEffect(() => {
     if (user) {
       const { username, jwt } = user
@@ -32,7 +36,7 @@ export const PetsProvider = ({ children }) => {
   }, [user])
 
   return (
-    <PetsContext.Provider value={{ pets, setPets, isLoading }}>
+    <PetsContext.Provider value={{ pets, setPets, addNewPetCtx, isLoading }}>
       {children}
     </PetsContext.Provider>
   )
