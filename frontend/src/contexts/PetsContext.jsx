@@ -2,19 +2,15 @@ import { createContext, useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
 import { getUserPets } from '../services/pets.services'
 
-const initialContext = {
-  pets: []
-}
-
-export const PetsContext = createContext(initialContext)
+export const PetsContext = createContext()
 
 export const PetsProvider = ({ children }) => {
   const { user } = useAuth()
-  const [pets, setPets] = useState(initialContext.pets)
+  const [pets, setPets] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   const addNewPetCtx = (pet) => {
-    setPets(prev => [...pets, pet])
+    setPets(prev => [...prev, pet])
   }
 
   useEffect(() => {
