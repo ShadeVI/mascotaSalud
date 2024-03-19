@@ -1,4 +1,5 @@
 const userService = require('../services/userService')
+const { generateJWT } = require('../utils/JWT')
 
 const getUser = async (req, res, next) => {
   const { username } = req.params
@@ -54,6 +55,7 @@ const getUserPets = async (req, res, next) => {
       httpCode: 404
     })
   }
+
   if (username !== user.username) {
     return next({
       error: 'NO AUTORIZADO',
@@ -91,6 +93,13 @@ const updateUser = async (req, res, next) => {
 
   const userFound = await userService.update(username, data)
 
+  const dataToToken = {
+    UUID: userFound.UUID,
+    email: userFound.email,
+    username: userFound.username
+  }
+  const jwtToken = await generateJWT(dataToToken)
+
   if (!userFound) {
     return next({
       error: 'NOT FOUND',
@@ -99,7 +108,7 @@ const updateUser = async (req, res, next) => {
     })
   }
 
-  return res.json({ message: `Datos del usuario ${username}`, result: { data: userFound } })
+  return res.json({ message: `Datos del usuario ${username}`, result: { data: userFound, jwt: jwtToken } })
 }
 
 const deleteUser = async (req, res, next) => {

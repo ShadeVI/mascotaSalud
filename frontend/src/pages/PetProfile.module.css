@@ -1,5 +1,7 @@
 .section {
   position: relative;
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
 .image__container {
@@ -76,6 +78,23 @@
   gap: 10px;
 }
 
+.footer .btn__history {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1rem 2rem;
+  border: 2px solid rgb(179, 159, 233);
+  border-radius: 3px;
+  width: fit-content;
+  margin: 0 auto;
+  transition: all 0.2s ease;
+}
+
+.footer .btn__history:hover {
+  background-color: rgba(219, 218, 218, 0.486);
+}
+
+
 @media screen and (max-width: 1024px) {
   .header {
     height: 150px;
@@ -120,5 +139,6 @@
   
   .main__content_elem {
     text-align: center;
+    height: 100px;
   }
 }

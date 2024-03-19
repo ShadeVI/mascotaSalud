@@ -5,6 +5,8 @@ import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import styles from './PetProfile.module.css'
 import { getFormattedAge } from '../utils/getFormattedAge'
 import { GiHealthNormal } from 'react-icons/gi'
+import { ROUTES } from '../constants/routes'
+import { createRoute } from '../utils/createRoute'
 
 const PetProfile = () => {
   const { pets } = usePets()
@@ -41,10 +43,7 @@ const PetProfile = () => {
         </div>
       </main>
       <footer className={styles.footer}>
-        <div>
-          <GiHealthNormal />
-          <Link>Ver historial medico</Link>
-        </div>
+        <Link className={styles.btn__history} to={createRoute(ROUTES.PET_HISTORY, selectedPet.ID)}><GiHealthNormal /> Ver historial salud</Link>
       </footer>
     </section>
   )

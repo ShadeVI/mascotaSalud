@@ -9,19 +9,13 @@ export const getFormattedAge = (fechaNac) => {
   const months = Math.floor(days / 31)
   const years = Math.floor(months / 12)
 
-  if (years > 1) {
-    return `${years} años`
-  }
-  if (years === 1) {
-    return `${years} año`
+  if (years >= 1) {
+    return `${years} año${years > 1 ? 's' : ''}`
   }
   if (months >= 1) {
-    return `${months} meses`
-  }
-  if (months === 1) {
-    return `${months} meses`
+    return `${months} mes${months > 1 ? 'es' : ''}`
   }
   if (days > 0) {
-    return `${days} días`
+    return `${days} día${days > 0 ? 's' : ''}`
   }
 }

@@ -91,7 +91,9 @@ const Profile = () => {
         return
       }
       if (data?.result) {
-        setUser({ ...user, ...data.result.data })
+        localStorage.removeItem('user')
+        localStorage.setItem('user', JSON.stringify({ username: data.result.data.username, jwt: data.result.jwt }))
+        setUser({ ...user, ...data.result.data, jwt: data.result.jwt })
         setIsFormOnlyReading(true)
       }
     } catch (error) {
