@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom'
-import Loading from '../components/Loading'
 import usePets from '../hooks/usePets'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import styles from './PetProfile.module.css'
@@ -7,6 +6,7 @@ import { getFormattedAge } from '../utils/getFormattedAge'
 import { GiHealthNormal } from 'react-icons/gi'
 import { ROUTES } from '../constants/routes'
 import { createRoute } from '../utils/createRoute'
+import NotFound from '../components/NotFound'
 
 const PetProfile = () => {
   const { pets } = usePets()
@@ -14,7 +14,7 @@ const PetProfile = () => {
   const selectedPet = pets.find((pet) => pet.ID === +idPet)
 
   if (!selectedPet) {
-    return <Loading />
+    return <NotFound />
   }
 
   return (

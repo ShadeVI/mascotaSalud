@@ -6,6 +6,7 @@ import useAuth from '../hooks/useAuth'
 import usePets from '../hooks/usePets'
 import { MdEdit, MdDelete } from 'react-icons/md'
 import { formatDateIntl } from '../utils/formatDateIntl'
+import NotFound from '../components/NotFound'
 
 const PetHistory = () => {
   const [history, setHistory] = useState([])
@@ -15,6 +16,10 @@ const PetHistory = () => {
   const { idPet } = useParams()
 
   const selectedPet = pets.find((pet) => pet.ID === +idPet)
+
+  if (!selectedPet) {
+    return <NotFound />
+  }
 
   useEffect(() => {
     getPetHistory({ idPet, jwt: user.jwt })
