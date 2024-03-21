@@ -3,7 +3,8 @@ import styles from './Navbar.module.css'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import { ROUTES } from '../../constants/routes'
-import noImageProfile from '../../assets/noImageProfile.png'
+import RoundedImage from '../RoundedImage'
+import { fotoPathBuilder } from '../../utils/fotoPathBuilder'
 
 const Navbar = () => {
   const { user, setUser } = useAuth()
@@ -31,10 +32,12 @@ const Navbar = () => {
               <Link className={styles.link} onClick={handleLogout}>Logout</Link>
             </div>
             <div className={styles.user}>
-              <p className={styles.userText}>Hola, <span><Link className={styles.link} to={ROUTES.PROFILE}>{user && user.username}</Link></span></p>
-                <div className={styles.userPicture}>
-                  <img className={styles.profile} src={user.profilePic || noImageProfile} alt="usuario image" />
-                </div>
+              <p className={styles.userText}>Hola,
+                <span>
+                  <Link className={styles.link} to={ROUTES.PROFILE}>{user && user.username}</Link>
+                </span>
+              </p>
+              <RoundedImage width={'60px'} height={'60px'} borderRadius='100%' src={fotoPathBuilder({ type: 'profile', foto: user.foto })} alt={user.username} />
             </div>
           </>
           )

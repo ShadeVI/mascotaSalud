@@ -7,10 +7,17 @@ import { GiHealthNormal } from 'react-icons/gi'
 import { ROUTES } from '../constants/routes'
 import { createRoute } from '../utils/createRoute'
 import NotFound from '../components/NotFound'
+import { formatDateIntl } from '../utils/formatDateIntl'
+import Loading from '../components/Loading'
 
 const PetProfile = () => {
-  const { pets } = usePets()
+  const { pets, isLoading } = usePets()
   const { idPet } = useParams()
+
+  if (isLoading) {
+    return <Loading />
+  }
+
   const selectedPet = pets.find((pet) => pet.ID === +idPet)
 
   if (!selectedPet) {
@@ -38,7 +45,7 @@ const PetProfile = () => {
           </div>
           <div className={styles.main__content_elem}>
             <h4>Fecha de nacimiento</h4>
-            <p>{new Date(selectedPet.fecha_nac).toLocaleDateString() || 'N/D'}</p>
+            <p>{formatDateIntl(selectedPet.fecha_nac) || 'N/D'}</p>
           </div>
         </div>
       </main>

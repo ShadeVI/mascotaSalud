@@ -7,13 +7,15 @@ import { createRoute } from '../utils/createRoute'
 const Card = ({ pet }) => {
   return (
     <div className={styles.card}>
-      <div className={styles.photoContainer}>
-        <img src={fotoPathBuilder({ type: 'animals', foto: pet.foto })} alt={`${pet.nombre} foto`} />
+        <Link to={createRoute(ROUTES.SINGLE_PET, pet.ID)}>
+        <div className={styles.photoContainer}>
+          <img src={fotoPathBuilder({ type: 'animals', foto: pet.foto })} alt={`${pet.nombre} foto`} />
+        </div>
+        <div className={styles.description}>
+          {pet.nombre}
+        </div>
+    </Link>
       </div>
-      <div className={styles.description}>
-        <Link to={createRoute(ROUTES.SINGLE_PET, pet.ID)}>{pet.nombre}</Link>
-      </div>
-    </div>
   )
 }
 export default Card
