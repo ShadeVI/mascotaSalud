@@ -33,30 +33,42 @@ const PetHistory = () => {
 
   return (
     <section className={styles.section}>
-      <Link to={createRoute(ROUTES.SINGLE_PET, selectedPet.ID)}><MdArrowBack fontSize={'2rem'} /></Link>
+      <div className={styles.backLink__wrapper}>
+        <Link to={createRoute(ROUTES.SINGLE_PET, selectedPet.ID)}><MdArrowBack fontSize={'2rem'} /></Link>
+      </div>
       <header className={styles.header}>
         <h1 className={styles.title}>Historial de {selectedPet?.nombre}</h1>
         <RoundedImage src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} alt={selectedPet.nombre} width='150px' height='150px' borderRadius='8px' />
       </header>
 
-      {history && (
-          <LineChart title='Variación del peso' labelsX={history.map((row) => formatDateIntl(row.fecha))} datasets={[
-            {
-              label: 'peso (en gramos)',
-              data: history.map(row => row.peso),
-              borderColor: 'rgb(53, 162, 235)',
-              backgroundColor: 'rgba(53, 162, 235, 0.5)'
-            }
-          ]} />
-      )}
+      {
+        history.length > 1
+          ? (<LineChart title='Variación del peso' labelsX={history.map((row) => formatDateIntl(row.fecha))} datasets={[
+              {
+                label: 'peso (en gramos)',
+                data: history.map(row => row.peso),
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)'
+              }
+            ]}
+          />)
+          : (<div className={styles.info__noDatos}>
+              <h3 >No hay suficientes datos para mostrar un gráfico</h3>
+              <p>Añade mas datos haciendo click <Link to={'home'}>aquí</Link></p>
+            </div>)
+      }
+
+      <div>
+        AÑADIR NUEVOS DATOS
+      </div>
 
       <table className={styles.table}>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Fecha</th>
                 <th>Peso <small>(en gramos)</small></th>
                 <th>Antiparasitario</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -64,7 +76,6 @@ const PetHistory = () => {
             history.map(({ ID, peso, antiparasitario, fecha }) => {
               return (
                 <tr key={ID}>
-                    <td>{ID}</td>
                     <td>{formatDateIntl(fecha)}</td>
                     <td>{peso}</td>
                     <td>{antiparasitario ? 'SI' : 'NO'}</td>

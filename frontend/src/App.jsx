@@ -12,6 +12,7 @@ import AddNewPet from './pages/AddNewPet'
 import PetHistory from './pages/PetHistory'
 import ProtectedRoute from './components/protectedRoute/ProtectedRoute'
 import { ROUTES } from './constants/routes'
+import VisionGlobal from './pages/VisionGlobal'
 
 function App () {
   return (
@@ -26,6 +27,7 @@ function App () {
           <Route path={ROUTES.PROFILE} element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path={ROUTES.SINGLE_PET} element={<ProtectedRoute><PetProfile /></ProtectedRoute>} />
           <Route path={ROUTES.PET_HISTORY} element={<ProtectedRoute><PetHistory /></ProtectedRoute>} />
+          <Route path={ROUTES.PETS_OVERVIEW} element={<ProtectedRoute><VisionGlobal /></ProtectedRoute>} />
           <Route path={ROUTES.NEW_PET} element={<ProtectedRoute><AddNewPet /></ProtectedRoute>} />
           <Route path={ROUTES.EXPENSES} element={<ProtectedRoute><Expenses /></ProtectedRoute>} />
           <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />

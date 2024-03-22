@@ -2,6 +2,12 @@
   position: relative;
 }
 
+.backLink__wrapper {
+  position: fixed;
+  top: 100px;
+  z-index: 999;
+}
+
 .header {
   display: flex;
   justify-content: center;
@@ -56,4 +62,14 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+.info__noDatos {
+  text-align: center;
+  margin: 5rem auto;
+}
+
+.info__noDatos > p {
+  margin-top: 10px;
+  font-size: 1rem;
 }

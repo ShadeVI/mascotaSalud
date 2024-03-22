@@ -8,6 +8,7 @@ export const ROUTES = {
   SINGLE_PET: '/mascotas/:idPet',
   NEW_PET: '/mascotas/nueva',
   PET_HISTORY: '/mascotas/:idPet/history',
+  PETS_OVERVIEW: '/mascotas/overview',
   EXPENSES: '/gastos',
   NOT_FOUND: '*'
 }

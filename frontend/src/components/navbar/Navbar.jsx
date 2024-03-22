@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import { ROUTES } from '../../constants/routes'
 import RoundedImage from '../RoundedImage'
+import { AiOutlinePoweroff } from 'react-icons/ai'
 import { fotoPathBuilder } from '../../utils/fotoPathBuilder'
 
 const Navbar = () => {
@@ -28,14 +29,15 @@ const Navbar = () => {
           <>
             <div className={styles.links}>
               <NavLink className={styles.link} to={ROUTES.HOME}>Home</NavLink>
+              <NavLink className={styles.link} to={ROUTES.PETS_OVERVIEW}>Visión global</NavLink>
               <NavLink className={styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
-              <Link className={styles.link} onClick={handleLogout}>Logout</Link>
             </div>
             <div className={styles.user}>
               <p className={styles.userText}>Hola,
                 <span>
                   <Link className={styles.link} to={ROUTES.PROFILE}>{user && user.username}</Link>
                 </span>
+                <Link className={styles.link} onClick={handleLogout}><AiOutlinePoweroff /></Link>
               </p>
               <RoundedImage width={'60px'} height={'60px'} borderRadius='100%' src={fotoPathBuilder({ type: 'profile', foto: user.foto })} alt={user.username} />
             </div>
