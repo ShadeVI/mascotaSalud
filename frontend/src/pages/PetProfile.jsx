@@ -9,6 +9,8 @@ import { createRoute } from '../utils/createRoute'
 import NotFound from '../components/NotFound'
 import { formatDateIntl } from '../utils/formatDateIntl'
 import Loading from '../components/Loading'
+import InfoPetCard from '../components/profilePet/InfoPetCard'
+import { convertBoolAnswer, convertGender } from '../utils/petProfileUtils'
 
 const PetProfile = () => {
   const { pets, isLoading } = usePets()
@@ -35,18 +37,12 @@ const PetProfile = () => {
       </header>
       <main>
         <div className={styles.main__content}>
-          <div className={styles.main__content_elem}>
-            <h4>Especie</h4>
-            <p>{selectedPet.tipo}</p>
-          </div>
-          <div className={styles.main__content_elem}>
-            <h4>Numero chip</h4>
-            <p>{selectedPet.n_chip || 'N/D'}</p>
-          </div>
-          <div className={styles.main__content_elem}>
-            <h4>Fecha de nacimiento</h4>
-            <p>{formatDateIntl(selectedPet.fecha_nac) || 'N/D'}</p>
-          </div>
+          <InfoPetCard title='Genero' info={convertGender(selectedPet.genero)} />
+          <InfoPetCard title='Especie' info={selectedPet.tipo} />
+          <InfoPetCard title='Raza' info={selectedPet.raza} />
+          <InfoPetCard title='Numero microchip' info={selectedPet.n_chip} />
+          <InfoPetCard title='Vacuna básica' info={convertBoolAnswer(selectedPet.vacuna_basica)} />
+          <InfoPetCard title='Fecha de nacimiento' info={formatDateIntl(selectedPet.fecha_nac)} />
         </div>
       </main>
       <footer className={styles.footer}>

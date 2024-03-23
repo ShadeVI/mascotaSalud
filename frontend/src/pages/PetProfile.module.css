@@ -39,22 +39,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.main__content_elem {
-  width: fit-content;
-  height: 150px;
-}
-
-.main__content_elem>h4 {
-  font-size: 1rem;
-  color: rgb(98, 87, 87);
-  margin-bottom: 10px;
-}
-
-.main__content_elem>p {
-  font-size: 1rem;
-  text-transform: capitalize;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3rem;
 }
 
 .name {
