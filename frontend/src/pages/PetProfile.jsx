@@ -32,17 +32,17 @@ const PetProfile = () => {
         <img src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} />
       </div>
       <header className={styles.header}>
-        <h1 className={styles.name}>{selectedPet.nombre}</h1>
-        <h3 className={styles.age}>Edad: {getFormattedAge(selectedPet.fecha_nac) || 'N/D'}</h3>
+        <h1 className={styles.name}>{selectedPet?.nombre}</h1>
+        <h3 className={styles.age}>Edad: {getFormattedAge(selectedPet?.fecha_nac) || 'N/D'}</h3>
       </header>
       <main>
         <div className={styles.main__content}>
-          <InfoPetCard title='Genero' info={convertGender(selectedPet.genero)} />
-          <InfoPetCard title='Especie' info={selectedPet.tipo} />
-          <InfoPetCard title='Raza' info={selectedPet.raza} />
-          <InfoPetCard title='Numero microchip' info={selectedPet.n_chip} />
-          <InfoPetCard title='Vacuna básica' info={convertBoolAnswer(selectedPet.vacuna_basica)} />
-          <InfoPetCard title='Fecha de nacimiento' info={formatDateIntl(selectedPet.fecha_nac)} />
+          <InfoPetCard title='Genero' info={convertGender(selectedPet?.genero)} />
+          <InfoPetCard title='Especie' info={selectedPet?.tipo} />
+          <InfoPetCard title='Raza' info={selectedPet?.raza} />
+          <InfoPetCard title='Numero microchip' info={selectedPet?.n_chip} />
+          <InfoPetCard title='Vacuna básica' info={convertBoolAnswer(selectedPet?.vacuna_basica)} />
+          <InfoPetCard title='Fecha de nacimiento' info={formatDateIntl(selectedPet?.fecha_nac)} />
         </div>
       </main>
       <footer className={styles.footer}>

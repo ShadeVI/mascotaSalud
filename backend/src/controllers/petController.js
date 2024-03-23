@@ -89,9 +89,14 @@ const addPet = async (req, res, next) => {
   }
 }
 
+const updatePet = async (req, res, next) => {
+  return res.json({ msg: 'UPDATE' })
+}
+
 module.exports = {
   getAllPets,
   getPet,
   getPetHistory,
-  addPet
+  addPet,
+  updatePet
 }

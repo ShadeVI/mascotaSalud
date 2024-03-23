@@ -36,10 +36,28 @@ const optionsAnimalTypes = [
   }
 ]
 
+const optionsGenderTypes = [
+  {
+    value: '',
+    displayText: 'Seleccione una opción'
+  },
+  {
+    value: 'H',
+    displayText: 'Hembra'
+  },
+  {
+    value: 'M',
+    displayText: 'Macho'
+  }
+]
+
 const initialFormState = {
   nombre: '',
   n_chip: '',
   fecha_nac: '',
+  raza: '',
+  genero: '',
+  vacunaBasica: false,
   tipo: optionsAnimalTypes[0].value,
   imagePet: null
 }
@@ -56,6 +74,12 @@ const AddNewPet = () => {
         return {
           ...prev,
           [e.target.name]: e.target.files[0]
+        }
+      }
+      if (e.target.type === 'checkbox') {
+        return {
+          ...prev,
+          [e.target.name]: e.target.checked
         }
       }
       return {
@@ -122,6 +146,18 @@ const AddNewPet = () => {
         <div className={styles.row_edit}>
           <Label htmlFor='tipo' text='Que animal es?' />
           <Select id='tipo' name='tipo' value={formEntries.tipo} onChange={handleFormEntries} required options={optionsAnimalTypes} />
+        </div>
+        <div className={styles.row_edit}>
+          <Label htmlFor='raza' text='Raza' />
+          <Input type='text' id='raza' name='raza' value={formEntries.raza} onChange={handleFormEntries} />
+        </div>
+        <div className={styles.row_edit}>
+          <Label htmlFor='genero' text='Genero' />
+          <Select id='genero' name='genero' value={formEntries.genero} onChange={handleFormEntries} required options={optionsGenderTypes} />
+        </div>
+        <div className={[styles.row_edit, styles.row_edit__inline].join(' ')}>
+          <Label htmlFor='vacunaBasica' text='Vacuna basica?' />
+          <Input type='checkbox' id='vacunaBasica' name='vacunaBasica' checked={formEntries.vacunaBasica} onChange={handleFormEntries} />
         </div>
         <Button type='submit' disabled={!formEntries.nombre || !formEntries.tipo} >Añadir</Button>
       </form>
