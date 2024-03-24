@@ -55,17 +55,11 @@
 
 .footer {
   text-align: center;
-}
-
-.footer>div {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 30px;
-  gap: 10px;
 }
 
-.footer .btn__history {
+.footer .btn {
   display: flex;
   align-items: center;
   gap: 5px;

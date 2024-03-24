@@ -46,7 +46,10 @@ const PetProfile = () => {
         </div>
       </main>
       <footer className={styles.footer}>
-        <Link className={styles.btn__history} to={createRoute(ROUTES.PET_HISTORY, selectedPet.ID)}><GiHealthNormal /> Ver historial salud</Link>
+        <Link className={styles.btn} to={createRoute(ROUTES.UPDATE_PET, selectedPet.ID)} >Actualizar datos</Link>
+        <Link className={styles.btn} to={createRoute(ROUTES.PET_HISTORY, selectedPet.ID)}>
+          <GiHealthNormal /> Ver historial salud
+        </Link>
       </footer>
     </section>
   )
