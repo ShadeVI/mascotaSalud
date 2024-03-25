@@ -23,7 +23,7 @@ class Pet {
 
     const { nombre, n_chip: nChip, fecha_nac: fechaNac, tipo, raza, genero, vacuna_basica: vacBasica, petImage, userUUID } = petData
 
-    const [result] = await db.query('INSERT INTO mascota (nombre, n_chip, fecha_nac, foto, tipo, raza, genero, vacuna_basica, UUID_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [nombre, nChip, fechaNac, petImage, tipo, raza, genero, vacBasica, userUUID])
+    const [result] = await db.query('INSERT INTO mascota (nombre, n_chip, fecha_nac, foto, tipo, raza, genero, vacuna_basica, UUID_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [nombre, nChip, fechaNac, petImage, tipo, raza, genero, vacBasica ? 1 : 0, userUUID])
 
     if (result.affectedRows > 0) {
       return result.insertId
