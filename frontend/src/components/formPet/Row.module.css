@@ -1,0 +1,34 @@
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row__inline {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px
+}
+
+.row > select,
+.row__inline > select {
+  height: 40px;
+  padding: 10px;
+}
+
+
+.row__inline > input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+}
+
+.row__inline > label {
+  margin: 0;
+}
+
+.row input[type='file'] {
+  width: fit-content;
+}

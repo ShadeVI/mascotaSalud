@@ -8,6 +8,8 @@ import { ROUTES } from '../constants/routes'
 import Input from '../components/form/Input'
 import Label from '../components/form/Label'
 import Select from '../components/form/Select'
+import Form from '../components/formPet/Form'
+import Row from '../components/formPet/Row'
 
 const optionsAnimalTypes = [
   {
@@ -57,7 +59,7 @@ const initialFormState = {
   fecha_nac: '',
   raza: '',
   genero: '',
-  vacunaBasica: false,
+  vacuna_basica: false,
   tipo: optionsAnimalTypes[0].value,
   imagePet: null
 }
@@ -101,7 +103,6 @@ const AddNewPet = () => {
       for (const key in formEntries) {
         formData.append(key, formEntries[key])
       }
-
       const res = await fetch('http://localhost:3000/pets/new-pet', {
         method: 'POST',
         headers: {
@@ -126,41 +127,41 @@ const AddNewPet = () => {
   return (
     <section className={styles.section}>
       <h2>Registra tu mascota ahora</h2>
-      <form className={styles.form_edit} onSubmit={handleSubmit} >
-        <div className={styles.row_edit}>
+      <Form onSubmit={handleSubmit} >
+        <Row>
             <Label htmlFor='imagePet' text='Foto de tu adorable mascota' />
-            <input id='imagePet' type='file' name='imagePet' accept="image/png, image/jpeg" value={formEntries.image} onChange={handleFormEntries} />
-        </div>
-        <div className={styles.row_edit}>
+            <Input id='imagePet' type='file' name='imagePet' accept="image/png, image/jpeg" value={formEntries.image} onChange={handleFormEntries} />
+        </Row>
+        <Row>
           <Label htmlFor='nombre' text='Nombre'/>
           <Input type='text' required id='nombre' name='nombre' value={formEntries.nombre} onChange={handleFormEntries} />
-        </div>
-        <div className={styles.row_edit}>
+        </Row>
+        <Row>
           <Label htmlFor='n_chip' text='Numero de chip' />
           <Input type='number' id='n_chip' name='n_chip' value={formEntries.n_chip} onChange={handleFormEntries} />
-        </div>
-        <div className={styles.row_edit}>
+        </Row>
+        <Row>
           <Label htmlFor='fecha_nac' text='Fecha de nacimiento' />
           <Input type='date' id='fecha_nac' name='fecha_nac' value={formEntries.fecha_nac} onChange={handleFormEntries} />
-        </div>
-        <div className={styles.row_edit}>
+        </Row>
+        <Row>
           <Label htmlFor='tipo' text='Que animal es?' />
           <Select id='tipo' name='tipo' value={formEntries.tipo} onChange={handleFormEntries} required options={optionsAnimalTypes} />
-        </div>
-        <div className={styles.row_edit}>
+        </Row>
+        <Row>
           <Label htmlFor='raza' text='Raza' />
           <Input type='text' id='raza' name='raza' value={formEntries.raza} onChange={handleFormEntries} />
-        </div>
-        <div className={styles.row_edit}>
+        </Row>
+        <Row>
           <Label htmlFor='genero' text='Genero' />
           <Select id='genero' name='genero' value={formEntries.genero} onChange={handleFormEntries} required options={optionsGenderTypes} />
-        </div>
-        <div className={[styles.row_edit, styles.row_edit__inline].join(' ')}>
-          <Label htmlFor='vacunaBasica' text='Vacuna basica?' />
-          <Input type='checkbox' id='vacunaBasica' name='vacunaBasica' checked={formEntries.vacunaBasica} onChange={handleFormEntries} />
-        </div>
+        </Row>
+        <Row inline={true}>
+          <Label htmlFor='vacuna_basica' text='Vacuna basica?' />
+          <Input type='checkbox' id='vacuna_basica' name='vacuna_basica' checked={formEntries.vacuna_basica} onChange={handleFormEntries} />
+        </Row>
         <Button type='submit' disabled={!formEntries.nombre || !formEntries.tipo} >Añadir</Button>
-      </form>
+      </Form>
     </section>
   )
 }
