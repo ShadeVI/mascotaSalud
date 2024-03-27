@@ -91,7 +91,7 @@ const addPet = async (req, res, next) => {
 
 const updatePet = async (req, res, next) => {
   console.log(req.body)
-  return res.json({ msg: 'UPDATE' })
+  return res.json({ message: 'Mascota añadida', result: { data: 'PET' } })
 }
 
 module.exports = {

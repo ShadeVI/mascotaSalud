@@ -11,23 +11,29 @@ import { formatDateIntl } from '../utils/formatDateIntl'
 import Loading from '../components/Loading'
 import InfoPetCard from '../components/profilePet/InfoPetCard'
 import { convertBoolAnswer, convertGender } from '../utils/petProfileUtils'
+import SectionPet from '../components/SectionPet'
+import { useEffect, useState } from 'react'
 
 const PetProfile = () => {
   const { pets, isLoading } = usePets()
   const { idPet } = useParams()
+  const [selectedPet, setSelectedPet] = useState(null)
+
+  useEffect(() => {
+    const selectedPet = pets.find((pet) => pet.ID === +idPet)
+    setSelectedPet(selectedPet)
+  }, [pets])
 
   if (isLoading) {
     return <Loading />
   }
-
-  const selectedPet = pets.find((pet) => pet.ID === +idPet)
 
   if (!selectedPet) {
     return <NotFound />
   }
 
   return (
-    <section className={styles.section}>
+    <SectionPet>
       <div className={styles.image__container}>
         <img src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} />
       </div>
@@ -51,7 +57,7 @@ const PetProfile = () => {
           <GiHealthNormal /> Ver historial salud
         </Link>
       </footer>
-    </section>
+    </SectionPet>
   )
 }
 

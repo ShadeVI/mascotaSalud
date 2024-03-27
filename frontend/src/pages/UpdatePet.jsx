@@ -13,6 +13,7 @@ import Loading from '../components/Loading'
 import NotFound from '../components/NotFound'
 import { formatPetObjectToForm } from '../utils/petProfileUtils'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
+import SectionPet from '../components/SectionPet'
 
 const optionsAnimalTypes = [
   {
@@ -111,14 +112,42 @@ const UpdatePet = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('SUBMIT')
+    if (!formEntries.nombre) {
+      // TODO: Set error
+      return
+    }
+
+    try {
+      const formData = new FormData()
+      for (const key in formEntries) {
+        formData.append(key, formEntries[key])
+      }
+      const res = await fetch(`http://localhost:3000/pets/${selectedPet.ID}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${user.jwt}`
+        },
+        body: formData
+      })
+      const data = await res.json()
+      if (data?.error) {
+        console.log(data.error)
+        return
+      }
+      if (data?.result) {
+        updatePetCtx(data.result.data)
+        console.log(data.result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
-    <section className={styles.section}>
-      <h2>Actualiza los datos</h2>
+    <SectionPet>
+      <h2 className={styles.title}>Actualiza los datos</h2>
       <Form onSubmit={handleSubmit} >
         <Row>
             <Label htmlFor='imagePet' text='Foto de tu adorable mascota' />
@@ -154,7 +183,7 @@ const UpdatePet = () => {
         </Row>
         <Button type='submit' >Actualizar</Button>
       </Form>
-    </section>
+    </SectionPet>
   )
 }
 export default UpdatePet
