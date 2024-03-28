@@ -18,7 +18,15 @@ class Pet {
 
   static async addOne (petData) {
     for (const key in petData) {
-      petData[key] = petData[key] === 'null' || petData[key] === 'undefined' || petData[key] === '' ? null : petData[key]
+      if (petData[key] === 'null' || petData[key] === 'undefined' || petData[key] === '') {
+        petData[key] = null
+      }
+      if (petData[key] === 'false') {
+        petData[key] = false
+      }
+      if (petData[key] === 'true') {
+        petData[key] = true
+      }
     }
 
     const { nombre, n_chip: nChip, fecha_nac: fechaNac, tipo, raza, genero, vacuna_basica: vacBasica, petImage, userUUID } = petData
@@ -33,7 +41,6 @@ class Pet {
   }
 
   static async updateOne (petData) {
-    console.log(petData)
     for (const key in petData) {
       if (petData[key] === 'null' || petData[key] === 'undefined' || petData[key] === '') {
         petData[key] = null
@@ -46,15 +53,24 @@ class Pet {
       }
     }
 
-    const { nombre, n_chip: nChip, fecha_nac: fechaNac, tipo, raza, genero, vacuna_basica: vacBasica, petImage, ID: idPet } = petData
+    const { nombre, n_chip: nChip, fecha_nac: fechaNac, foto, tipo, raza, genero, vacuna_basica: vacBasica, petImage, ID: idPet } = petData
 
-    const [result] = await db.query('UPDATE mascota SET nombre = ?, n_chip = ?, fecha_nac = ?, foto = ?, tipo = ?, raza = ?, genero = ?, vacuna_basica = ? WHERE ID = ?', [nombre, nChip, fechaNac, petImage, tipo, raza, genero, (vacBasica ? 1 : 0), idPet])
+    const [result] = await db.query('UPDATE mascota SET nombre = ?, n_chip = ?, fecha_nac = ?, foto = ?, tipo = ?, raza = ?, genero = ?, vacuna_basica = ? WHERE ID = ?', [nombre, nChip, fechaNac, petImage || foto, tipo, raza, genero, (vacBasica ? 1 : 0), idPet])
 
     if (result.affectedRows > 0) {
       return true
     }
 
     return null
+  }
+
+  static async deleteOne (petId) {
+    const [result] = await db.query('DELETE FROM mascota WHERE ID = ?', [petId])
+    if (result.affectedRows > 0) {
+      return true
+    }
+
+    return false
   }
 }
 

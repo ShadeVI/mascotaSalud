@@ -92,11 +92,22 @@ const addPet = async (req, res, next) => {
 const updatePet = async (req, res, next) => {
   const { body: data } = req
   const file = req?.file
-  const { UUID: userUUID } = res.locals.user
+
   try {
-    const updatedPet = await petService.updatePet({ petData: data, petImage: file, userUUID })
+    const updatedPet = await petService.updatePet({ petData: data, petImage: file })
 
     return res.json({ message: 'Mascota actualizada', result: { data: updatedPet } })
+  } catch (error) {
+    return next(error)
+  }
+}
+
+const deletePet = async (req, res, next) => {
+  const { id } = req.params
+
+  try {
+    const isDeleted = await petService.deletePet(id)
+    return res.json({ message: 'Mascota eliminada', result: { data: isDeleted } })
   } catch (error) {
     return next(error)
   }
@@ -107,5 +118,6 @@ module.exports = {
   getPet,
   getPetHistory,
   addPet,
-  updatePet
+  updatePet,
+  deletePet
 }

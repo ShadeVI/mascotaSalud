@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import usePets from '../hooks/usePets'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import styles from './PetProfile.module.css'
@@ -14,11 +14,22 @@ import { convertBoolAnswer, convertGender } from '../utils/petProfileUtils'
 import SectionPet from '../components/Section'
 import { useEffect, useState } from 'react'
 import BackButton from '../components/BackButton'
+import { deletePet } from '../services/pets.services'
+import useAuth from '../hooks/useAuth'
 
 const PetProfile = () => {
+  const { user } = useAuth()
   const { pets, isLoading } = usePets()
   const { idPet } = useParams()
+  const navigator = useNavigate()
   const [selectedPet, setSelectedPet] = useState(null)
+
+  const handleDelete = async () => {
+    const { result } = await deletePet({ idPet, jwt: user.jwt })
+    if (result) {
+      navigator(ROUTES.HOME)
+    }
+  }
 
   useEffect(() => {
     const selectedPet = pets.find((pet) => pet.ID === +idPet)
@@ -36,6 +47,7 @@ const PetProfile = () => {
   return (
     <SectionPet>
       <BackButton route={createRoute(ROUTES.HOME)}/>
+      <button className={styles.btn__delete} onClick={handleDelete} >eliminar</button>
       <div className={styles.image__container}>
         <img src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} />
       </div>

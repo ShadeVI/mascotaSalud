@@ -1,5 +1,7 @@
 const Pet = require('../models/Pet')
 const PetHistory = require('../models/PetHistory')
+const path = require('node:path')
+const fs = require('node:fs/promises')
 
 const findAll = async () => {
   const allPets = await Pet.findAll()
@@ -39,13 +41,17 @@ const addPet = async ({ petData, petImage, userUUID }) => {
   return pet
 }
 
-const updatePet = async ({ petData, petImage, userUUID }) => {
+const updatePet = async ({ petData, petImage }) => {
   let petDataPrepared = {
     ...petData
   }
 
   if (petImage) {
     petDataPrepared = { ...petDataPrepared, petImage: petImage.filename }
+    if (petDataPrepared?.foto) {
+      const pathFileToRemove = path.join('public/animal_images', petDataPrepared.foto)
+      fs.rm(pathFileToRemove).then(() => console.log('IMAGEN ANTERIOR BORRADA')).catch((err) => console.log(err))
+    }
   }
 
   const isUpdated = await Pet.updateOne(petDataPrepared)
@@ -58,10 +64,16 @@ const updatePet = async ({ petData, petImage, userUUID }) => {
   return pet
 }
 
+const deletePet = async (petId) => {
+  const isDeleted = await Pet.deleteOne(petId)
+  return isDeleted
+}
+
 module.exports = {
   findAll,
   findOne,
   findPetHistory,
   addPet,
-  updatePet
+  updatePet,
+  deletePet
 }
