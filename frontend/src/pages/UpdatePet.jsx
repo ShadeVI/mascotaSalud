@@ -13,49 +13,8 @@ import Loading from '../components/Loading'
 import NotFound from '../components/NotFound'
 import { formatPetObjectToForm } from '../utils/petProfileUtils'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
-import SectionPet from '../components/SectionPet'
-
-const optionsAnimalTypes = [
-  {
-    value: '',
-    displayText: 'Seleccione una opción'
-  },
-  {
-    value: 'gato',
-    displayText: 'Gato'
-  },
-  {
-    value: 'perro',
-    displayText: 'Perro'
-  },
-  {
-    value: 'hamster',
-    displayText: 'Hamster'
-  },
-  {
-    value: 'loro',
-    displayText: 'Loro'
-  },
-  {
-    value: 'otro',
-    displayText: 'Otro'
-  }
-]
-
-const optionsGenderTypes = [
-  {
-    value: '',
-    displayText: 'Seleccione una opción'
-  },
-  {
-    value: 'H',
-    displayText: 'Hembra'
-  },
-  {
-    value: 'M',
-    displayText: 'Macho'
-  }
-]
+import SectionPet from '../components/Section'
+import { optionsAnimalTypes, optionsGenderTypes } from '../constants/petForm'
 
 const initialFormState = {
   nombre: '',
@@ -87,7 +46,7 @@ const UpdatePet = () => {
     return <Loading />
   }
 
-  if (!selectedPet) {
+  if (!selectedPet && !isLoading) {
     return <NotFound />
   }
 

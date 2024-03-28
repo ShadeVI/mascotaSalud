@@ -4,12 +4,21 @@ import { Link, NavLink, useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import { ROUTES } from '../../constants/routes'
 import RoundedImage from '../RoundedImage'
-import { AiOutlinePoweroff } from 'react-icons/ai'
+import { AiOutlinePoweroff, AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { fotoPathBuilder } from '../../utils/fotoPathBuilder'
+import { useEffect, useRef, useState } from 'react'
+import { isMobile } from '../../utils/responsive'
 
 const Navbar = () => {
   const { user, setUser } = useAuth()
   const navigator = useNavigate()
+  const mobileLinks = useRef()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const handleMobileMenu = () => {
+    isMobile() && mobileLinks.current.classList.toggle(styles.show)
+    setIsMenuOpen(prev => !prev)
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('user')
@@ -19,18 +28,33 @@ const Navbar = () => {
     })
   }
 
+  useEffect(() => {
+    const handler = () => {
+      if (!isMobile() && isMenuOpen) {
+        mobileLinks.current.classList.remove(styles.show)
+        setIsMenuOpen(false)
+      }
+    }
+    window.addEventListener('resize', handler)
+
+    return () => window.removeEventListener('resize', handler)
+  }, [isMenuOpen])
+
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logoContainer}>
-        <img className={styles.logoPicture} src={logo} alt="Mascota Salud" />
+      <div className={styles.logo}>
+        <div className={styles.logoContainer}>
+          <img className={styles.logoPicture} src={logo} alt="Mascota Salud" />
+        </div>
+        <span className={styles.logoName}>MascotaSalud</span>
       </div>
       {user
         ? (
           <>
-            <div className={styles.links}>
-              <NavLink className={styles.link} to={ROUTES.HOME}>Home</NavLink>
-              <NavLink className={styles.link} to={ROUTES.PETS_OVERVIEW}>Visión global</NavLink>
-              <NavLink className={styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
+            <div className={styles.links} ref={mobileLinks}>
+              <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.HOME}>Home</NavLink>
+              <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.PETS_OVERVIEW}>Visión global</NavLink>
+              <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
             </div>
             <div className={styles.user}>
               <p className={styles.userText}>Hola,
@@ -50,7 +74,13 @@ const Navbar = () => {
           </div>
           )
       }
+      <div className={styles.hamburger}>
+        {isMenuOpen
+          ? <AiOutlineClose onClick={handleMobileMenu} />
+          : <AiOutlineMenu onClick={handleMobileMenu}/>
+        }
 
+      </div>
     </nav>
   )
 }

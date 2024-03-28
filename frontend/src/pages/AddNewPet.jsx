@@ -10,48 +10,8 @@ import Label from '../components/form/Label'
 import Select from '../components/form/Select'
 import Form from '../components/formPet/Form'
 import Row from '../components/formPet/Row'
-
-const optionsAnimalTypes = [
-  {
-    value: '',
-    displayText: 'Seleccione una opción'
-  },
-  {
-    value: 'gato',
-    displayText: 'Gato'
-  },
-  {
-    value: 'perro',
-    displayText: 'Perro'
-  },
-  {
-    value: 'hamster',
-    displayText: 'Hamster'
-  },
-  {
-    value: 'loro',
-    displayText: 'Loro'
-  },
-  {
-    value: 'otro',
-    displayText: 'Otro'
-  }
-]
-
-const optionsGenderTypes = [
-  {
-    value: '',
-    displayText: 'Seleccione una opción'
-  },
-  {
-    value: 'H',
-    displayText: 'Hembra'
-  },
-  {
-    value: 'M',
-    displayText: 'Macho'
-  }
-]
+import { addNewPet } from '../services/pets.services'
+import { optionsAnimalTypes, optionsGenderTypes } from '../constants/petForm'
 
 const initialFormState = {
   nombre: '',
@@ -98,30 +58,18 @@ const AddNewPet = () => {
       return
     }
 
-    try {
-      const formData = new FormData()
-      for (const key in formEntries) {
-        formData.append(key, formEntries[key])
-      }
-      const res = await fetch('http://localhost:3000/pets/new-pet', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${user.jwt}`
-        },
-        body: formData
-      })
-      const data = await res.json()
-      if (data?.error) {
-        console.log(data.error)
-        return
-      }
-      if (data?.result) {
-        addNewPetCtx(data.result.data)
-        navigator(ROUTES.HOME)
-      }
-    } catch (error) {
-      console.log(error)
+    const formData = new FormData()
+    for (const key in formEntries) {
+      formData.append(key, formEntries[key])
     }
+
+    const { result, error } = await addNewPet({ body: formData, jwt: user.jwt })
+    if (error) {
+      console.log(error)
+      return
+    }
+    addNewPetCtx(result)
+    navigator(ROUTES.HOME)
   }
 
   return (

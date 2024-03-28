@@ -2,12 +2,6 @@
   position: relative;
 }
 
-.backLink__wrapper {
-  position: fixed;
-  top: 100px;
-  z-index: 999;
-}
-
 .header {
   display: flex;
   justify-content: center;

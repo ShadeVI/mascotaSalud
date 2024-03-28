@@ -11,8 +11,9 @@ import { formatDateIntl } from '../utils/formatDateIntl'
 import Loading from '../components/Loading'
 import InfoPetCard from '../components/profilePet/InfoPetCard'
 import { convertBoolAnswer, convertGender } from '../utils/petProfileUtils'
-import SectionPet from '../components/SectionPet'
+import SectionPet from '../components/Section'
 import { useEffect, useState } from 'react'
+import BackButton from '../components/BackButton'
 
 const PetProfile = () => {
   const { pets, isLoading } = usePets()
@@ -28,12 +29,13 @@ const PetProfile = () => {
     return <Loading />
   }
 
-  if (!selectedPet) {
+  if (!selectedPet && !isLoading) {
     return <NotFound />
   }
 
   return (
     <SectionPet>
+      <BackButton route={createRoute(ROUTES.HOME)}/>
       <div className={styles.image__container}>
         <img src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} />
       </div>
@@ -54,7 +56,7 @@ const PetProfile = () => {
       <footer className={styles.footer}>
         <Link className={styles.btn} to={createRoute(ROUTES.UPDATE_PET, selectedPet.ID)} >Actualizar datos</Link>
         <Link className={styles.btn} to={createRoute(ROUTES.PET_HISTORY, selectedPet.ID)}>
-          <GiHealthNormal /> Ver historial salud
+          <GiHealthNormal />Historial salud
         </Link>
       </footer>
     </SectionPet>

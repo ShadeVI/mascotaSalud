@@ -4,7 +4,7 @@ import { getPetHistory } from '../services/pets.services'
 import { Link, useParams } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import usePets from '../hooks/usePets'
-import { MdEdit, MdDelete, MdArrowBack } from 'react-icons/md'
+import { MdEdit, MdDelete } from 'react-icons/md'
 import { formatDateIntl } from '../utils/formatDateIntl'
 import NotFound from '../components/NotFound'
 
@@ -13,6 +13,8 @@ import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import { ROUTES } from '../constants/routes'
 import { createRoute } from '../utils/createRoute'
 import LineChart from '../components/LineChart'
+import BackButton from '../components/BackButton'
+import SectionPet from '../components/Section'
 
 const PetHistory = () => {
   const { pets } = usePets()
@@ -32,10 +34,8 @@ const PetHistory = () => {
   }
 
   return (
-    <section className={styles.section}>
-      <div className={styles.backLink__wrapper}>
-        <Link to={createRoute(ROUTES.SINGLE_PET, selectedPet.ID)}><MdArrowBack fontSize={'2rem'} /></Link>
-      </div>
+    <SectionPet>
+      <BackButton route={createRoute(ROUTES.SINGLE_PET, selectedPet.ID)}/>
       <header className={styles.header}>
         <h1 className={styles.title}>Historial de {selectedPet?.nombre}</h1>
         <RoundedImage src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} alt={selectedPet.nombre} width='150px' height='150px' borderRadius='8px' />
@@ -91,7 +91,7 @@ const PetHistory = () => {
           }
         </tbody>
       </table>
-    </section>
+    </SectionPet>
   )
 }
 export default PetHistory
