@@ -13,8 +13,11 @@ export const PetsProvider = ({ children }) => {
     setPets(prev => [...prev, pet])
   }
 
-  const updatePetCtx = () => {
-    console.log('UPDATE PET')
+  const updatePetCtx = (pet) => {
+    setPets(prev => {
+      const filteredPets = prev.filter(prevPet => prevPet.ID !== pet.ID)
+      return [...filteredPets, pet]
+    })
   }
 
   useEffect(() => {

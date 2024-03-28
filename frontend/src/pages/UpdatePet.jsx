@@ -15,6 +15,7 @@ import { formatPetObjectToForm } from '../utils/petProfileUtils'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
 import SectionPet from '../components/Section'
 import { optionsAnimalTypes, optionsGenderTypes } from '../constants/petForm'
+import { updatePet } from '../services/pets.services'
 
 const initialFormState = {
   nombre: '',
@@ -36,19 +37,12 @@ const UpdatePet = () => {
 
   useEffect(() => {
     const pet = pets.find((pet) => pet.ID === +idPet)
-    setSelectedPet(pet)
     if (pet) {
+      pet.vacuna_basica = pet.vacuna_basica !== 0
+      setSelectedPet(pet)
       setFormEntries(formatPetObjectToForm(pet))
     }
-  }, [isLoading])
-
-  if (isLoading) {
-    return <Loading />
-  }
-
-  if (!selectedPet && !isLoading) {
-    return <NotFound />
-  }
+  }, [pets])
 
   const handleFormEntries = (e) => {
     setFormEntries((prev) => {
@@ -78,30 +72,32 @@ const UpdatePet = () => {
       return
     }
 
-    try {
-      const formData = new FormData()
-      for (const key in formEntries) {
+    const formData = new FormData()
+    for (const key in formEntries) {
+      if (key === 'fecha_nac') {
+        formData.append(key, formatDateYYYYmmdd(formEntries[key]))
+      } else {
         formData.append(key, formEntries[key])
       }
-      const res = await fetch(`http://localhost:3000/pets/${selectedPet.ID}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${user.jwt}`
-        },
-        body: formData
-      })
-      const data = await res.json()
-      if (data?.error) {
-        console.log(data.error)
-        return
-      }
-      if (data?.result) {
-        updatePetCtx(data.result.data)
-        console.log(data.result)
-      }
-    } catch (error) {
-      console.log(error)
     }
+    const { result, error } = await updatePet({ idPet, body: formData, jwt: user.jwt })
+    if (error) {
+      console.log(error)
+      return
+    }
+
+    if (result) {
+      updatePetCtx(result)
+      console.log(result)
+    }
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (!selectedPet && !isLoading) {
+    return <NotFound />
   }
 
   return (
@@ -138,7 +134,7 @@ const UpdatePet = () => {
         </Row>
         <Row inline={true}>
           <Label htmlFor='vacuna_basica' text='Vacuna basica?' />
-          <Input type='checkbox' id='vacuna_basica' name='vacuna_basica' checked={formEntries.vacuna_basica} onChange={handleFormEntries} />
+          <Input type='checkbox' id='vacuna_basica' name='vacuna_basica' checked={!!formEntries.vacuna_basica} onChange={handleFormEntries} />
         </Row>
         <Button type='submit' >Actualizar</Button>
       </Form>

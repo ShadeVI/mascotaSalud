@@ -36,8 +36,25 @@ const addNewPet = async ({ body, jwt }) => {
   }
 }
 
+const updatePet = async ({ idPet, body, jwt }) => {
+  try {
+    const res = await fetch(`http://localhost:3000/pets/${idPet}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${jwt}`
+      },
+      body
+    })
+    const data = await res.json()
+    return { result: data?.result.data, error: data?.error }
+  } catch (error) {
+    return { result: null, error }
+  }
+}
+
 export {
   getUserPets,
   getPetHistory,
-  addNewPet
+  addNewPet,
+  updatePet
 }

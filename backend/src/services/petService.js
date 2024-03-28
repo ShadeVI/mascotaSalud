@@ -39,9 +39,29 @@ const addPet = async ({ petData, petImage, userUUID }) => {
   return pet
 }
 
+const updatePet = async ({ petData, petImage, userUUID }) => {
+  let petDataPrepared = {
+    ...petData
+  }
+
+  if (petImage) {
+    petDataPrepared = { ...petDataPrepared, petImage: petImage.filename }
+  }
+
+  const isUpdated = await Pet.updateOne(petDataPrepared)
+
+  if (!isUpdated) {
+    return null
+  }
+
+  const pet = await Pet.findById(petDataPrepared.ID)
+  return pet
+}
+
 module.exports = {
   findAll,
   findOne,
   findPetHistory,
-  addPet
+  addPet,
+  updatePet
 }

@@ -10,7 +10,7 @@ petRouter.get('/:id/history', getPetHistory)
 
 petRouter.post('/new-pet', upload.single('imagePet'), addPet)
 
-petRouter.put('/:id', updatePet)
+petRouter.put('/:id', upload.single('imagePet'), updatePet)
 
 module.exports = {
   petRouter

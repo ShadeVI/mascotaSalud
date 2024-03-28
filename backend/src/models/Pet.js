@@ -23,10 +23,35 @@ class Pet {
 
     const { nombre, n_chip: nChip, fecha_nac: fechaNac, tipo, raza, genero, vacuna_basica: vacBasica, petImage, userUUID } = petData
 
-    const [result] = await db.query('INSERT INTO mascota (nombre, n_chip, fecha_nac, foto, tipo, raza, genero, vacuna_basica, UUID_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [nombre, nChip, fechaNac, petImage, tipo, raza, genero, vacBasica ? 1 : 0, userUUID])
+    const [result] = await db.query('INSERT INTO mascota (nombre, n_chip, fecha_nac, foto, tipo, raza, genero, vacuna_basica, UUID_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [nombre, nChip, fechaNac, petImage, tipo, raza, genero, (vacBasica ? 1 : 0), userUUID])
 
     if (result.affectedRows > 0) {
       return result.insertId
+    }
+
+    return null
+  }
+
+  static async updateOne (petData) {
+    console.log(petData)
+    for (const key in petData) {
+      if (petData[key] === 'null' || petData[key] === 'undefined' || petData[key] === '') {
+        petData[key] = null
+      }
+      if (petData[key] === 'false') {
+        petData[key] = false
+      }
+      if (petData[key] === 'true') {
+        petData[key] = true
+      }
+    }
+
+    const { nombre, n_chip: nChip, fecha_nac: fechaNac, tipo, raza, genero, vacuna_basica: vacBasica, petImage, ID: idPet } = petData
+
+    const [result] = await db.query('UPDATE mascota SET nombre = ?, n_chip = ?, fecha_nac = ?, foto = ?, tipo = ?, raza = ?, genero = ?, vacuna_basica = ? WHERE ID = ?', [nombre, nChip, fechaNac, petImage, tipo, raza, genero, (vacBasica ? 1 : 0), idPet])
+
+    if (result.affectedRows > 0) {
+      return true
     }
 
     return null

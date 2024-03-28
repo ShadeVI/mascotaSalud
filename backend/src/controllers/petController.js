@@ -90,8 +90,16 @@ const addPet = async (req, res, next) => {
 }
 
 const updatePet = async (req, res, next) => {
-  console.log(req.body)
-  return res.json({ message: 'Datos actualizados', result: { data: 'PET' } })
+  const { body: data } = req
+  const file = req?.file
+  const { UUID: userUUID } = res.locals.user
+  try {
+    const updatedPet = await petService.updatePet({ petData: data, petImage: file, userUUID })
+
+    return res.json({ message: 'Mascota actualizada', result: { data: updatedPet } })
+  } catch (error) {
+    return next(error)
+  }
 }
 
 module.exports = {
