@@ -8,7 +8,7 @@ import Select from '../components/form/Select'
 import Button from '../components/Button'
 import Row from '../components/formPet/Row'
 import Form from '../components/formPet/Form'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Loading from '../components/Loading'
 import NotFound from '../components/NotFound'
 import { formatPetObjectToForm } from '../utils/petProfileUtils'
@@ -16,6 +16,8 @@ import { formatDateYYYYmmdd } from '../utils/formatDate'
 import SectionPet from '../components/Section'
 import { optionsAnimalTypes, optionsGenderTypes } from '../constants/petForm'
 import { updatePet } from '../services/pets.services'
+import { ROUTES } from '../constants/routes'
+import { createRoute } from '../utils/createRoute'
 
 const initialFormState = {
   nombre: '',
@@ -31,6 +33,7 @@ const initialFormState = {
 const UpdatePet = () => {
   const { user } = useAuth()
   const { idPet } = useParams()
+  const navigator = useNavigate()
   const { updatePetCtx, pets, isLoading } = usePets()
   const [formEntries, setFormEntries] = useState(initialFormState)
   const [selectedPet, setSelectedPet] = useState(null)
@@ -88,7 +91,7 @@ const UpdatePet = () => {
 
     if (result) {
       updatePetCtx(result)
-      console.log(result)
+      navigator(createRoute(ROUTES.SINGLE_PET, idPet))
     }
   }
 
