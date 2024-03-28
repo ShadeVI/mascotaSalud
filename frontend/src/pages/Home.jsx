@@ -7,6 +7,8 @@ import usePets from '../hooks/usePets'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '../constants/routes'
 import Loading from '../components/Loading'
+import SectionVertical from '../components/SectionVertical'
+import Section from '../components/Section'
 
 const Home = () => {
   const navigator = useNavigate()
@@ -21,39 +23,34 @@ const Home = () => {
   }
 
   return (
-    <section className={styles.section}>
+    <>
       {
         pets.length > 0
           ? (
-            <Grid>
-              {pets.map(pet => {
-                return (
-                  <GridSquare key={pet.ID}>
-                    <Card pet={pet} />
-                  </GridSquare>
-                )
-              })}
-              <GridSquare key='Add'>
-                <ButtonSquare text='+' handleClick={handleAddPet} />
-              </GridSquare>
-            </Grid>
+            <Section>
+              <Grid>
+                {pets.map(pet => {
+                  return (
+                    <GridSquare key={pet.ID}>
+                      <Card pet={pet} />
+                    </GridSquare>
+                  )
+                })}
+                <GridSquare key='Add'>
+                  <ButtonSquare text='+' handleClick={handleAddPet} />
+                </GridSquare>
+              </Grid>
+            </Section>
             )
           : (
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyItems: 'center',
-              alignItems: 'center',
-              gap: '20px',
-              textAlign: 'center'
-            }}>
+            <SectionVertical>
               <h2 className={styles.info}>Todavía no tienes registrada ninguna mascota</h2>
               <p>Quieres añadir tu primera mascota?</p>
               <ButtonSquare text='+' handleClick={handleAddPet} />
-            </div>
+            </SectionVertical>
             )
       }
-    </section>
+    </>
   )
 }
 
