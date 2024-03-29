@@ -19,7 +19,7 @@ import useAuth from '../hooks/useAuth'
 
 const PetProfile = () => {
   const { user } = useAuth()
-  const { pets, isLoading } = usePets()
+  const { pets, isLoading, deletePetCtx } = usePets()
   const { idPet } = useParams()
   const navigator = useNavigate()
   const [selectedPet, setSelectedPet] = useState(null)
@@ -27,6 +27,7 @@ const PetProfile = () => {
   const handleDelete = async () => {
     const { result } = await deletePet({ idPet, jwt: user.jwt })
     if (result) {
+      deletePetCtx(selectedPet.ID)
       navigator(ROUTES.HOME)
     }
   }

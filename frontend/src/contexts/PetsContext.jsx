@@ -20,6 +20,13 @@ export const PetsProvider = ({ children }) => {
     })
   }
 
+  const deletePetCtx = (id) => {
+    setPets(prev => {
+      const filteredPets = prev.filter(prevPet => prevPet.ID !== id)
+      return filteredPets
+    })
+  }
+
   useEffect(() => {
     if (user) {
       const { username, jwt } = user
@@ -39,7 +46,7 @@ export const PetsProvider = ({ children }) => {
   }, [user])
 
   return (
-    <PetsContext.Provider value={{ pets, setPets, addNewPetCtx, updatePetCtx, isLoading }}>
+    <PetsContext.Provider value={{ pets, setPets, addNewPetCtx, updatePetCtx, deletePetCtx, isLoading }}>
       {children}
     </PetsContext.Provider>
   )
