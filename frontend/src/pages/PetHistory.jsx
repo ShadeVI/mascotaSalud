@@ -19,6 +19,7 @@ import FormContainer from '../components/form/FormContainer'
 import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
+import Modal from '../components/Modal'
 
 const PetHistory = () => {
   const { pets } = usePets()
@@ -26,10 +27,10 @@ const PetHistory = () => {
   const { idPet } = useParams()
   const [history, setHistory] = useState([])
   const [selectedPet, setSelectedPet] = useState(null)
-  const [showForm, setShowForm] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
-  const handleShowForm = () => {
-    setShowForm(prev => !prev)
+  const handleShowModal = () => {
+    setShowModal(prev => !prev)
   }
 
   const handleSubmit = async (e) => {
@@ -78,28 +79,30 @@ const PetHistory = () => {
       }
 
       <div className={styles.buttonWrapper}>
-        <Button type='button' onClick={handleShowForm}>{showForm ? 'Cerrar' : 'Añadir datos'}</Button>
+        <Button type='button' onClick={handleShowModal}>Añadir datos</Button>
       </div>
 
-      <div className={showForm ? styles.formWrapper : styles.formWrapper__hidden}>
-        <FormContainer>
-          <form onSubmit={handleSubmit}>
-            <Row>
-              <Label text='fecha' htmlFor='fecha' />
-              <Input type='date' id='fecha' />
-            </Row>
-            <Row>
-              <Label text='peso' htmlFor='peso' />
-              <Input type='number' id='peso' />
-            </Row>
-            <Row>
-              <Label text='antiparasitario' htmlFor='antiparasitario' />
-              <Input type='checkbox' id='antiparasitario' />
-            </Row>
-            <Button type='submit'>Enviar</Button>
-          </form>
-        </FormContainer>
-      </div>
+      {showModal && (
+        <Modal handleClose={handleShowModal}>
+          <FormContainer>
+            <form onSubmit={handleSubmit}>
+              <Row>
+                <Label text='fecha' htmlFor='fecha' />
+                <Input type='date' id='fecha' />
+              </Row>
+              <Row>
+                <Label text='peso' htmlFor='peso' />
+                <Input type='number' id='peso' />
+              </Row>
+              <Row>
+                <Label text='antiparasitario' htmlFor='antiparasitario' />
+                <Input type='checkbox' id='antiparasitario' />
+              </Row>
+              <Button type='submit'>Enviar</Button>
+            </form>
+          </FormContainer>
+        </Modal>)
+      }
 
       <table className={styles.table}>
         <thead>
