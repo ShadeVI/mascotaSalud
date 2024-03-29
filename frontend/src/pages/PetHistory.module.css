@@ -17,6 +17,24 @@
   font-size: 3rem;
 }
 
+.buttonWrapper {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.formWrapper {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.formWrapper__hidden {
+  display: none;
+}
+
+.formWrapper > div {
+  width: 300px;
+}
+
 .table {
   border: 1px solid #ccc;
   border-collapse: collapse;

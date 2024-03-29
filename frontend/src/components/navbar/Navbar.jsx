@@ -53,7 +53,7 @@ const Navbar = () => {
           <>
             <div className={styles.links} ref={mobileLinks}>
               <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.HOME}>Home</NavLink>
-              <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.PETS_OVERVIEW}>Visión global</NavLink>
+              {/* <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.PETS_OVERVIEW}>Visión global</NavLink> */}
               <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
             </div>
             <div className={styles.user}>

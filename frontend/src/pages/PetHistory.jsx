@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import styles from './PetHistory.module.css'
 import { getPetHistory } from '../services/pets.services'
-import { Link, useParams } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import usePets from '../hooks/usePets'
 import { MdEdit, MdDelete } from 'react-icons/md'
 import { formatDateIntl } from '../utils/formatDateIntl'
 import NotFound from '../components/NotFound'
-
+import { useParams } from 'react-router-dom'
 import RoundedImage from '../components/RoundedImage'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import { ROUTES } from '../constants/routes'
@@ -15,19 +14,40 @@ import { createRoute } from '../utils/createRoute'
 import LineChart from '../components/LineChart'
 import BackButton from '../components/BackButton'
 import SectionPet from '../components/Section'
+import Button from '../components/Button'
+import FormContainer from '../components/form/FormContainer'
+import Row from '../components/form/Row'
+import Label from '../components/form/Label'
+import Input from '../components/form/Input'
 
 const PetHistory = () => {
   const { pets } = usePets()
   const { user } = useAuth()
   const { idPet } = useParams()
   const [history, setHistory] = useState([])
+  const [selectedPet, setSelectedPet] = useState(null)
+  const [showForm, setShowForm] = useState(false)
 
-  const selectedPet = pets.find((pet) => pet.ID === +idPet)
+  const handleShowForm = () => {
+    setShowForm(prev => !prev)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    console.log(e)
+  }
 
   useEffect(() => {
-    getPetHistory({ idPet, jwt: user.jwt })
-      .then((data) => setHistory(data))
-  }, [])
+    const selectedPet = pets.find((pet) => pet.ID === +idPet)
+    setSelectedPet(selectedPet)
+  }, [pets])
+
+  useEffect(() => {
+    if (selectedPet) {
+      getPetHistory({ idPet: selectedPet?.ID, jwt: user.jwt })
+        .then((data) => setHistory(data))
+    }
+  }, [selectedPet])
 
   if (!selectedPet) {
     return <NotFound />
@@ -54,12 +74,31 @@ const PetHistory = () => {
           />)
           : (<div className={styles.info__noDatos}>
               <h3 >No hay suficientes datos para mostrar un gráfico</h3>
-              <p>Añade mas datos haciendo click <Link to={'home'}>aquí</Link></p>
             </div>)
       }
 
-      <div>
-        AÑADIR NUEVOS DATOS
+      <div className={styles.buttonWrapper}>
+        <Button type='button' onClick={handleShowForm}>{showForm ? 'Cerrar' : 'Añadir datos'}</Button>
+      </div>
+
+      <div className={showForm ? styles.formWrapper : styles.formWrapper__hidden}>
+        <FormContainer>
+          <form onSubmit={handleSubmit}>
+            <Row>
+              <Label text='fecha' htmlFor='fecha' />
+              <Input type='date' id='fecha' />
+            </Row>
+            <Row>
+              <Label text='peso' htmlFor='peso' />
+              <Input type='number' id='peso' />
+            </Row>
+            <Row>
+              <Label text='antiparasitario' htmlFor='antiparasitario' />
+              <Input type='checkbox' id='antiparasitario' />
+            </Row>
+            <Button type='submit'>Enviar</Button>
+          </form>
+        </FormContainer>
       </div>
 
       <table className={styles.table}>
