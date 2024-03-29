@@ -41,7 +41,6 @@ const UpdatePet = () => {
   useEffect(() => {
     const pet = pets.find((pet) => pet.ID === +idPet)
     if (pet) {
-      pet.vacuna_basica = pet.vacuna_basica !== 0
       setSelectedPet(pet)
       setFormEntries(formatPetObjectToForm(pet))
     }
@@ -137,7 +136,7 @@ const UpdatePet = () => {
         </Row>
         <Row inline={true}>
           <Label htmlFor='vacuna_basica' text='Vacuna basica?' />
-          <Input type='checkbox' id='vacuna_basica' name='vacuna_basica' checked={!!formEntries.vacuna_basica} onChange={handleFormEntries} />
+          <Input type='checkbox' id='vacuna_basica' name='vacuna_basica' checked={formEntries.vacuna_basica} onChange={handleFormEntries} />
         </Row>
         <Button type='submit' >Actualizar</Button>
       </Form>
