@@ -67,8 +67,9 @@ const PetHistory = () => {
     for (const key in formEntries) {
       formData.append(key, formEntries[key])
     }
+    formData.append('ID_mascota', idPet)
 
-    const { result, error } = await addNewHistory({ idPet, body: formData, jwt: user.jwt })
+    const { result, error } = await addNewHistory({ idPet, body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
     if (error) {
       console.log(error)
       return
@@ -76,6 +77,8 @@ const PetHistory = () => {
 
     if (result) {
       setHistory(prev => [...prev, result])
+      setShowModal(false)
+      setFormEntries(initialFormState)
     }
   }
 
@@ -156,8 +159,9 @@ const PetHistory = () => {
         </thead>
         <tbody>
           {
-            history.map(({ ID, peso, antiparasitario, fecha }) => {
-              return (
+            history.length > 0
+              ? history.map(({ ID, peso, antiparasitario, fecha }) => {
+                return (
                 <tr key={ID}>
                     <td>{formatDateIntl(fecha)}</td>
                     <td>{peso}</td>
@@ -169,8 +173,9 @@ const PetHistory = () => {
                       </div>
                     </td>
                 </tr>
-              )
-            })
+                )
+              })
+              : <tr><td colSpan={4}>No hay datos</td></tr>
           }
         </tbody>
       </table>

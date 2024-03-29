@@ -1,4 +1,5 @@
 const petService = require('../services/petService')
+const historyPetService = require('../services/historyPetService')
 
 const getAllPets = async (req, res, next) => {
   const { user } = res.locals
@@ -113,11 +114,42 @@ const deletePet = async (req, res, next) => {
   }
 }
 
+const addPetHistory = async (req, res, next) => {
+  const { body: data } = req
+
+  try {
+    for (const key in data) {
+      if (data[key] === 'null' || data[key] === 'undefined' || data[key] === '') {
+        data[key] = null
+      }
+      if (data[key] === 'false') {
+        data[key] = false
+      }
+      if (data[key] === 'true') {
+        data[key] = true
+      }
+    }
+    const newHistoryRow = await historyPetService.addOne({ data })
+
+    return res.json({ message: 'Nuevos datos añadidos', result: { data: newHistoryRow } })
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return next({
+        error: 'BAD REQUEST',
+        message: 'Numero de chip no valido o ya existe',
+        httpCode: 400
+      })
+    }
+    return next(error)
+  }
+}
+
 module.exports = {
   getAllPets,
   getPet,
   getPetHistory,
   addPet,
   updatePet,
-  deletePet
+  deletePet,
+  addPetHistory
 }

@@ -3,7 +3,8 @@ const addNewHistory = async ({ idPet, body, jwt }) => {
     const res = await fetch(`http://localhost:3000/pets/${idPet}/history`, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${jwt}`
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
       },
       body
     })
