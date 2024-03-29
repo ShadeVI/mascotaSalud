@@ -20,6 +20,13 @@ import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Modal from '../components/Modal'
+import { addNewHistory } from '../services/petHistory.services'
+
+const initialFormState = {
+  peso: '',
+  fecha: '',
+  antiparasitario: false
+}
 
 const PetHistory = () => {
   const { pets } = usePets()
@@ -28,6 +35,22 @@ const PetHistory = () => {
   const [history, setHistory] = useState([])
   const [selectedPet, setSelectedPet] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [formEntries, setFormEntries] = useState(initialFormState)
+
+  const handleFormEntries = (e) => {
+    setFormEntries((prev) => {
+      if (e.target.type === 'checkbox') {
+        return {
+          ...prev,
+          [e.target.name]: e.target.checked
+        }
+      }
+      return {
+        ...prev,
+        [e.target.name]: e.target.value
+      }
+    })
+  }
 
   const handleShowModal = () => {
     setShowModal(prev => !prev)
@@ -35,7 +58,25 @@ const PetHistory = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(e)
+    if (!formEntries.peso || !formEntries.fecha) {
+      // TODO: Set error
+      return
+    }
+
+    const formData = new FormData()
+    for (const key in formEntries) {
+      formData.append(key, formEntries[key])
+    }
+
+    const { result, error } = await addNewHistory({ idPet, body: formData, jwt: user.jwt })
+    if (error) {
+      console.log(error)
+      return
+    }
+
+    if (result) {
+      setHistory(prev => [...prev, result])
+    }
   }
 
   useEffect(() => {
@@ -88,15 +129,15 @@ const PetHistory = () => {
             <form onSubmit={handleSubmit}>
               <Row>
                 <Label text='fecha' htmlFor='fecha' />
-                <Input type='date' id='fecha' />
+                <Input type='date' id='fecha' name='fecha' value={formEntries?.fecha} onChange={handleFormEntries} />
               </Row>
               <Row>
                 <Label text='peso' htmlFor='peso' />
-                <Input type='number' id='peso' />
+                <Input type='number' id='peso' name='peso' value={formEntries?.peso} onChange={handleFormEntries} />
               </Row>
               <Row>
                 <Label text='antiparasitario' htmlFor='antiparasitario' />
-                <Input type='checkbox' id='antiparasitario' />
+                <Input type='checkbox' id='antiparasitario' name='antiparasitario' value={formEntries?.antiparasitario} onChange={handleFormEntries} />
               </Row>
               <Button type='submit'>Enviar</Button>
             </form>
