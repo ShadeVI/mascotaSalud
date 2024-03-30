@@ -18,6 +18,7 @@ import { optionsAnimalTypes, optionsGenderTypes } from '../constants/petForm'
 import { updatePet } from '../services/pets.services'
 import { ROUTES } from '../constants/routes'
 import { createRoute } from '../utils/createRoute'
+import BackButton from '../components/BackButton'
 
 const initialFormState = {
   nombre: '',
@@ -104,6 +105,7 @@ const UpdatePet = () => {
 
   return (
     <SectionPet>
+      <BackButton route={createRoute(ROUTES.SINGLE_PET, idPet)}/>
       <h2 className={styles.title}>Actualiza los datos</h2>
       <Form onSubmit={handleSubmit} >
         <Row>
