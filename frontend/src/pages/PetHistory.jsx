@@ -20,9 +20,11 @@ import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Modal from '../components/Modal'
-import { addNewHistory } from '../services/petHistory.services'
+import { addNewHistory, editHistory } from '../services/petHistory.services'
+import { formatDateYYYYmmdd } from '../utils/formatDate'
 
 const initialFormState = {
+  ID: '',
   peso: '',
   fecha: '',
   antiparasitario: false
@@ -35,6 +37,7 @@ const PetHistory = () => {
   const [history, setHistory] = useState([])
   const [selectedPet, setSelectedPet] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
   const [formEntries, setFormEntries] = useState(initialFormState)
 
   const handleFormEntries = (e) => {
@@ -53,6 +56,7 @@ const PetHistory = () => {
   }
 
   const handleShowModal = () => {
+    setFormEntries(initialFormState)
     setShowModal(prev => !prev)
   }
 
@@ -69,17 +73,38 @@ const PetHistory = () => {
     }
     formData.append('ID_mascota', idPet)
 
-    const { result, error } = await addNewHistory({ idPet, body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
+    const { result, error } = isEdit
+      ? await editHistory({ idPet, body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
+      : await addNewHistory({ idPet, body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
+
     if (error) {
       console.log(error)
       return
     }
 
     if (result) {
-      setHistory(prev => [...prev, result])
+      setHistory(prev => {
+        let newHistory = [...prev]
+        if (isEdit) {
+          newHistory = [...prev].filter((hist) => hist.ID !== result.ID)
+        }
+        return [...newHistory, result].sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+      })
       setShowModal(false)
       setFormEntries(initialFormState)
     }
+  }
+
+  const handleEdit = async (ID) => {
+    setIsEdit(true)
+    setShowModal(true)
+    const { peso, fecha, antiparasitario } = history.find(hist => hist.ID === ID)
+    setFormEntries({
+      ID,
+      peso,
+      fecha: formatDateYYYYmmdd(fecha),
+      antiparasitario: Boolean(antiparasitario)
+    })
   }
 
   useEffect(() => {
@@ -90,7 +115,10 @@ const PetHistory = () => {
   useEffect(() => {
     if (selectedPet) {
       getPetHistory({ idPet: selectedPet?.ID, jwt: user.jwt })
-        .then((data) => setHistory(data))
+        .then((data) => {
+          const orderedData = data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+          setHistory(orderedData)
+        })
     }
   }, [selectedPet])
 
@@ -140,7 +168,7 @@ const PetHistory = () => {
               </Row>
               <Row>
                 <Label text='antiparasitario' htmlFor='antiparasitario' />
-                <Input type='checkbox' id='antiparasitario' name='antiparasitario' value={formEntries?.antiparasitario} onChange={handleFormEntries} />
+                <Input type='checkbox' id='antiparasitario' name='antiparasitario' checked={formEntries?.antiparasitario} onChange={handleFormEntries} />
               </Row>
               <Button type='submit'>Enviar</Button>
             </form>
@@ -168,7 +196,7 @@ const PetHistory = () => {
                     <td>{antiparasitario ? 'SI' : 'NO'}</td>
                     <td>
                       <div className={styles.actions}>
-                        <div><MdEdit /></div>
+                        <div><MdEdit onClick={() => handleEdit(ID)} /></div>
                         <div><MdDelete /></div>
                       </div>
                     </td>

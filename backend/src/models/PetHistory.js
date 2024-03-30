@@ -24,6 +24,15 @@ class PetHistory {
     }
     return null
   }
+
+  static async updateOne ({ data }) {
+    const { peso, antiparasitario, fecha, ID } = data
+    const [result] = await db.execute('UPDATE historial_mascota SET peso = ?, antiparasitario = ?, fecha = ? WHERE ID = ?', [peso, antiparasitario, fecha, ID])
+    if (result.affectedRows > 0) {
+      return ID
+    }
+    return null
+  }
 }
 
 module.exports = PetHistory

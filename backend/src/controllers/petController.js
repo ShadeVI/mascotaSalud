@@ -136,10 +136,33 @@ const addPetHistory = async (req, res, next) => {
     if (error.code === 'ER_DUP_ENTRY') {
       return next({
         error: 'BAD REQUEST',
-        message: 'Numero de chip no valido o ya existe',
+        message: 'Ya existe',
         httpCode: 400
       })
     }
+    return next(error)
+  }
+}
+
+const updatePetHistory = async (req, res, next) => {
+  const { body: data } = req
+
+  try {
+    for (const key in data) {
+      if (data[key] === 'null' || data[key] === 'undefined' || data[key] === '') {
+        data[key] = null
+      }
+      if (data[key] === 'false') {
+        data[key] = false
+      }
+      if (data[key] === 'true') {
+        data[key] = true
+      }
+    }
+    const updatedHistoryRow = await historyPetService.updateOne({ data })
+
+    return res.json({ message: 'Registro actualizado', result: { data: updatedHistoryRow } })
+  } catch (error) {
     return next(error)
   }
 }
@@ -151,5 +174,6 @@ module.exports = {
   addPet,
   updatePet,
   deletePet,
-  addPetHistory
+  addPetHistory,
+  updatePetHistory
 }

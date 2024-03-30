@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllPets, getPet, getPetHistory, addPet, updatePet, deletePet, addPetHistory } = require('../controllers/petController')
+const { getAllPets, getPet, getPetHistory, addPet, updatePet, deletePet, addPetHistory, updatePetHistory } = require('../controllers/petController')
 const upload = require('../middlewares/imagePetUploader')
 
 const petRouter = express.Router()
@@ -13,6 +13,7 @@ petRouter.put('/:id', upload.single('imagePet'), updatePet)
 petRouter.delete('/:id', deletePet)
 
 petRouter.post('/:id/history', addPetHistory)
+petRouter.put('/:id/history', updatePetHistory)
 
 module.exports = {
   petRouter

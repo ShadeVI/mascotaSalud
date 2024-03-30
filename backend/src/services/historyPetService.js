@@ -11,6 +11,18 @@ const addOne = async ({ data }) => {
   return petHistory[0]
 }
 
+const updateOne = async ({ data }) => {
+  const IDUpdatedRow = await PetHistory.updateOne({ data })
+
+  if (!IDUpdatedRow) {
+    return null
+  }
+
+  const petHistory = await PetHistory.findOneByHistoryId(IDUpdatedRow)
+  return petHistory[0]
+}
+
 module.exports = {
-  addOne
+  addOne,
+  updateOne
 }

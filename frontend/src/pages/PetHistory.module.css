@@ -65,6 +65,10 @@
   align-items: center;
 }
 
+.actions svg {
+  cursor: pointer;
+}
+
 .info__noDatos {
   text-align: center;
   margin: 5rem auto;
