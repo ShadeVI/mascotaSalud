@@ -167,6 +167,16 @@ const updatePetHistory = async (req, res, next) => {
   }
 }
 
+const deletePetHistory = async (req, res, next) => {
+  const { historyID } = req.params
+  const isDeleted = await historyPetService.deleteOne(historyID)
+  try {
+    return res.json({ message: 'Registro eliminado', result: { data: isDeleted } })
+  } catch (error) {
+    return next(error)
+  }
+}
+
 module.exports = {
   getAllPets,
   getPet,
@@ -175,5 +185,6 @@ module.exports = {
   updatePet,
   deletePet,
   addPetHistory,
-  updatePetHistory
+  updatePetHistory,
+  deletePetHistory
 }

@@ -20,7 +20,7 @@ import Row from '../components/form/Row'
 import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Modal from '../components/Modal'
-import { addNewHistory, editHistory } from '../services/petHistory.services'
+import { addNewHistory, deleteHistory, editHistory } from '../services/petHistory.services'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
 
 const initialFormState = {
@@ -105,6 +105,22 @@ const PetHistory = () => {
       fecha: formatDateYYYYmmdd(fecha),
       antiparasitario: Boolean(antiparasitario)
     })
+  }
+
+  const handleDelete = async (ID) => {
+    if (!window.confirm('¿Está seguro de eliminar este registro?')) return
+    try {
+      const { result, error } = await deleteHistory({ historyId: ID, jwt: user.jwt })
+      if (error) {
+        console.log(error)
+        return
+      }
+      if (result) {
+        setHistory(prev => prev.filter(hist => hist.ID !== ID).sort((a, b) => new Date(a.fecha) - new Date(b.fecha)))
+      }
+    } catch (err) {
+      alert('Error al intentar eliminar el historial')
+    }
   }
 
   useEffect(() => {
@@ -197,7 +213,7 @@ const PetHistory = () => {
                     <td>
                       <div className={styles.actions}>
                         <div><MdEdit onClick={() => handleEdit(ID)} /></div>
-                        <div><MdDelete /></div>
+                        <div><MdDelete onClick={() => handleDelete(ID)} /></div>
                       </div>
                     </td>
                 </tr>

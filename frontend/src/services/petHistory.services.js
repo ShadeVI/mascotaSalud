@@ -32,7 +32,24 @@ const editHistory = async ({ idPet, body, jwt }) => {
   }
 }
 
+const deleteHistory = async ({ historyId, jwt }) => {
+  try {
+    const res = await fetch(`http://localhost:3000/pets/history/${historyId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await res.json()
+    return { result: data?.result.data, error: data?.error }
+  } catch (error) {
+    return { result: null, error }
+  }
+}
+
 export {
   addNewHistory,
-  editHistory
+  editHistory,
+  deleteHistory
 }

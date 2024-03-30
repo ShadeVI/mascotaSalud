@@ -33,6 +33,14 @@ class PetHistory {
     }
     return null
   }
+
+  static async deleteOne (historyId) {
+    const [result] = await db.query('DELETE FROM historial_mascota WHERE ID = ?', [historyId])
+    if (result.affectedRows > 0) {
+      return true
+    }
+    return false
+  }
 }
 
 module.exports = PetHistory

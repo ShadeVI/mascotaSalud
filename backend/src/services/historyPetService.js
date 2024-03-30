@@ -22,7 +22,14 @@ const updateOne = async ({ data }) => {
   return petHistory[0]
 }
 
+const deleteOne = async (historyId) => {
+  const isDeleted = await PetHistory.deleteOne(historyId)
+
+  return isDeleted
+}
+
 module.exports = {
   addOne,
-  updateOne
+  updateOne,
+  deleteOne
 }
