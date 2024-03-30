@@ -191,7 +191,7 @@ const PetHistory = () => {
           </FormContainer>
         </Modal>)
       }
-
+      {/* TODO: CREATE TABLE COMPONENT */}
       <table className={styles.table}>
         <thead>
             <tr>
