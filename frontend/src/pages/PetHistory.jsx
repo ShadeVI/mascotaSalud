@@ -22,6 +22,7 @@ import Input from '../components/form/Input'
 import Modal from '../components/Modal'
 import { addNewHistory, deleteHistory, editHistory } from '../services/petHistory.services'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
+import Table from '../components/Table/Table'
 
 const initialFormState = {
   ID: '',
@@ -192,7 +193,7 @@ const PetHistory = () => {
         </Modal>)
       }
       {/* TODO: CREATE TABLE COMPONENT */}
-      <table className={styles.table}>
+      <Table>
         <thead>
             <tr>
                 <th>Fecha</th>
@@ -222,7 +223,7 @@ const PetHistory = () => {
               : <tr><td colSpan={4}>No hay datos</td></tr>
           }
         </tbody>
-      </table>
+      </Table>
     </SectionPet>
   )
 }
