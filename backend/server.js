@@ -8,6 +8,7 @@ const cors = require('cors')
 const { authRouter } = require('./src/routes/authRouter')
 const { userRouter } = require('./src/routes/userRouter')
 const { petRouter } = require('./src/routes/petRouter')
+const { expensesRouter } = require('./src/routes/expensesRouter')
 
 // Import middlewares
 const requireAuth = require('./src/middlewares/requireAuth')
@@ -28,6 +29,8 @@ app.use('/auth', authRouter)
 app.use('/users', requireAuth, userRouter)
 
 app.use('/pets', requireAuth, petRouter)
+
+app.use('/expenses', requireAuth, expensesRouter)
 
 app.use((err, req, res, next) => {
   console.log({ err })
