@@ -16,7 +16,6 @@
 
 .table tr:hover {
   background-color: rgb(179, 159, 233);
-  font-weight: bold;
 }
 
 .table th,
