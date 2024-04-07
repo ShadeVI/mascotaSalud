@@ -6,6 +6,17 @@ const getAllByUserId = async (userId) => {
   return userExpenses
 }
 
+const updateOne = async ({ data }) => {
+  const isUpdated = await Expense.updateOne({ data })
+
+  if (!isUpdated) {
+    return false
+  }
+
+  return true
+}
+
 module.exports = {
-  getAllByUserId
+  getAllByUserId,
+  updateOne
 }

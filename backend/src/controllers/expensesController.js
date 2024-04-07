@@ -20,6 +20,19 @@ const getAllExpensesByUser = async (req, res, next) => {
   }
 }
 
+const updateExpense = async (req, res, next) => {
+  const { body: data } = req
+
+  try {
+    const aaa = await expenseService.updateOne({ data })
+
+    return res.json({ message: 'Registro actualizado', result: { data: aaa } })
+  } catch (error) {
+    return next(error)
+  }
+}
+
 module.exports = {
-  getAllExpensesByUser
+  getAllExpensesByUser,
+  updateExpense
 }

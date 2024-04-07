@@ -212,7 +212,7 @@ const PetHistory = () => {
                     <td>{peso}</td>
                     <td>{antiparasitario ? 'SI' : 'NO'}</td>
                     <td>
-                      <Actions ID={ID} handleEdit={handleEdit} handleDelete={handleDelete}/>
+                      <Actions handleEdit={() => handleEdit(ID)} handleDelete={() => handleDelete(ID)}/>
                     </td>
                 </tr>
                 )
