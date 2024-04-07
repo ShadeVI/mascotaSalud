@@ -3,7 +3,6 @@ import styles from './PetHistory.module.css'
 import { getPetHistory } from '../services/pets.services'
 import useAuth from '../hooks/useAuth'
 import usePets from '../hooks/usePets'
-import { MdEdit, MdDelete } from 'react-icons/md'
 import { formatDateIntl } from '../utils/formatDateIntl'
 import NotFound from '../components/NotFound'
 import { useParams } from 'react-router-dom'
@@ -23,6 +22,7 @@ import Modal from '../components/Modal'
 import { addNewHistory, deleteHistory, editHistory } from '../services/petHistory.services'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
 import Table from '../components/Table/Table'
+import Actions from '../components/Table/Actions'
 
 const initialFormState = {
   ID: '',
@@ -212,10 +212,7 @@ const PetHistory = () => {
                     <td>{peso}</td>
                     <td>{antiparasitario ? 'SI' : 'NO'}</td>
                     <td>
-                      <div className={styles.actions}>
-                        <div><MdEdit onClick={() => handleEdit(ID)} /></div>
-                        <div><MdDelete onClick={() => handleDelete(ID)} /></div>
-                      </div>
+                      <Actions ID={ID} handleEdit={handleEdit} handleDelete={handleDelete}/>
                     </td>
                 </tr>
                 )
