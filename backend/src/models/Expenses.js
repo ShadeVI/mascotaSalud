@@ -1,6 +1,12 @@
 const { db } = require('../db/connection')
 
 class Expense {
+  static async getOne (expenseID) {
+    const [rows] = await db.execute('SELECT * FROM gasto WHERE ID = ?', [expenseID])
+    if (rows.length > 0) return rows[0]
+    return rows
+  }
+
   static async getAll () {
     const [rows] = await db.execute('SELECT * FROM gasto ORDER BY fecha')
     return rows
@@ -16,7 +22,17 @@ class Expense {
     const { ID, descripcion, fecha, valor, IDmascota } = expenseData
 
     const [result] = await db.query('UPDATE gasto SET descripcion = ?, fecha = ?, valor = ?, ID_mascota = ? WHERE ID = ?', [descripcion, fecha, valor, IDmascota, ID])
-    console.log(result)
+
+    if (result.affectedRows > 0) {
+      return true
+    }
+
+    return null
+  }
+
+  static async deleteOne (expenseID) {
+    const [result] = await db.query('DELETE FROM gasto WHERE ID = ?', [expenseID])
+
     if (result.affectedRows > 0) {
       return true
     }

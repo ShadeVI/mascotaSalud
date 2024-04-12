@@ -1,5 +1,10 @@
 const Expense = require('../models/Expenses')
 
+const getOne = async (expenseID) => {
+  const expense = await Expense.getOne(expenseID)
+  return expense
+}
+
 const getAllByUserId = async (userId) => {
   const allExpenses = await Expense.getAll()
   const userExpenses = allExpenses.filter(expense => expense.UUID_usuario === userId)
@@ -16,7 +21,19 @@ const updateOne = async ({ data }) => {
   return true
 }
 
+const deleteOne = async (expenseID) => {
+  const isDeleted = await Expense.deleteOne(expenseID)
+
+  if (!isDeleted) {
+    return false
+  }
+
+  return true
+}
+
 module.exports = {
+  getOne,
   getAllByUserId,
-  updateOne
+  updateOne,
+  deleteOne
 }
