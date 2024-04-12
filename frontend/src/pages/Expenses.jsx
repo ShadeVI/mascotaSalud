@@ -15,6 +15,8 @@ import Label from '../components/form/Label'
 import Input from '../components/form/Input'
 import Button from '../components/Button'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
+import useAuth from '../hooks/useAuth'
+import { deleteExpense } from '../services/expenses.services'
 
 const initialFormState = {
   ID: '',
@@ -26,15 +28,15 @@ const initialFormState = {
 }
 
 const Expenses = () => {
+  const { user } = useAuth()
   const { pets } = usePets()
-  const { expenses, isLoading } = useExpenses()
+  const { expenses, isLoading, setExpenses } = useExpenses()
   const [filteredExpenses, setFilteredExpenses] = useState([...expenses])
   const [selectedFilterID, setSelectedFilterID] = useState('all')
   const [showModal, setShowModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [formEntries, setFormEntries] = useState(initialFormState)
   const [petOnEdit, setPetOnEdit] = useState(null)
-  console.log(expenses)
 
   const handleChangeFilter = (e) => {
     const getFilteredValue = isNaN(e.target.value) ? 'all' : Number(e.target.value)
@@ -102,19 +104,19 @@ const Expenses = () => {
   }
 
   const handleDelete = async (ID) => {
-    /* if (!window.confirm('¿Está seguro de eliminar este registro?')) return
+    if (!window.confirm('¿Está seguro de eliminar este registro?')) return
     try {
-      const { result, error } = await deleteHistory({ historyId: ID, jwt: user.jwt })
+      const { result, error } = await deleteExpense({ expenseID: ID, jwt: user.jwt })
       if (error) {
         console.log(error)
         return
       }
       if (result) {
-        setHistory(prev => prev.filter(hist => hist.ID !== ID).sort((a, b) => new Date(a.fecha) - new Date(b.fecha)))
+        setExpenses(prev => prev.filter(expense => expense.ID !== ID).sort((a, b) => new Date(a.fecha) - new Date(b.fecha)))
       }
     } catch (err) {
       alert('Error al intentar eliminar el historial')
-    } */
+    }
   }
 
   useEffect(() => {
