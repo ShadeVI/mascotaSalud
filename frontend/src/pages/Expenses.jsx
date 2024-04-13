@@ -18,6 +18,7 @@ import { formatDateYYYYmmdd } from '../utils/formatDate'
 import useAuth from '../hooks/useAuth'
 import { createExpense, deleteExpense, updateExpense } from '../services/expenses.services'
 import { monthsMapper } from '../utils/monthsMapper'
+import Select from '../components/form/Select'
 
 const initialFormState = {
   ID: '',
@@ -66,6 +67,8 @@ const Expenses = () => {
       formData.append(key, formEntries[key])
     }
 
+    formData.append('UUIDusuario', user.UUID)
+
     const { result, error } = isEdit
       ? await updateExpense({ body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
       : await createExpense({ body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
@@ -92,14 +95,13 @@ const Expenses = () => {
     setPetOnEdit(pets.filter(pet => pet.ID === petId)[0])
     setIsEdit(true)
     setShowModal(true)
-    const { descripcion, valor, fecha, ID_mascota: IDmascota, UUID_usuario: UUIDusuario } = expenses.filter(expense => expense.ID === ID)[0]
+    const { descripcion, valor, fecha, ID_mascota: IDmascota } = expenses.filter(expense => expense.ID === ID)[0]
     setFormEntries({
       ID,
       descripcion,
       fecha: formatDateYYYYmmdd(fecha),
       valor,
-      IDmascota,
-      UUIDusuario
+      IDmascota
     })
   }
 
@@ -137,7 +139,7 @@ const Expenses = () => {
       <BackButton route={ROUTES.HOME}/>
       <div style={{ width: 'fit-content', height: 'fit-content', padding: '20px', border: '1px solid black', margin: '0 auto' }}>Gastos de {monthsMapper(new Date().getMonth())}: {expenses.filter((exp) => new Date(exp.fecha).getMonth() === new Date().getMonth()).reduce((prev, curr) => {
         return prev + curr.valor
-      }, 0)} €</div>
+      }, 0).toFixed(2)} €</div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50 }}>
         <div>
           <label htmlFor='filter-expenses'>Filtrar por: </label>
@@ -170,6 +172,12 @@ const Expenses = () => {
               <Row>
                 <Label text='valor' htmlFor='valor' />
                 <Input type='number' step='0.01' min='0' id='valor' name='valor' value={formEntries?.valor} onChange={handleFormEntries} />
+              </Row>
+              <Row>
+                <Label text='mascota' htmlFor='mascota' />
+                <Select id='mascota' name='IDmascota' isFirstDisabled={false} value={formEntries?.IDmascota} onChange={(e) => handleFormEntries(e)} options={[{ displayText: 'Todos', value: '' }, ...pets.map(({ ID, nombre }) => {
+                  return { displayText: nombre, value: ID }
+                })]} />
               </Row>
               <Button type='submit'>Enviar</Button>
             </form>

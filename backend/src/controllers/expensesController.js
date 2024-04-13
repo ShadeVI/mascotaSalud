@@ -20,6 +20,28 @@ const getAllExpensesByUser = async (req, res, next) => {
   }
 }
 
+const addExpense = async (req, res, next) => {
+  const { body: data } = req
+  const { user } = res.locals
+
+  if (user.UUID !== data.UUIDusuario) {
+    return next(
+      {
+        error: 'NO AUTHORIZED',
+        message: 'No tienes suficientes permisos',
+        httpCode: 401
+      }
+    )
+  }
+  try {
+    const newExpense = await expenseService.addOne({ data })
+
+    return res.json({ message: 'Registro actualizado', result: { data: newExpense } })
+  } catch (error) {
+    return next(error)
+  }
+}
+
 const updateExpense = async (req, res, next) => {
   const { body: data } = req
   const { user } = res.locals
@@ -76,5 +98,6 @@ const deleteExpense = async (req, res, next) => {
 module.exports = {
   getAllExpensesByUser,
   updateExpense,
-  deleteExpense
+  deleteExpense,
+  addExpense
 }

@@ -12,6 +12,24 @@ class Expense {
     return rows
   }
 
+  static async addOne ({ data: expenseData }) {
+    for (const key in expenseData) {
+      if (expenseData[key] === 'null' || expenseData[key] === 'undefined' || expenseData[key] === '') {
+        expenseData[key] = null
+      }
+    }
+
+    const { descripcion, fecha, valor, IDmascota, UUIDusuario } = expenseData
+
+    const [result] = await db.query('INSERT INTO gasto (descripcion, valor, fecha, UUID_usuario, ID_mascota) VALUES (?, ?, ?, ?, ?)', [descripcion, Number(valor), fecha, UUIDusuario, IDmascota])
+
+    if (result.affectedRows > 0) {
+      return result.insertId
+    }
+
+    return null
+  }
+
   static async updateOne ({ data: expenseData }) {
     for (const key in expenseData) {
       if (expenseData[key] === 'null' || expenseData[key] === 'undefined' || expenseData[key] === '') {

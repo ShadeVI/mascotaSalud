@@ -19,3 +19,9 @@
   color: #10142e;
   box-shadow: 0 0 2px 2px #6976d954;
 }
+
+@media screen and (max-width: 680px) {
+  .button {
+    font-size: 12px;
+  }
+}
