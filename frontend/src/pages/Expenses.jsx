@@ -16,7 +16,7 @@ import Input from '../components/form/Input'
 import Button from '../components/Button'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
 import useAuth from '../hooks/useAuth'
-import { deleteExpense } from '../services/expenses.services'
+import { createExpense, deleteExpense, updateExpense } from '../services/expenses.services'
 
 const initialFormState = {
   ID: '',
@@ -65,10 +65,9 @@ const Expenses = () => {
       formData.append(key, formEntries[key])
     }
 
-    /*
     const { result, error } = isEdit
-      ? await editHistory({ idPet, body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
-      : await addNewHistory({ idPet, body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
+      ? await updateExpense({ body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
+      : await createExpense({ body: JSON.stringify(Object.fromEntries(formData)), jwt: user.jwt })
 
     if (error) {
       console.log(error)
@@ -76,16 +75,16 @@ const Expenses = () => {
     }
 
     if (result) {
-      setHistory(prev => {
-        let newHistory = [...prev]
+      setExpenses(prev => {
+        let oldExpenses = [...prev]
         if (isEdit) {
-          newHistory = [...prev].filter((hist) => hist.ID !== result.ID)
+          oldExpenses = [...prev].filter((hist) => hist.ID !== result.ID)
         }
-        return [...newHistory, result].sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+        return [...oldExpenses, result].sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
       })
       setShowModal(false)
       setFormEntries(initialFormState)
-    } */
+    }
   }
 
   const handleEdit = async (ID, petId) => {
@@ -135,22 +134,27 @@ const Expenses = () => {
   return (
     <Section>
       <BackButton route={ROUTES.HOME}/>
-      <div>
-        <label htmlFor='filter-expenses'>Filtrar por: </label>
-        <select id='filter-expenses' name='filterExpense' onChange={(e) => handleChangeFilter(e)}>
-          <option value="all">Todos</option>
-          {
-            pets.map(({ ID, nombre }) => {
-              return (<option key={ID} value={ID}>{nombre}</option>)
-            })
-          }
-        </select>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 100 }}>
+        <div>
+          <label htmlFor='filter-expenses'>Filtrar por: </label>
+          <select id='filter-expenses' name='filterExpense' onChange={(e) => handleChangeFilter(e)}>
+            <option value="all">Todos</option>
+              {
+                pets.map(({ ID, nombre }) => {
+                  return (<option key={ID} value={ID}>{nombre}</option>)
+                })
+              }
+          </select>
+        </div>
+        <div>
+          <Button type='button' onClick={handleShowModal}>Añadir gasto</Button>
+        </div>
       </div>
       {showModal && (
         <Modal handleClose={handleShowModal}>
           <FormContainer>
             <form onSubmit={handleSubmit}>
-              {petOnEdit && <h3 style={{ marginBottom: '15px' }}>Estás modificando el registro de {petOnEdit.nombre}</h3>}
+              {petOnEdit && <h3 style={{ marginBottom: '15px' }}>Estás modificando el registro de {petOnEdit?.nombre}</h3>}
               <Row>
                 <Label text='fecha' htmlFor='fecha' />
                 <Input type='date' id='fecha' name='fecha' value={formEntries?.fecha} onChange={handleFormEntries} />

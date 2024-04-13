@@ -17,8 +17,8 @@ const updateOne = async ({ data }) => {
   if (!isUpdated) {
     return false
   }
-
-  return true
+  const updatedExpense = await Expense.getOne(data.ID)
+  return updatedExpense
 }
 
 const deleteOne = async (expenseID) => {

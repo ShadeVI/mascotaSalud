@@ -1,11 +1,16 @@
 .table {
-  border: 1px solid #ccc;
+  border: 1px solid black;
   border-collapse: collapse;
-  border-radius: 3px;
+  border-radius: 5px;
   overflow: hidden;
   margin: 50px auto;
   padding: 0;
   width: 100%;
+}
+
+.table thead tr {
+  border: 1px solid black;
+  padding: .35em;
 }
 
 .table tr {
@@ -13,6 +18,7 @@
   border: 1px solid #ddd;
   padding: .35em;
 }
+
 
 .table tr:hover {
   background-color: rgb(179, 159, 233);
@@ -30,4 +36,5 @@
   font-size: .85em;
   letter-spacing: .1em;
   text-transform: uppercase;
+  background-color: #43a1ff;
 }

@@ -14,12 +14,12 @@ export const ExpensesProvider = ({ children }) => {
       const { UUID, jwt } = user
       setIsLoading(true)
       getExpenses({ userId: UUID, jwt })
-        .then((data) => {
-          if (data.error) {
-            console.log(data.error)
+        .then(({ result, error }) => {
+          if (error) {
+            console.log(error)
           }
-          if (data) {
-            setExpenses([...data])
+          if (result) {
+            setExpenses([...result])
           }
         })
         .catch(error => console.log(error.message))

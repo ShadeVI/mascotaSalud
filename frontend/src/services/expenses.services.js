@@ -6,7 +6,7 @@ const getExpenses = async ({ userId, jwt }) => {
     }
   })
   const data = await res.json()
-  return data?.result?.data || data?.error
+  return { result: data?.result.data, error: data?.error }
 }
 
 const deleteExpense = async ({ expenseID, jwt }) => {
@@ -25,7 +25,43 @@ const deleteExpense = async ({ expenseID, jwt }) => {
   }
 }
 
+const updateExpense = async ({ jwt, body }) => {
+  try {
+    const res = await fetch('http://localhost:3000/expenses/', {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      },
+      body
+    })
+    const data = await res.json()
+    return { result: data?.result.data, error: data?.error }
+  } catch (error) {
+    return { result: null, error }
+  }
+}
+
+const createExpense = async ({ jwt, body }) => {
+  try {
+    const res = await fetch('http://localhost:3000/expenses/', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      },
+      body
+    })
+    const data = await res.json()
+    return { result: data?.result.data, error: data?.error }
+  } catch (error) {
+    return { result: null, error }
+  }
+}
+
 export {
   getExpenses,
-  deleteExpense
+  deleteExpense,
+  updateExpense,
+  createExpense
 }
