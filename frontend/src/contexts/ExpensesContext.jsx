@@ -19,7 +19,7 @@ export const ExpensesProvider = ({ children }) => {
             console.log(error)
           }
           if (result) {
-            setExpenses([...result])
+            setExpenses([...result.sort((a, b) => new Date(b.fecha) - new Date(a.fecha))])
           }
         })
         .catch(error => console.log(error.message))

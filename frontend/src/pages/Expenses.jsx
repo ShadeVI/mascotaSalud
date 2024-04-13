@@ -17,6 +17,7 @@ import Button from '../components/Button'
 import { formatDateYYYYmmdd } from '../utils/formatDate'
 import useAuth from '../hooks/useAuth'
 import { createExpense, deleteExpense, updateExpense } from '../services/expenses.services'
+import { monthsMapper } from '../utils/monthsMapper'
 
 const initialFormState = {
   ID: '',
@@ -80,7 +81,7 @@ const Expenses = () => {
         if (isEdit) {
           oldExpenses = [...prev].filter((hist) => hist.ID !== result.ID)
         }
-        return [...oldExpenses, result].sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+        return [...oldExpenses, result].sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
       })
       setShowModal(false)
       setFormEntries(initialFormState)
@@ -111,7 +112,7 @@ const Expenses = () => {
         return
       }
       if (result) {
-        setExpenses(prev => prev.filter(expense => expense.ID !== ID).sort((a, b) => new Date(a.fecha) - new Date(b.fecha)))
+        setExpenses(prev => prev.filter(expense => expense.ID !== ID).sort((a, b) => new Date(b.fecha) - new Date(a.fecha)))
       }
     } catch (err) {
       alert('Error al intentar eliminar el historial')
@@ -134,7 +135,10 @@ const Expenses = () => {
   return (
     <Section>
       <BackButton route={ROUTES.HOME}/>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 100 }}>
+      <div style={{ width: 'fit-content', height: 'fit-content', padding: '20px', border: '1px solid black', margin: '0 auto' }}>Gastos de {monthsMapper(new Date().getMonth())}: {expenses.filter((exp) => new Date(exp.fecha).getMonth() === new Date().getMonth()).reduce((prev, curr) => {
+        return prev + curr.valor
+      }, 0)} €</div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50 }}>
         <div>
           <label htmlFor='filter-expenses'>Filtrar por: </label>
           <select id='filter-expenses' name='filterExpense' onChange={(e) => handleChangeFilter(e)}>
