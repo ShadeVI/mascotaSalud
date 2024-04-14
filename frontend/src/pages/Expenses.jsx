@@ -137,20 +137,15 @@ const Expenses = () => {
   return (
     <Section>
       <BackButton route={ROUTES.HOME}/>
-      <div style={{ width: 'fit-content', height: 'fit-content', padding: '20px', border: '1px solid black', margin: '0 auto' }}>Gastos de {monthsMapper(new Date().getMonth())}: {expenses.filter((exp) => new Date(exp.fecha).getMonth() === new Date().getMonth()).reduce((prev, curr) => {
+      <div style={{ width: 'fit-content', height: 'fit-content', padding: '20px', border: '1px solid black', margin: '0 auto' }}>Gastos de {monthsMapper(new Date().getMonth())}: <span style={{ fontWeight: 'bold' }}>{expenses.filter((exp) => new Date(exp.fecha).getMonth() === new Date().getMonth()).reduce((prev, curr) => {
         return prev + curr.valor
-      }, 0).toFixed(2)} €</div>
+      }, 0).toFixed(2)} €</span></div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50 }}>
-        <div>
-          <label htmlFor='filter-expenses'>Filtrar por: </label>
-          <select id='filter-expenses' name='filterExpense' onChange={(e) => handleChangeFilter(e)}>
-            <option value="all">Todos</option>
-              {
-                pets.map(({ ID, nombre }) => {
-                  return (<option key={ID} value={ID}>{nombre}</option>)
-                })
-              }
-          </select>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Label text='Filtrar por: ' htmlFor='filter-expenses' />
+          <Select id='filter-expenses' name='filterExpense' isFirstDisabled={false} value={selectedFilterID} onChange={(e) => handleChangeFilter(e)} options={[{ displayText: 'Todos', value: 'all' }, ...pets.map(({ ID, nombre }) => {
+            return { displayText: nombre, value: ID }
+          })]} />
         </div>
         <div>
           <Button type='button' onClick={handleShowModal}>Añadir gasto</Button>
