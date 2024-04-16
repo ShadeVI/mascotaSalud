@@ -3,4 +3,19 @@
   max-width: 1024px;
   margin: 0 auto;
   height: 100%;
+  padding-top: 140px;
+}
+
+@media screen and (max-width: 1024px) {
+  .section {
+    max-width: 600px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .section {
+    max-width: 320px;
+    width: 100%;
+  }
 }

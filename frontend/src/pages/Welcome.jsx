@@ -1,8 +1,8 @@
 const Welcome = () => {
   return (
-    <section>
-      WELCOME
-    </section>
+    <main style={{ backgroundColor: 'black', width: '100%', minHeight: '100vh' }}>
+
+    </main>
   )
 }
 export default Welcome

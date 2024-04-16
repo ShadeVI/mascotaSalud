@@ -23,6 +23,7 @@ import { addNewHistory, deleteHistory, editHistory } from '../services/petHistor
 import { formatDateYYYYmmdd } from '../utils/formatDate'
 import Table from '../components/Table/Table'
 import Actions from '../components/Table/Actions'
+import useWindowWidth from '../hooks/useWindowWidth'
 
 const initialFormState = {
   ID: '',
@@ -40,6 +41,7 @@ const PetHistory = () => {
   const [showModal, setShowModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [formEntries, setFormEntries] = useState(initialFormState)
+  const windowWidth = useWindowWidth()
 
   const handleFormEntries = (e) => {
     setFormEntries((prev) => {
@@ -147,7 +149,7 @@ const PetHistory = () => {
     <SectionPet>
       <BackButton route={createRoute(ROUTES.SINGLE_PET, selectedPet.ID)}/>
       <header className={styles.header}>
-        <h1 className={styles.title}>Historial de {selectedPet?.nombre}</h1>
+        {windowWidth > 680 && <h1 className={styles.title}>Historial de {selectedPet?.nombre}</h1>}
         <RoundedImage src={fotoPathBuilder({ type: 'animals', foto: selectedPet?.foto })} alt={selectedPet.nombre} width='150px' height='150px' borderRadius='8px' />
       </header>
 

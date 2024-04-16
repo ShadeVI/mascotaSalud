@@ -7,6 +7,7 @@ import { formatDateYYYYmmdd } from '../utils/formatDate'
 import noImageProfile from '../assets/noImageProfile.png'
 import { FaUser, FaCalendarCheck, FaCalendar } from 'react-icons/fa'
 import { MdWork, MdDriveFileRenameOutline, MdEmail } from 'react-icons/md'
+import SectionVertical from '../components/SectionVertical'
 
 const Profile = () => {
   const [showChangeButton, setShowChangeButton] = useState(false)
@@ -133,7 +134,7 @@ const Profile = () => {
   }, [user])
 
   return (
-    <section className={styles.section}>
+    <SectionVertical>
       <div className={styles.profilePicContainer}>
         <img src={user.profilePic} alt={`Foto perfil de ${user.nombre}`} />
       </div>
@@ -196,7 +197,7 @@ const Profile = () => {
         <Button type='button' onClick={() => setIsFormOnlyReading(false)}>Modificar</Button>
 
       )}
-    </section>
+    </SectionVertical>
   )
 }
 export default Profile

@@ -26,11 +26,9 @@ body {
 
 .container {
   min-width: 280px;
-  max-width: 1280px;
-  width: 80%;
+  width: 100%;
   min-height: 100vh;
   margin: 0 auto;
-  padding-top: 140px;
 }
 
 a {
