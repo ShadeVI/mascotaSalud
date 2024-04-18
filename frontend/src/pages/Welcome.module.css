@@ -1,6 +1,31 @@
 .main {
-  height: 100vh;
+  padding-top: 100px;
+  min-height: 100vh;
+}
+
+.header {
   display: flex;
-  justify-content: left;
   align-items: center;
+  justify-content: center;
+  padding: 50px;
+  gap: 25px;
+}
+
+.textContainer {
+  
+}
+
+.imageContainer {
+  border-radius: 5px;
+  overflow: hidden;
+  min-width: 500px;
+  height: 300px;
+  box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.2);
+}
+
+.welcomeImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
