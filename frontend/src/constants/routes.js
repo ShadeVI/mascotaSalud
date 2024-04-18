@@ -1,8 +1,8 @@
 export const ROUTES = {
-  HOME: '/',
+  HOME: '/home',
   LOGIN: '/login',
   SIGNUP: '/sign-up',
-  WELCOME: '/welcome',
+  WELCOME: '/',
   PROFILE: '/perfil',
   PETS: '/mascotas',
   SINGLE_PET: '/mascotas/:idPet',

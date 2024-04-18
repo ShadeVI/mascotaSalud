@@ -10,6 +10,7 @@ import Button from '../components/Button'
 import { getUserData } from '../services/user.services'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import noImage from '../assets/noImageProfile.png'
+import { ROUTES } from '../constants/routes'
 
 const SignUp = () => {
   const navigator = useNavigate()
@@ -46,7 +47,7 @@ const SignUp = () => {
         .then((data) => {
           const foto = data?.foto ? fotoPathBuilder(data.foto) : noImage
           setUser({ ...data, jwt: result.data.jwt, profilePic: foto })
-          navigator('/', { replace: true })
+          navigator(ROUTES.HOME, { replace: true })
         })
     } catch (err) {
     } finally {

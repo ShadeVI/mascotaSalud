@@ -1,6 +1,10 @@
+import styles from './Welcome.module.css'
+
 const Welcome = () => {
+  // https://unsplash.com/es/fotos/mujer-y-gato-se-dan-la-mano-N_G2Sqdy9QY
+
   return (
-    <main style={{ backgroundColor: 'black', width: '100%', minHeight: '100vh' }}>
+    <main className={styles.main}>
 
     </main>
   )

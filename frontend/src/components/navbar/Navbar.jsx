@@ -23,7 +23,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('user')
     setUser(null)
-    navigator('/login', {
+    navigator(ROUTES.LOGIN, {
       replace: true
     })
   }
@@ -48,32 +48,33 @@ const Navbar = () => {
         </div>
         <span className={styles.logoName}>MascotaSalud</span>
       </div>
-      {user
-        ? (
-          <>
-            <div className={styles.links} ref={mobileLinks}>
-              <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.HOME}>Home</NavLink>
-              {/* <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.PETS_OVERVIEW}>Visión global</NavLink> */}
-              <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
-            </div>
-            <div className={styles.user}>
-              <p className={styles.userText}>Hola,
-                <span>
-                  <Link className={styles.link} to={ROUTES.PROFILE}>{user && user.username}</Link>
-                </span>
-                <Link className={styles.link} onClick={handleLogout}><AiOutlinePoweroff /></Link>
-              </p>
-              <RoundedImage width={'60px'} height={'60px'} borderRadius='100%' src={fotoPathBuilder({ type: 'profile', foto: user.foto })} alt={user.username} />
-            </div>
-          </>
-          )
-        : (
-          <div className={styles.links}>
-            <NavLink className={styles.link} to={ROUTES.LOGIN}>login</NavLink>
-            <NavLink className={styles.link} to={ROUTES.SIGNUP}>register</NavLink>
-          </div>
-          )
-      }
+      <>
+        <div className={styles.links} ref={mobileLinks}>
+          {user
+            ? (
+              <>
+            <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.HOME}>Home</NavLink>
+            <NavLink onClick={handleMobileMenu} className={({ isActive }) => isActive ? styles.link__active : styles.link} to={ROUTES.EXPENSES}>Gastos</NavLink>
+            </>)
+            : (<>
+            <NavLink onClick={handleMobileMenu} className={styles.link} to={ROUTES.LOGIN}>login</NavLink>
+            <NavLink onClick={handleMobileMenu} className={styles.link} to={ROUTES.SIGNUP}>register</NavLink>
+            </>
+              )
+          }
+        </div>
+        {user && (
+        <div className={styles.user}>
+          <p className={styles.userText}>Hola,
+            <span>
+              <Link className={styles.link} to={ROUTES.PROFILE}>{user && user.username}</Link>
+            </span>
+            <Link className={styles.link} onClick={handleLogout}><AiOutlinePoweroff /></Link>
+          </p>
+          <RoundedImage width={'60px'} height={'60px'} borderRadius='100%' src={fotoPathBuilder({ type: 'profile', foto: user.foto })} alt={user.username} />
+        </div>)}
+      </>
+
       <div className={styles.hamburger}>
         {isMenuOpen
           ? <AiOutlineClose onClick={handleMobileMenu} />
