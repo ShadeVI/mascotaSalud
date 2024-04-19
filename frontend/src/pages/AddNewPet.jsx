@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Button from '../components/Button'
-import styles from './AddNewPet.module.css'
 import useAuth from '../hooks/useAuth'
 import usePets from '../hooks/usePets'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +11,8 @@ import Form from '../components/formPet/Form'
 import Row from '../components/formPet/Row'
 import { addNewPet } from '../services/pets.services'
 import { optionsAnimalTypes, optionsGenderTypes } from '../constants/petForm'
+import BackButton from '../components/BackButton'
+import Section from '../components/Section'
 
 const initialFormState = {
   nombre: '',
@@ -73,8 +74,9 @@ const AddNewPet = () => {
   }
 
   return (
-    <section className={styles.section}>
-      <h2>Registra tu mascota ahora</h2>
+    <Section>
+      <BackButton route={ROUTES.HOME}/>
+      <h2 style={{ textAlign: 'center' }}>Registra tu mascota ahora</h2>
       <Form onSubmit={handleSubmit} >
         <Row>
             <Label htmlFor='imagePet' text='Foto de tu adorable mascota' />
@@ -110,7 +112,7 @@ const AddNewPet = () => {
         </Row>
         <Button type='submit' disabled={!formEntries.nombre || !formEntries.tipo} >Añadir</Button>
       </Form>
-    </section>
+    </Section>
   )
 }
 export default AddNewPet
