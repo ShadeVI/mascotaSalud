@@ -1,5 +1,7 @@
+import { BACKEND_ENDPOINTS } from '../constants/endpoints'
+
 const getExpenses = async ({ userId, jwt }) => {
-  const res = await fetch(`http://localhost:3000/expenses/${userId}`, {
+  const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}expenses/${userId}`, {
     method: 'GET',
     headers: {
       authorization: `Bearer ${jwt}`
@@ -11,7 +13,7 @@ const getExpenses = async ({ userId, jwt }) => {
 
 const deleteExpense = async ({ expenseID, jwt }) => {
   try {
-    const res = await fetch(`http://localhost:3000/expenses/${expenseID}`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}expenses/${expenseID}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -27,7 +29,7 @@ const deleteExpense = async ({ expenseID, jwt }) => {
 
 const updateExpense = async ({ jwt, body }) => {
   try {
-    const res = await fetch('http://localhost:3000/expenses/', {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}expenses/`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -44,7 +46,7 @@ const updateExpense = async ({ jwt, body }) => {
 
 const createExpense = async ({ jwt, body }) => {
   try {
-    const res = await fetch('http://localhost:3000/expenses/', {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}expenses/`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${jwt}`,

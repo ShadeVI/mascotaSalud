@@ -1,5 +1,7 @@
+import { BACKEND_ENDPOINTS } from '../constants/endpoints'
+
 const getUserData = async ({ username, jwt }) => {
-  const res = await fetch(`http://localhost:3000/users/${username}`, {
+  const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}users/${username}`, {
     method: 'GET',
     headers: {
       authorization: `Bearer ${jwt}`

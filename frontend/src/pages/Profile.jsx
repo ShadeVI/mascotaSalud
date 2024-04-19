@@ -8,6 +8,7 @@ import noImageProfile from '../assets/noImageProfile.png'
 import { FaUser, FaCalendarCheck, FaCalendar } from 'react-icons/fa'
 import { MdWork, MdDriveFileRenameOutline, MdEmail } from 'react-icons/md'
 import SectionVertical from '../components/SectionVertical'
+import { BACKEND_ENDPOINTS } from '../constants/endpoints'
 
 const Profile = () => {
   const [showChangeButton, setShowChangeButton] = useState(false)
@@ -48,7 +49,7 @@ const Profile = () => {
     try {
       const formData = new FormData()
       formData.append('profilePic', refInputProfileImage.current.files[0])
-      const res = await fetch('http://localhost:3000/users/upload-photo', {
+      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}users/upload-photo`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${user.jwt}`
@@ -78,7 +79,7 @@ const Profile = () => {
     try {
       const formData = new FormData(refUserProfileForm.current)
       const jsonFormData = JSON.stringify(Object.fromEntries(formData.entries()))
-      const res = await fetch(`http://localhost:3000/users/${user.username}`, {
+      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}users/${user.username}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${user.jwt}`,

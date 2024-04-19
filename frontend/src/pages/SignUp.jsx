@@ -11,6 +11,7 @@ import { getUserData } from '../services/user.services'
 import { fotoPathBuilder } from '../utils/fotoPathBuilder'
 import noImage from '../assets/noImageProfile.png'
 import { ROUTES } from '../constants/routes'
+import { BACKEND_ENDPOINTS } from '../constants/endpoints'
 
 const SignUp = () => {
   const navigator = useNavigate()
@@ -25,7 +26,7 @@ const SignUp = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const res = await fetch('http://localhost:3000/auth/signup',
+      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_URL}auth/signup`,
         {
           headers: {
             'Content-Type': 'application/json'
