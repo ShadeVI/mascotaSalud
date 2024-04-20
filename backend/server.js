@@ -24,13 +24,13 @@ app.use(cookieParser())
 
 app.use(express.static('public'))
 
-app.use('/auth', authRouter)
+app.use('/api/auth', authRouter)
 
-app.use('/users', requireAuth, userRouter)
+app.use('/api/users', requireAuth, userRouter)
 
-app.use('/pets', requireAuth, petRouter)
+app.use('/api/pets', requireAuth, petRouter)
 
-app.use('/expenses', requireAuth, expensesRouter)
+app.use('/api/expenses', requireAuth, expensesRouter)
 
 app.use((err, req, res, next) => {
   console.log({ err })

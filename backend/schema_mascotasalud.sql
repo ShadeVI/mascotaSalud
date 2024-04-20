@@ -24,7 +24,7 @@ USE `mascotasalud` ;
 -- Table `mascotasalud`.`usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mascotasalud`.`usuario` (
-  `UUID` VARCHAR(36) NOT NULL DEFAULT uuid(),
+  `UUID` VARCHAR(36) NOT NULL DEFAULT (UUID()),
   `email` VARCHAR(45) NOT NULL,
   `password_hash` TEXT NOT NULL,
   `username` VARCHAR(45) NOT NULL,

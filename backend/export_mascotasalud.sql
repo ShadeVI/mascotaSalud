@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuario` (
-  `UUID` varchar(36) NOT NULL DEFAULT (uuid()),
+  `UUID` varchar(36) NOT NULL DEFAULT (UUID()),
   `email` varchar(45) NOT NULL,
   `password_hash` text NOT NULL,
   `username` varchar(45) NOT NULL,
