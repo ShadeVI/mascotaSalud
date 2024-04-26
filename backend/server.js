@@ -1,7 +1,6 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 // Import routers
@@ -18,7 +17,6 @@ const PORT = process.env.PORT || 3002
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json({ limit: '5mb' }))
-app.use(cookieParser())
 
 app.use(express.static('public'))
 
