@@ -1,7 +1,7 @@
 import { BACKEND_ENDPOINTS } from '../constants/endpoints'
 
 const getUserPets = async ({ username, jwt }) => {
-  const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}users/${username}/pets`, {
+  const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/users/${username}/pets`, {
     method: 'GET',
     headers: {
       authorization: `Bearer ${jwt}`
@@ -12,7 +12,7 @@ const getUserPets = async ({ username, jwt }) => {
 }
 
 const getPetHistory = async ({ idPet, jwt }) => {
-  const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/${idPet}/history`, {
+  const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/${idPet}/history`, {
     method: 'GET',
     headers: {
       authorization: `Bearer ${jwt}`
@@ -24,7 +24,7 @@ const getPetHistory = async ({ idPet, jwt }) => {
 
 const addNewPet = async ({ body, jwt }) => {
   try {
-    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/new-pet`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/new-pet`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${jwt}`
@@ -40,7 +40,7 @@ const addNewPet = async ({ body, jwt }) => {
 
 const updatePet = async ({ idPet, body, jwt }) => {
   try {
-    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/${idPet}`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/${idPet}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`
@@ -56,7 +56,7 @@ const updatePet = async ({ idPet, body, jwt }) => {
 
 const deletePet = async ({ idPet, jwt }) => {
   try {
-    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/${idPet}`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/${idPet}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${jwt}`

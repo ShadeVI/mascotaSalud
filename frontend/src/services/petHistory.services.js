@@ -2,7 +2,7 @@ import { BACKEND_ENDPOINTS } from '../constants/endpoints'
 
 const addNewHistory = async ({ idPet, body, jwt }) => {
   try {
-    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/${idPet}/history`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/${idPet}/history`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -19,7 +19,7 @@ const addNewHistory = async ({ idPet, body, jwt }) => {
 
 const editHistory = async ({ idPet, body, jwt }) => {
   try {
-    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/${idPet}/history`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/${idPet}/history`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`,
@@ -36,7 +36,7 @@ const editHistory = async ({ idPet, body, jwt }) => {
 
 const deleteHistory = async ({ historyId, jwt }) => {
   try {
-    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}pets/history/${historyId}`, {
+    const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/pets/history/${historyId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${jwt}`,

@@ -25,7 +25,7 @@ const Login = () => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}auth/login`,
+      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/auth/login`,
         {
           headers: {
             'Content-Type': 'application/json'

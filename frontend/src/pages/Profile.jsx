@@ -49,7 +49,7 @@ const Profile = () => {
     try {
       const formData = new FormData()
       formData.append('profilePic', refInputProfileImage.current.files[0])
-      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}users/upload-photo`, {
+      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/users/upload-photo`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${user.jwt}`
@@ -79,7 +79,7 @@ const Profile = () => {
     try {
       const formData = new FormData(refUserProfileForm.current)
       const jsonFormData = JSON.stringify(Object.fromEntries(formData.entries()))
-      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}users/${user.username}`, {
+      const res = await fetch(`${BACKEND_ENDPOINTS.BASE_API_URL}/users/${user.username}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${user.jwt}`,
