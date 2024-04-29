@@ -7,4 +7,4 @@ const URL_ROUTES = {
   animals: 'animal_images'
 }
 
-export const fotoPathBuilder = ({ type, foto }) => foto ? `${BACKEND_ENDPOINTS.BASE_URL}${URL_ROUTES[type]}/${foto}` : type === 'profile' ? noImageProfile : noImageAnimal
+export const fotoPathBuilder = ({ type, foto }) => foto ? `${BACKEND_ENDPOINTS.BASE_URL}/${URL_ROUTES[type]}/${foto}` : type === 'profile' ? noImageProfile : noImageAnimal

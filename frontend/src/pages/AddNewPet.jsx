@@ -83,7 +83,7 @@ const AddNewPet = () => {
             <Input id='imagePet' type='file' name='imagePet' accept="image/png, image/jpeg" value={formEntries.image} onChange={handleFormEntries} />
         </Row>
         <Row>
-          <Label htmlFor='nombre' text='Nombre'/>
+          <Label htmlFor='nombre' text='Nombre *'/>
           <Input type='text' required id='nombre' name='nombre' value={formEntries.nombre} onChange={handleFormEntries} />
         </Row>
         <Row>
@@ -95,7 +95,7 @@ const AddNewPet = () => {
           <Input type='date' id='fecha_nac' name='fecha_nac' value={formEntries.fecha_nac} onChange={handleFormEntries} />
         </Row>
         <Row>
-          <Label htmlFor='tipo' text='Que animal es?' />
+          <Label htmlFor='tipo' text='Que animal es? *' />
           <Select id='tipo' name='tipo' value={formEntries.tipo} onChange={handleFormEntries} required options={optionsAnimalTypes} />
         </Row>
         <Row>
@@ -103,7 +103,7 @@ const AddNewPet = () => {
           <Input type='text' id='raza' name='raza' value={formEntries.raza} onChange={handleFormEntries} />
         </Row>
         <Row>
-          <Label htmlFor='genero' text='Genero' />
+          <Label htmlFor='genero' text='Genero *' />
           <Select id='genero' name='genero' value={formEntries.genero} onChange={handleFormEntries} required options={optionsGenderTypes} />
         </Row>
         <Row inline={true}>

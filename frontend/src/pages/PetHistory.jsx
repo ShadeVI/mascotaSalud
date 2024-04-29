@@ -41,6 +41,7 @@ const PetHistory = () => {
   const [showModal, setShowModal] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const [formEntries, setFormEntries] = useState(initialFormState)
+  const [errorForm, setErrorForm] = useState({ isError: false, msg: '' })
   const windowWidth = useWindowWidth()
 
   const handleFormEntries = (e) => {
@@ -64,9 +65,10 @@ const PetHistory = () => {
   }
 
   const handleSubmit = async (e) => {
+    setErrorForm({ isError: false, msg: '' })
     e.preventDefault()
     if (!formEntries.peso || !formEntries.fecha) {
-      // TODO: Set error
+      setErrorForm({ isError: true, msg: 'El campo peso y el campo fecha son obligatorios' })
       return
     }
 
@@ -141,6 +143,13 @@ const PetHistory = () => {
     }
   }, [selectedPet])
 
+  useEffect(() => {
+    const timeoutID = setTimeout(() => {
+      setErrorForm({ isError: false, msg: '' })
+    }, 3000)
+    return () => clearTimeout(timeoutID)
+  }, [errorForm.isError])
+
   if (!selectedPet) {
     return <NotFound />
   }
@@ -190,6 +199,7 @@ const PetHistory = () => {
                 <Input type='checkbox' id='antiparasitario' name='antiparasitario' checked={formEntries?.antiparasitario} onChange={handleFormEntries} />
               </Row>
               <Button type='submit'>Enviar</Button>
+              <p className={styles.errorMsg}>{errorForm.isError && errorForm.msg}</p>
             </form>
           </FormContainer>
         </Modal>)
