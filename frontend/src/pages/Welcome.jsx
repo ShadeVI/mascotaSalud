@@ -2,9 +2,17 @@ import styles from './Welcome.module.css'
 import imageWelcome from '../assets/welcome.jpg'
 import CardService from '../components/CardService'
 import { services } from '../data/welcomeCardsInfo'
+import useAuth from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '../constants/routes'
 
 const Welcome = () => {
   // https://unsplash.com/es/fotos/mujer-y-gato-se-dan-la-mano-N_G2Sqdy9QY
+  const { user } = useAuth()
+  const navigator = useNavigate()
+  if (user) {
+    navigator(ROUTES.HOME)
+  }
 
   return (
     <main className={styles.main}>
