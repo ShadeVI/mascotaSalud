@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
 import { getExpenses } from '../services/expenses.services'
+import usePets from '../hooks/usePets'
 
 export const ExpensesContext = createContext()
 
 export const ExpensesProvider = ({ children }) => {
   const { user } = useAuth()
+  const { pets } = usePets()
   const [expenses, setExpenses] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
@@ -25,7 +27,7 @@ export const ExpensesProvider = ({ children }) => {
         .catch(error => console.log(error.message))
         .finally(() => setIsLoading(false))
     }
-  }, [user])
+  }, [user, pets])
 
   return (
     <ExpensesContext.Provider value={{ expenses, isLoading, setExpenses }}>
