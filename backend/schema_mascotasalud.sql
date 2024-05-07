@@ -88,10 +88,14 @@ CREATE TABLE IF NOT EXISTS `mascotasalud`.`gasto` (
   INDEX `ID_mascota_fk_idx` (`ID_mascota` ASC) VISIBLE,
   CONSTRAINT `ID_mascota_gasto_fk`
     FOREIGN KEY (`ID_mascota`)
-    REFERENCES `mascotasalud`.`mascota` (`ID`),
+    REFERENCES `mascotasalud`.`mascota` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `UUID_usuario_gasto_fk`
     FOREIGN KEY (`UUID_usuario`)
-    REFERENCES `mascotasalud`.`usuario` (`UUID`))
+    REFERENCES `mascotasalud`.`usuario` (`UUID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 30
 DEFAULT CHARACTER SET = utf8mb4
@@ -112,7 +116,9 @@ CREATE TABLE IF NOT EXISTS `mascotasalud`.`historial_mascota` (
   INDEX `ID_mascota_fk_idx` (`ID_mascota` ASC) VISIBLE,
   CONSTRAINT `ID_mascota_fk`
     FOREIGN KEY (`ID_mascota`)
-    REFERENCES `mascotasalud`.`mascota` (`ID`))
+    REFERENCES `mascotasalud`.`mascota` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 109
 DEFAULT CHARACTER SET = utf8mb4
