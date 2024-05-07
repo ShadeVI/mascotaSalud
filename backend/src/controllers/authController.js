@@ -76,7 +76,7 @@ const login = async (req, res, next) => {
     if (!user) {
       return next({
         error: 'BAD REQUEST',
-        message: 'Email/contraseña no validas',
+        message: 'Correo electrónico/Contraseña no validas',
         httpCode: 401
       })
     }

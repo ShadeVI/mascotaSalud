@@ -64,19 +64,19 @@ const SignUp = () => {
         <h2 className={styles.title}>Registro</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <Row>
-            <Label htmlFor='username' text="Username" />
+            <Label htmlFor='username' text="Nombre de usuario" />
             <Input type='text' id='username' name='username' value={username} onChange={(e) => setUsername(e.target.value)} />
           </Row>
           <Row>
-            <Label htmlFor='email' text="Email" />
+            <Label htmlFor='email' text="Correo electrónico" />
             <Input type='email' id='email' name='email' value={email} onChange={(e) => setEmail(e.target.value)} />
           </Row>
           <Row>
-            <Label htmlFor='password' text="Password" />
+            <Label htmlFor='password' text="Contraseña" />
             <Input type='password' id='password' name='password' value={password} onChange={(e) => setPassword(e.target.value)} />
           </Row>
           <Row>
-            <Button disabled={isLoading}>Registro</Button>
+            <Button disabled={isLoading}>Registrar</Button>
           </Row>
           {error && (<Row>
             <p className={styles.error}>{error.message}</p>

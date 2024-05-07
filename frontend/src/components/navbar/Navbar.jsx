@@ -58,7 +58,7 @@ const Navbar = () => {
             </>)
             : (<>
             <NavLink onClick={handleMobileMenu} className={styles.link} to={ROUTES.LOGIN}>login</NavLink>
-            <NavLink onClick={handleMobileMenu} className={styles.link} to={ROUTES.SIGNUP}>register</NavLink>
+            <NavLink onClick={handleMobileMenu} className={styles.link} to={ROUTES.SIGNUP}>registrar</NavLink>
             </>
               )
           }
