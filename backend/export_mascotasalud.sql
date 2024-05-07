@@ -33,8 +33,8 @@ CREATE TABLE `gasto` (
   UNIQUE KEY `ID_UNIQUE` (`ID`),
   KEY `UUID_ususario_fk_idx` (`UUID_usuario`),
   KEY `ID_mascota_fk_idx` (`ID_mascota`),
-  CONSTRAINT `ID_mascota_gasto_fk` FOREIGN KEY (`ID_mascota`) REFERENCES `mascota` (`ID`),
-  CONSTRAINT `UUID_usuario_gasto_fk` FOREIGN KEY (`UUID_usuario`) REFERENCES `usuario` (`UUID`)
+  CONSTRAINT `ID_mascota_gasto_fk` FOREIGN KEY (`ID_mascota`) REFERENCES `mascota` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `UUID_usuario_gasto_fk` FOREIGN KEY (`UUID_usuario`) REFERENCES `usuario` (`UUID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -64,7 +64,7 @@ CREATE TABLE `historial_mascota` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `ID_UNIQUE` (`ID`),
   KEY `ID_mascota_fk_idx` (`ID_mascota`),
-  CONSTRAINT `ID_mascota_fk` FOREIGN KEY (`ID_mascota`) REFERENCES `mascota` (`ID`)
+  CONSTRAINT `ID_mascota_fk` FOREIGN KEY (`ID_mascota`) REFERENCES `mascota` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
