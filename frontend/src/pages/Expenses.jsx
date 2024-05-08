@@ -64,7 +64,7 @@ const Expenses = () => {
   const handleSubmit = async (e) => {
     setErrorForm({ isError: false, msg: '' })
     e.preventDefault()
-    if (!formEntries.fecha || !formEntries.descripcion || formEntries.valor) {
+    if (!formEntries.fecha || !formEntries.descripcion || !formEntries.valor) {
       setErrorForm({ isError: true, msg: 'Todos los campos son obligatorios' })
       return
     }
