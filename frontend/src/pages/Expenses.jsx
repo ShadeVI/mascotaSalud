@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import styles from './Expenses.module.css'
 import BackButton from '../components/BackButton'
 import Loading from '../components/Loading'
 import Section from '../components/Section'
@@ -39,6 +40,7 @@ const Expenses = () => {
   const [isEdit, setIsEdit] = useState(false)
   const [formEntries, setFormEntries] = useState(initialFormState)
   const [petOnEdit, setPetOnEdit] = useState(null)
+  const [errorForm, setErrorForm] = useState({ isError: false, msg: '' })
 
   const handleChangeFilter = (e) => {
     const getFilteredValue = isNaN(e.target.value) ? 'all' : Number(e.target.value)
@@ -60,7 +62,12 @@ const Expenses = () => {
   }
 
   const handleSubmit = async (e) => {
+    setErrorForm({ isError: false, msg: '' })
     e.preventDefault()
+    if (!formEntries.fecha || !formEntries.descripcion || formEntries.valor) {
+      setErrorForm({ isError: true, msg: 'Todos los campos son obligatorios' })
+      return
+    }
 
     const formData = new FormData()
     for (const key in formEntries) {
@@ -131,6 +138,13 @@ const Expenses = () => {
     setFilteredExpenses(expFilt)
   }, [selectedFilterID, expenses])
 
+  useEffect(() => {
+    const timeoutID = setTimeout(() => {
+      setErrorForm({ isError: false, msg: '' })
+    }, 3000)
+    return () => clearTimeout(timeoutID)
+  }, [errorForm.isError])
+
   if (isLoading) {
     return <Loading />
   }
@@ -175,6 +189,7 @@ const Expenses = () => {
                 })]} />
               </Row>
               <Button type='submit'>Enviar</Button>
+              <p className={styles.errorMsg}>{errorForm.isError && errorForm.msg}</p>
             </form>
           </FormContainer>
         </Modal>)
