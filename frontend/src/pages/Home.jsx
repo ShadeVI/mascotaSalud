@@ -29,6 +29,9 @@ const Home = () => {
           ? (
             <Section>
               <Grid>
+                <GridSquare key='Add'>
+                  <ButtonSquare text='+' handleClick={handleAddPet} />
+                </GridSquare>
                 {pets.map(pet => {
                   return (
                     <GridSquare key={pet.ID}>
@@ -36,9 +39,6 @@ const Home = () => {
                     </GridSquare>
                   )
                 })}
-                <GridSquare key='Add'>
-                  <ButtonSquare text='+' handleClick={handleAddPet} />
-                </GridSquare>
               </Grid>
             </Section>
             )
