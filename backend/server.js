@@ -11,6 +11,7 @@ const { expensesRouter } = require('./src/routes/expensesRouter')
 
 // Import middlewares
 const requireAuth = require('./src/middlewares/requireAuth')
+const { petHistoryRouter } = require('./src/routes/petHistory')
 
 const PORT = process.env.PORT || 3002
 
@@ -25,6 +26,8 @@ app.use('/api/auth', authRouter)
 app.use('/api/users', requireAuth, userRouter)
 
 app.use('/api/pets', requireAuth, petRouter)
+
+app.use('/api/pets', requireAuth, petHistoryRouter)
 
 app.use('/api/expenses', requireAuth, expensesRouter)
 
