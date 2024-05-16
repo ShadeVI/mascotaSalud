@@ -28,7 +28,11 @@ export const AuthProvider = ({ children }) => {
             setUser({ ...data, jwt, profilePic: foto })
           }
         })
-        .catch(error => console.log(error.message))
+        .catch(error => {
+          console.log(error.message)
+          localStorage.removeItem('user')
+          window.location.reload()
+        })
     }
   }, [userLS])
 
