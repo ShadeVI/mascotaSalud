@@ -9,7 +9,7 @@ const signup = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: 'Datos insuficientes',
-        httpCode: 401
+        httpCode: 400
       })
     }
     // SERVICE SIGN UP
@@ -46,7 +46,7 @@ const signup = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: error.message,
-        httpCode: 401
+        httpCode: 400
       })
     }
     return next(
@@ -67,7 +67,7 @@ const login = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: 'Datos insuficientes',
-        httpCode: 401
+        httpCode: 400
       })
     }
 
@@ -77,7 +77,7 @@ const login = async (req, res, next) => {
       return next({
         error: 'BAD REQUEST',
         message: 'Correo electrónico/Contraseña no validas',
-        httpCode: 401
+        httpCode: 400
       })
     }
 

@@ -9,7 +9,7 @@ const getUser = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
@@ -42,7 +42,7 @@ const getUserPets = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
@@ -50,7 +50,7 @@ const getUserPets = async (req, res, next) => {
   const userFound = await userService.findOne(username)
   if (!userFound) {
     return next({
-      error: 'BAD REQUEST',
+      error: 'NOT FOUND',
       message: 'Usuario no encontrado',
       httpCode: 404
     })
@@ -79,7 +79,7 @@ const updateUser = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
@@ -119,7 +119,7 @@ const deleteUser = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
@@ -150,7 +150,7 @@ const uploadPhotoProfile = async (req, res, next) => {
     return next({
       error: 'BAD REQUEST',
       message: 'Datos insuficientes',
-      httpCode: 401
+      httpCode: 400
     })
   }
 
