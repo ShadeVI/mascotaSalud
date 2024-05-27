@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
             return
           }
           if (data) {
-            const foto = data?.foto && fotoPathBuilder({ type: 'profile', foto: data.foto })
+            const foto = fotoPathBuilder({ type: 'profile', foto: data.foto })
             setUser({ ...data, jwt, profilePic: foto })
           }
         })

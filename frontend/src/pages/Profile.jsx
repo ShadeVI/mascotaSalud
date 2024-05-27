@@ -137,13 +137,13 @@ const Profile = () => {
   return (
     <SectionVertical>
       <div className={styles.profilePicContainer}>
-        <img src={user.profilePic} alt={`Foto perfil de ${user.nombre}`} />
+        <img src={user.profilePic} alt={`Foto perfil de ${user?.username}`} />
       </div>
       <form className={styles.form_image} onSubmit={handleSubmitImageProfile} encType='multipart/form-data'>
         <div className={styles.row}>
           <label htmlFor='profilePicInput'>Nueva foto: </label>
           <input id='profilePicInput' type='file' name='profilePic' accept="image/png, image/jpeg" onChange={handleChange} ref={refInputProfileImage} />
-          {showChangeButton && <Button type='submit' disabled={loading}>Cambiar foto</Button>}
+          {refInputProfileImage?.current?.value && showChangeButton && <Button type='submit' disabled={loading}>Cambiar foto</Button>}
         </div>
         <div className={styles.row}>
           {response && <p>{response}</p>}

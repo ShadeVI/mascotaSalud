@@ -162,14 +162,14 @@ const Expenses = () => {
           })]} />
         </div>
         <div>
-          <Button type='button' onClick={handleShowModal}>Añadir gasto</Button>
+          <Button type='button' onClick={() => { setIsEdit(false); handleShowModal() }}>Añadir gasto</Button>
         </div>
       </div>
       {showModal && (
         <Modal handleClose={handleShowModal}>
           <FormContainer>
             <form onSubmit={handleSubmit}>
-              {petOnEdit && <h3 style={{ marginBottom: '15px' }}>Estás modificando el registro de {petOnEdit?.nombre}</h3>}
+              {isEdit && <h3 style={{ marginBottom: '15px' }}>{petOnEdit?.nombre && `Estás modificando el registro de ${petOnEdit?.nombre}`}</h3>}
               <Row>
                 <Label text='fecha' htmlFor='fecha' />
                 <Input type='date' id='fecha' name='fecha' value={formEntries?.fecha} onChange={handleFormEntries} />
